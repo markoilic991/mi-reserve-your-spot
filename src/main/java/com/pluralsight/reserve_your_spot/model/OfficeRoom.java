@@ -29,6 +29,11 @@ public class OfficeRoom {
     public OfficeRoom() {
     }
 
+    public OfficeRoom(String name, int orderNo) {
+        this.name = name;
+        this.orderNo = orderNo;
+    }
+
     public OfficeRoom(int id, String name, int orderNo, Collection<WorkStation> stations) {
         this.id = id;
         this.name = name;
