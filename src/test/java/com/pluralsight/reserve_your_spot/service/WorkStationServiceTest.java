@@ -36,7 +36,7 @@ public class WorkStationServiceTest {
     private WorkStation workStation;
 
     @Test
-    public void getStationsTest(){
+    public void Should_Get_All_Stations(){
 
         WorkStation workStation1 = new WorkStation(1, "PD441100", new OfficeRoom(1, "JAVA", 10));
         WorkStation workStation2 = new WorkStation(2, "PD447711", new OfficeRoom(1, "JAVA", 10));
@@ -50,7 +50,7 @@ public class WorkStationServiceTest {
     }
 
     @Test
-    public void getStationByIdTest(){
+    public void Should_Get_Station_By_Id(){
 
         WorkStation workStation1 = new WorkStation(1, "PD441100", new OfficeRoom(1, "JAVA", 10));
         workStationService.getById(workStation1.getId());
@@ -59,7 +59,7 @@ public class WorkStationServiceTest {
     }
 
     @Test
-    public void deleteStationTest(){
+    public void Should_Delete_Station(){
 
         WorkStation workStation1 = new WorkStation(1, "PD441100", new OfficeRoom(1, "JAVA", 10));
         workStationService.deleteById(workStation1.getId());

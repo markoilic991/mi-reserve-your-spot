@@ -1,5 +1,6 @@
 package com.pluralsight.reserve_your_spot.service;
 
+import com.pluralsight.reserve_your_spot.exception.OfficeNotFoundException;
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.repository.OfficeRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,8 @@ public class OfficeRoomService {
         return officeRoomRepository.findAll();
     }
 
-
     public OfficeRoom getById(int id){
-        return officeRoomRepository.findById(id).orElse(null);
+        return officeRoomRepository.findById(id).orElseThrow(()-> new OfficeNotFoundException("OfficeRoom do not exist with id: " + id));
     }
 
     //delete

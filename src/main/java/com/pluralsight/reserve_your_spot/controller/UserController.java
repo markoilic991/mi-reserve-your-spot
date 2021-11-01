@@ -1,11 +1,13 @@
 package com.pluralsight.reserve_your_spot.controller;
 
+import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
 import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.InvalidNameException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -13,6 +15,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private List<User> listUsers = new ArrayList<>();
 
     @Autowired
     public UserController(UserService userService) {
@@ -27,8 +30,8 @@ public class UserController {
 
     // get users
     @GetMapping("/")
-    public List<User> getUsers(){
-        return userService.getUsers();
+    public List<User> getUsers() {
+            return userService.getUsers();
     }
 
     @GetMapping("/{id}")

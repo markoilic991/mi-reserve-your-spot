@@ -1,9 +1,11 @@
 package com.pluralsight.reserve_your_spot.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pluralsight.reserve_your_spot.exception.UserNotFoundException;
 import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.repository.UserRepository;
 import com.pluralsight.reserve_your_spot.service.UserService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class UserControllerTest {
     private User user;
 
     @Test
-    public void testGetAllUsers() throws Exception {
+    public void Should_Find_All_Users() throws Exception {
 
         List<User> usersNewList = new ArrayList<>();
         usersNewList.add(new User(1, "Marko", "marko.ilic@prodyna"));
@@ -58,7 +60,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserByIdTest() throws Exception {
+    public void Should_Find_User_By_Id() throws Exception {
 
         User userNew = new User();
         userNew.setName("Ilija Milic");
@@ -74,16 +76,29 @@ public class UserControllerTest {
     }
 
     @Test
-    public void saveUserTest() throws Exception {
+    public void Should_Get_User_By_Id(){
 
-        //mock the user data that we want to save
+        User user1 = new User();
+        user1.setName("Ivica");
+        user1.setEmail("ivica@gmail");
+
+        Mockito.when(userService.getUserById(anyInt())).thenReturn(user1);
+
+        User user2 = userService.getUserById(1);
+
+        Assertions.assertNotNull(user2);
+        Assertions.assertEquals("Ivica", user2.getName());
+    }
+
+    @Test
+    public void Should_Add_New_User() throws Exception {
+
         User userNew = new User();
         userNew.setId(1);
         userNew.setName("Ilija Milic");
         userNew.setEmail("ilija.ilic@prodyna.com");
 
         Mockito.when(userService.addUser(any(User.class))).thenReturn(userNew);
-        //create a mock request
 
         mockMvc.perform(MockMvcRequestBuilders.post("/users/")
                 .content(objectMapper.writeValueAsString(userNew))
@@ -96,7 +111,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void userUpdateTest() throws Exception {
+    public void Should_Update_User() throws Exception {
 
         User userNew = new User("Stefan", "stef.ilic@gmail.com");
         userNew.setName("Milos");
@@ -112,6 +127,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Milos"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("milos.radin@gmail.com"));
     }
+
 
 
 }

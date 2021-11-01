@@ -3,6 +3,8 @@ package com.pluralsight.reserve_your_spot.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -12,7 +14,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotNull(message = "Name should not be null!")
     private String name;
+    @NotNull(message = "Email should not be null!")
     private String email;
 
     public User() {

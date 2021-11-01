@@ -45,7 +45,7 @@ public class WorkStationControllerTest {
     private OfficeRoom officeRoom;
 
     @Test
-    public void addStationTest() throws Exception {
+    public void Should_Add_New_WorkStation() throws Exception {
 
         WorkStation workStationNew = new WorkStation();
         workStationNew.setId(1);
@@ -64,7 +64,7 @@ public class WorkStationControllerTest {
     }
 
     @Test
-    public void getByIdTest() throws Exception {
+    public void Should_Find_WorkStation_By_Id() throws Exception {
 
         WorkStation workStationNew = new WorkStation();
         workStationNew.setUniqueCode("PD002211");
@@ -79,7 +79,7 @@ public class WorkStationControllerTest {
     }
 
     @Test
-    public void getStationsTest() throws Exception {
+    public void Should_Find_All_WorkStations() throws Exception {
 
         List<WorkStation> stationsList = new ArrayList<>();
         stationsList.add(new WorkStation(1, "PD002211", new OfficeRoom(1, "JAVA", 1)));
@@ -94,7 +94,7 @@ public class WorkStationControllerTest {
     }
 
     @Test
-    public void updateStationsTest() throws Exception {
+    public void Should_Update_WorkStation() throws Exception {
 
         WorkStation stationNew = new WorkStation("PD741474", new OfficeRoom(1,"JAVA", 1));
         stationNew.setUniqueCode("PD111000");

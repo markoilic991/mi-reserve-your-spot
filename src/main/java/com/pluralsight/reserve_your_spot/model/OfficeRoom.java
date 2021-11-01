@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +16,7 @@ public class OfficeRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotNull(message = "OfficeRoom must have a name!")
     private String name;
     private int orderNo;
     @OneToMany(
