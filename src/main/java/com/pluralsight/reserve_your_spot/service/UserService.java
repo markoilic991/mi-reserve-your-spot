@@ -4,16 +4,28 @@ import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
 import com.pluralsight.reserve_your_spot.exception.UserNotFoundException;
 import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.repository.UserRepository;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.*;
 import java.util.List;
+import java.util.Set;
 
 @Service
+@Validated
 public class UserService {
 
     private UserRepository userRepository;
 
+    private Validator validator;
+
+    public UserService(Validator validator) {
+        this.validator = validator;
+    }
 
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -21,9 +33,9 @@ public class UserService {
     }
 
     //add user
-    public User addUser(User user){
-        if(user.getName() == ""){
-            throw new NameNotValidException("The name of user must have value!");
+    public User addUser(@Valid User user){
+        if(user.getName().equals("")){
+          throw new NameNotValidException("The name of user is not valid, must have an value!");
         }
         return userRepository.save(user);
     }
@@ -51,4 +63,9 @@ public class UserService {
         oldUser.setEmail(user.getEmail());
         return userRepository.save(oldUser);
     }
+
+    public void validateUser(@Valid User user){
+        System.out.println("User is validated!");
+    }
+
 }

@@ -6,6 +6,15 @@ This project should ensure that employees in a company can successfully reserve 
 ##  Used By
 
 * PRODYNA Innovative IT Consultancy
+## Technology Stack
+##### This project was built using InteliiJ IDEA and uses the following technologies:
+* Java
+* Spring Framework/Spring Boot
+* REST CRUD operations
+* Swagger UI with REST
+* Spring DATA MySQL
+* Test coverage
+* Rest error handlers
 ## API Reference
 
 ### Users

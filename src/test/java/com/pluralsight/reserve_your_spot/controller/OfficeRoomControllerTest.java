@@ -1,15 +1,18 @@
 package com.pluralsight.reserve_your_spot.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.model.WorkStation;
 import com.pluralsight.reserve_your_spot.service.OfficeRoomService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -21,6 +24,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(OfficeRoomController.class)
 public class OfficeRoomControllerTest {
 
@@ -112,4 +116,17 @@ public class OfficeRoomControllerTest {
 
 
     }
+
+    @Test
+    public void when_Room_Is_Invalid_Then_Return_Exception400() throws Exception {
+
+        OfficeRoom officeRoom = new OfficeRoom("",5);
+
+        String body = objectMapper.writeValueAsString(officeRoom);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/rooms/").contentType("application/json").content(body))
+                .andExpect(status().isBadRequest());
+
+    }
+
 }

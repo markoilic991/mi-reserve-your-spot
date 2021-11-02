@@ -4,9 +4,12 @@ import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
 import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.InvalidNameException;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class UserController {
 
     //add one
     @PostMapping("/")
-    public User addUser(@RequestBody User user){
+    public User addUser(@Valid @RequestBody User user){
         return userService.addUser(user);
     }
 
@@ -51,4 +54,6 @@ public class UserController {
         return userService.updateUser(user);
 
     }
+
+
 }

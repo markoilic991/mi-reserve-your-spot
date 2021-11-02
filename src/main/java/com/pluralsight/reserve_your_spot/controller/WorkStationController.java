@@ -5,6 +5,7 @@ import com.pluralsight.reserve_your_spot.service.WorkStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class WorkStationController {
     }
     // add one
     @PostMapping("/")
-    public WorkStation addOne(@RequestBody WorkStation workStation){
+    public WorkStation addOne(@Valid @RequestBody WorkStation workStation){
         return workStationService.addOne(workStation);
     }
 
@@ -42,7 +43,7 @@ public class WorkStationController {
 
     //update
     @PutMapping("update")
-    public WorkStation update(@RequestBody WorkStation workStation){
+    public WorkStation update(@Valid @RequestBody WorkStation workStation){
         return workStationService.update(workStation);
     }
 }

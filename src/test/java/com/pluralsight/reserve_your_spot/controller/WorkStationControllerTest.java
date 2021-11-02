@@ -1,15 +1,18 @@
 package com.pluralsight.reserve_your_spot.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.model.WorkStation;
 import com.pluralsight.reserve_your_spot.repository.WorkStationRepository;
 import com.pluralsight.reserve_your_spot.service.WorkStationService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -20,6 +23,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(WorkStationController.class)
 public class WorkStationControllerTest {
 
@@ -110,4 +114,16 @@ public class WorkStationControllerTest {
                         .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD111000"))
                         .andExpect(MockMvcResultMatchers.jsonPath("$.room").value(new OfficeRoom(1, "QA", 1)));
     }
+
+    @Test
+    public void when_Station_Is_Invalid_Then_Return_Exception400() throws Exception {
+
+        WorkStation workStation = new WorkStation(" ", new OfficeRoom("JAVA", 5));
+
+        String body = objectMapper.writeValueAsString(workStation);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/stations/").contentType("application/json").content(body))
+                .andExpect(status().isBadRequest());
+    }
+
 }

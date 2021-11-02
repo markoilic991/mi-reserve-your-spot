@@ -1,29 +1,39 @@
 package com.pluralsight.reserve_your_spot.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
 import com.pluralsight.reserve_your_spot.exception.UserNotFoundException;
 import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.repository.UserRepository;
 import com.pluralsight.reserve_your_spot.service.UserService;
+import org.junit.Rule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.xmlunit.builder.Input;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
@@ -44,6 +54,9 @@ public class UserControllerTest {
 
     @MockBean
     private User user;
+
+    @Rule
+    public ExpectedException thrown= ExpectedException.none();
 
     @Test
     public void Should_Find_All_Users() throws Exception {
@@ -75,20 +88,6 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void Should_Get_User_By_Id(){
-
-        User user1 = new User();
-        user1.setName("Ivica");
-        user1.setEmail("ivica@gmail");
-
-        Mockito.when(userService.getUserById(anyInt())).thenReturn(user1);
-
-        User user2 = userService.getUserById(1);
-
-        Assertions.assertNotNull(user2);
-        Assertions.assertEquals("Ivica", user2.getName());
-    }
 
     @Test
     public void Should_Add_New_User() throws Exception {
@@ -126,6 +125,18 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Milos"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("milos.radin@gmail.com"));
+    }
+
+
+    @Test
+    public void when_User_is_Invalid_Then_Return_Status400() throws Exception {
+
+        User userNew = new User("", "asdadadasdas");
+        String body = objectMapper.writeValueAsString(userNew);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/users/").contentType("application/json").content(body))
+                .andExpect(status().isBadRequest());
+
     }
 
 

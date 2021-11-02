@@ -32,6 +32,11 @@ dependencies {
 	testImplementation group: 'com.jayway.jsonpath', name: 'json-path-assert', version: '2.6.0'
 	testImplementation 'org.assertj:assertj-core:3.21.0'
 	implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.6'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+	implementation group: 'io.springfox', name: 'springfox-schema', version: '3.0.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.12'
 
 }
 

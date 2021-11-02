@@ -1,5 +1,6 @@
 package com.pluralsight.reserve_your_spot.service;
 
+import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
 import com.pluralsight.reserve_your_spot.exception.OfficeNotFoundException;
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.repository.OfficeRoomRepository;
@@ -20,6 +21,9 @@ public class OfficeRoomService {
 
     //add one
     public OfficeRoom addRoom(OfficeRoom officeRoom){
+        if(officeRoom.getName().equals("")){
+            throw new NameNotValidException("OfficeRoom name must have value!");
+        }
         return officeRoomRepository.save(officeRoom);
     }
 
@@ -27,6 +31,7 @@ public class OfficeRoomService {
     public List<OfficeRoom> getAll(){
         return officeRoomRepository.findAll();
     }
+
 
     public OfficeRoom getById(int id){
         return officeRoomRepository.findById(id).orElseThrow(()-> new OfficeNotFoundException("OfficeRoom do not exist with id: " + id));
