@@ -104,9 +104,9 @@ public class WorkStationControllerTest {
         stationNew.setUniqueCode("PD111000");
         stationNew.setRoom(new OfficeRoom(1, "QA", 1));
 
-        Mockito.when(workStationService.update(any(WorkStation.class))).thenReturn(stationNew);
+        Mockito.when(workStationService.update(any(),anyInt())).thenReturn(stationNew);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/stations/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/stations/2")
                         .content(objectMapper.writeValueAsString(stationNew))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

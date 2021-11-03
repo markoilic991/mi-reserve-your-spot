@@ -1,5 +1,6 @@
 package com.pluralsight.reserve_your_spot.service;
 
+import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.model.WorkStation;
 import com.pluralsight.reserve_your_spot.repository.WorkStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ public class WorkStationService {
         return workStationRepository.save(workStation);
     }
 
+    //add list of stations
+    public List<WorkStation> saveAll(List<WorkStation> stations){
+        return workStationRepository.saveAll(stations);
+    }
+
     //get all
     public List<WorkStation> getAll(){
         return workStationRepository.findAll();
@@ -39,9 +45,11 @@ public class WorkStationService {
     }
 
     //update
-    public WorkStation update(WorkStation workStation){
-        WorkStation oldStation = workStationRepository.getById(workStation.getId());
+    public WorkStation update(WorkStation workStation, int id){
+        WorkStation oldStation = workStationRepository.findById(id).orElse(null);
         oldStation.setUniqueCode(workStation.getUniqueCode());
         return workStationRepository.save(oldStation);
     }
+
+
 }

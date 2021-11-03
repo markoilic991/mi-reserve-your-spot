@@ -1,0 +1,27 @@
+[
+{
+  "id": 1,
+  "name": "Milos Pjevovic",
+  "email": "milos.pjevovic@gmail.com"
+},
+  {
+    "id": 2,
+    "name": "Slobodan Ilic",
+    "email": "sloba.ilic@gmail.com"
+  },
+  {
+    "id": 3,
+    "name": "Nikola Ristic",
+    "email": "nikola.ristic@gmail.com"
+  },
+  {
+    "id": 4,
+    "name": "Marko Jaksic",
+    "email": "marko.jaksic@gmail.com"
+  },
+  {
+    "id": 5,
+    "name": "Mirko Jankovic",
+    "email": "mirko.jankovic@gmail.com"
+  }
+]

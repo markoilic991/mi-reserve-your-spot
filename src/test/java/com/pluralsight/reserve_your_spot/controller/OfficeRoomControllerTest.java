@@ -103,9 +103,9 @@ public class OfficeRoomControllerTest {
         officeRoomNew.setName("JAVA");
         officeRoomNew.setOrderNo(15);
 
-        Mockito.when(officeRoomService.update(any(OfficeRoom.class))).thenReturn(officeRoomNew);
+        Mockito.when(officeRoomService.update(any(), anyInt())).thenReturn(officeRoomNew);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/rooms/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/rooms/2")
                         .content(objectMapper.writeValueAsString(officeRoomNew))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))

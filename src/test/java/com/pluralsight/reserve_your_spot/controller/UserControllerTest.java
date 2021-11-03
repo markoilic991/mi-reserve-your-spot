@@ -116,9 +116,9 @@ public class UserControllerTest {
         userNew.setName("Milos");
         userNew.setEmail("milos.radin@gmail.com");
 
-        Mockito.when(userService.updateUser(any(User.class))).thenReturn(userNew);
+        Mockito.when(userService.updateUser(any(), anyInt())).thenReturn(userNew);
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/update")
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/2")
                 .content(objectMapper.writeValueAsString(userNew))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

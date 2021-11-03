@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "uniqueCode": "PD0001",
+    "room": {
+      "id": 1,
+      "name": "JAVA",
+      "orderNo": 1
+    }
+  },
+  {
+    "id": 2,
+    "uniqueCode": "PD0001",
+    "room": {
+      "id": 1,
+      "name": "JAVA",
+      "orderNo": 1
+    }
+  },
+  {
+    "id": 3,
+    "uniqueCode": "PD0002",
+    "room": {
+      "id": 2,
+      "name": "QA",
+      "orderNo": 2
+    }
+  },
+  {
+    "id": 4,
+    "uniqueCode": "PD0003",
+    "room": {
+      "id": 2,
+      "name": "QA",
+      "orderNo": 2
+    }
+  },
+  {
+    "id": 5,
+    "uniqueCode": "PD0004",
+    "room": {
+      "id": 3,
+      "name": ".NET",
+      "orderNo": 3
+    }
+  },
+  {
+    "id": 6,
+    "uniqueCode": "PD0004",
+    "room": {
+      "id": 3,
+      "name": ".NET",
+      "orderNo": 3
+    }
+  },
+  {
+    "id": 7,
+    "uniqueCode": "PD0005",
+    "room": {
+      "id": 4,
+      "name": "Front",
+      "orderNo": 4
+    }
+  },
+  {
+    "id": 8,
+    "uniqueCode": "PD0006",
+    "room": {
+      "id": 4,
+      "name": "Front",
+      "orderNo": 4
+    }
+  }
+]

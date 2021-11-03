@@ -1,6 +1,7 @@
 package com.pluralsight.reserve_your_spot.controller;
 
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
+import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.service.OfficeRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,11 @@ public class OfficeRoomController {
         return officeRoomService.addRoom(officeRoom);
     }
 
+    @PostMapping("/list")
+    public List<OfficeRoom> listOfRooms(@RequestBody List<OfficeRoom> rooms){
+        return officeRoomService.saveAll(rooms);
+    }
+
     //get all
     @GetMapping("/")
     public List<OfficeRoom>getAll(){
@@ -51,8 +57,8 @@ public class OfficeRoomController {
     }
 
     //update
-    @PutMapping("/update")
-    public OfficeRoom update(@Valid @RequestBody OfficeRoom officeRoom){
-        return officeRoomService.update(officeRoom);
+    @PutMapping("/{id}")
+    public OfficeRoom update(@Valid @RequestBody OfficeRoom officeRoom, @PathVariable int id){
+        return officeRoomService.update(officeRoom, id);
     }
 }
