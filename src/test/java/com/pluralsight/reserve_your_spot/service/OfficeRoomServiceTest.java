@@ -1,6 +1,7 @@
 package com.pluralsight.reserve_your_spot.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pluralsight.reserve_your_spot.exception.OfficeNotFoundException;
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.repository.OfficeRoomRepository;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @WebMvcTest(OfficeRoomService.class)
-public class OfficeRoomServiceTest {
+public class OfficeRoomServiceTest{
 
     @Autowired
     private OfficeRoomService officeRoomService;
@@ -35,6 +36,7 @@ public class OfficeRoomServiceTest {
 
     @MockBean
     private OfficeRoom officeRoom;
+
 
     @Test
     public void Should_Find_All_Rooms(){
@@ -59,6 +61,7 @@ public class OfficeRoomServiceTest {
         officeRoomService.getById(officeRoom.getId());
 
         Mockito.verify(officeRoomRepository, Mockito.times(1)).findById(officeRoom.getId());
+
 
     }
 

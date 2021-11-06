@@ -38,9 +38,9 @@ public class WorkStationServiceTest {
     @Test
     public void Should_Get_All_Stations(){
 
-        WorkStation workStation1 = new WorkStation(1, "PD441100", new OfficeRoom(1, "JAVA", 10));
-        WorkStation workStation2 = new WorkStation(2, "PD447711", new OfficeRoom(1, "JAVA", 10));
-        WorkStation workStation3 = new WorkStation(3, "PD445566", new OfficeRoom(1, "JAVA", 10));
+        WorkStation workStation1 = new WorkStation(1, "PD441100");
+        WorkStation workStation2 = new WorkStation(2, "PD447711");
+        WorkStation workStation3 = new WorkStation(3, "PD445566");
 
         Mockito.when(workStationRepository.findAll())
                 .thenReturn((List<WorkStation>) Stream.of(workStation1, workStation2, workStation3)
@@ -52,7 +52,7 @@ public class WorkStationServiceTest {
     @Test
     public void Should_Get_Station_By_Id(){
 
-        WorkStation workStation1 = new WorkStation(1, "PD441100", new OfficeRoom(1, "JAVA", 10));
+        WorkStation workStation1 = new WorkStation(1, "PD441100");
         workStationService.getById(workStation1.getId());
 
         Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.getId());
@@ -61,7 +61,7 @@ public class WorkStationServiceTest {
     @Test
     public void Should_Delete_Station(){
 
-        WorkStation workStation1 = new WorkStation(1, "PD441100", new OfficeRoom(1, "JAVA", 10));
+        WorkStation workStation1 = new WorkStation(1, "PD441100");
         workStationService.deleteById(workStation1.getId());
 
         Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStation1.getId());

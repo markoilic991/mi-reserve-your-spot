@@ -19,7 +19,7 @@ public class WorkStationController {
     public WorkStationController(WorkStationService workStationService) {
         this.workStationService = workStationService;
     }
-    // add one
+
     @PostMapping("/")
     public WorkStation addOne(@Valid @RequestBody WorkStation workStation){
         return workStationService.addOne(workStation);
@@ -29,7 +29,6 @@ public class WorkStationController {
         return workStationService.saveAll(stations);
     }
 
-    //get all
     @GetMapping("/")
     public List<WorkStation>getAll(){
         return workStationService.getAll();
@@ -40,13 +39,13 @@ public class WorkStationController {
         return workStationService.getById(id);
     }
 
-    //delete
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id){
         workStationService.deleteById(id);
     }
 
-    //update
+
     @PutMapping("/{id}")
     public WorkStation update(@Valid @RequestBody WorkStation workStation,@PathVariable int id){
         return workStationService.update(workStation, id);

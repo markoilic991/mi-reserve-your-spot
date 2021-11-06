@@ -12,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,7 +55,7 @@ public class UserServiceTest {
         User userNew = new User(1,"Marko Ilic", "marko.ilic@prodyna.com");
         userService.getUserById(userNew.getId());
 
-        Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.getId());
+        Mockito.verify(userRepository, Mockito.times(1)).getById(userNew.getId());
 
     }
 

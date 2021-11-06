@@ -27,36 +27,27 @@ public class OfficeRoomService {
         this.officeRoomRepository = officeRoomRepository;
     }
 
-    //add one
     public OfficeRoom addRoom(OfficeRoom officeRoom){
-        if(officeRoom.getName().equals("")){
-            throw new NameNotValidException("OfficeRoom name must have value!");
-        }
         return officeRoomRepository.save(officeRoom);
     }
 
-    //add list of rooms
     public List<OfficeRoom> saveAll(List<OfficeRoom> rooms){
         return officeRoomRepository.saveAll(rooms);
     }
 
-    //list all
     public List<OfficeRoom> getAll(){
         return officeRoomRepository.findAll();
     }
-
 
     public OfficeRoom getById(int id){
         return officeRoomRepository.findById(id).orElseThrow(()-> new OfficeNotFoundException("OfficeRoom do not exist with id: " + id));
     }
 
-    //delete
     public String deleteById(int id){
         officeRoomRepository.deleteById(id);
         return "Room deleted!";
     }
 
-    //update
     public OfficeRoom update(OfficeRoom officeRoom, int id){
         OfficeRoom oldRoom = officeRoomRepository.findById(id).orElse(null);
         oldRoom.setName(officeRoom.getName());

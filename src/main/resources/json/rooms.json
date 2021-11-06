@@ -2,61 +2,21 @@
   {
     "id": 1,
     "name": "JAVA",
-    "orderNo": 1,
-    "stations": [
-      {
-        "id": 1,
-        "uniqueCode": "PD0001"
-      },
-      {
-        "id": 2,
-        "uniqueCode": "PD0001"
-      }
-    ]
+    "orderNo": 1
   },
   {
     "id": 2,
     "name": "QA",
-    "orderNo": 2,
-    "stations": [
-      {
-        "id": 3,
-        "uniqueCode": "PD0002"
-      },
-      {
-        "id": 4,
-        "uniqueCode": "PD0003"
-      }
-    ]
+    "orderNo": 2
   },
   {
     "id": 3,
     "name": ".NET",
-    "orderNo": 3,
-    "stations": [
-      {
-        "id": 5,
-        "uniqueCode": "PD0004"
-      },
-      {
-        "id": 6,
-        "uniqueCode": "PD0004"
-      }
-    ]
+    "orderNo": 3
   },
   {
     "id": 4,
     "name": "Front",
-    "orderNo": 4,
-    "stations": [
-      {
-        "id": 7,
-        "uniqueCode": "PD0005"
-      },
-      {
-        "id": 8,
-        "uniqueCode": "PD0006"
-      }
-    ]
+    "orderNo": 4
   }
 ]

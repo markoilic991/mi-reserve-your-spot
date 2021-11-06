@@ -17,13 +17,27 @@ import javax.validation.ConstraintViolationException;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
-public class CustomExceptionHandler {
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
 
     @ExceptionHandler(NameNotValidException.class)
     public ResponseEntity<?> nameNotValidExceptionHandler(NameNotValidException e, ServletWebRequest request) {
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                HttpStatus.BAD_REQUEST,
+                e.getMessage(),
+                ZonedDateTime.now(),
+                request.getDescription(true));
+
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DateNotValidException.class)
+    public ResponseEntity<?> nameNotValidExceptionHandler(DateNotValidException e, ServletWebRequest request) {
 
         ErrorDetails errorDetails = new ErrorDetails(
                 HttpStatus.BAD_REQUEST,
@@ -60,27 +74,6 @@ public class CustomExceptionHandler {
     }
 
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorDetails handleMethodArgNotValid(MethodArgumentNotValidException exception, HttpServletRequest request){
-
-        ErrorDetails errorDetails = new ErrorDetails(
-                HttpStatus.BAD_REQUEST,
-                exception.getMessage(),
-                ZonedDateTime.now(),
-                request.getServletPath()
-        );
-        BindingResult bindingResult = exception.getBindingResult();
-        Map<String, String> validationErrors = new HashMap<>();
-        for (FieldError fieldError: bindingResult.getFieldErrors()
-             ) {
-            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
-        errorDetails.setValidationErrors(validationErrors);
-        return errorDetails;
-    }
-
-
     //making custom exception for our controller OfficeRoom
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -90,6 +83,22 @@ public class CustomExceptionHandler {
 
     }
 
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        Map<String, Object> body = new HashMap<>();
+
+        List<String>errors = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(x -> x.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        body.put("errors", errors);
+
+        return new ResponseEntity<>(body, headers, status);
+
+    }
 }
 
 

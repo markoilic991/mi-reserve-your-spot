@@ -1,18 +1,10 @@
 package com.pluralsight.reserve_your_spot.controller;
 
-import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
 import com.pluralsight.reserve_your_spot.model.User;
-import com.pluralsight.reserve_your_spot.service.SampleDataService;
 import com.pluralsight.reserve_your_spot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.naming.InvalidNameException;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +25,6 @@ public class UserController {
     public User addUser(@Valid @RequestBody User user){
         return userService.addUser(user);
     }
-
 
     @PostMapping("/list")
     public List<User> listOfUsers(@RequestBody List<User> users){

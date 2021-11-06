@@ -44,16 +44,16 @@ public class UserService {
     }
 
     public User getUserById(int id){
-        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
+        return userRepository.findById((int) id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
     }
 
     public String deleteById(int id){
-        userRepository.deleteById(id);
+        userRepository.deleteById((int) id);
         return "User deleted!";
     }
 
     public User updateUser(User user, int id){
-        User oldUser = userRepository.findById(id).orElse(null);
+        User oldUser = userRepository.findById((int) id).orElse(null);
         oldUser.setName(user.getName());
         oldUser.setEmail(user.getEmail());
         return userRepository.save(oldUser);

@@ -1,6 +1,5 @@
 package com.pluralsight.reserve_your_spot.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.model.WorkStation;
@@ -51,7 +50,7 @@ public class WorkStationControllerTest {
     @Test
     public void Should_Add_New_WorkStation() throws Exception {
 
-        WorkStation workStationNew = new WorkStation();
+        WorkStation workStationNew = new WorkStation(1, "PD002211");
         workStationNew.setId(1);
         workStationNew.setUniqueCode("PD002211");
 
@@ -70,7 +69,7 @@ public class WorkStationControllerTest {
     @Test
     public void Should_Find_WorkStation_By_Id() throws Exception {
 
-        WorkStation workStationNew = new WorkStation();
+        WorkStation workStationNew = new WorkStation(1, "PD002211");
         workStationNew.setUniqueCode("PD002211");
 
         Mockito.when(workStationService.getById(anyInt())).thenReturn(workStationNew);
@@ -86,9 +85,9 @@ public class WorkStationControllerTest {
     public void Should_Find_All_WorkStations() throws Exception {
 
         List<WorkStation> stationsList = new ArrayList<>();
-        stationsList.add(new WorkStation(1, "PD002211", new OfficeRoom(1, "JAVA", 1)));
-        stationsList.add(new WorkStation(2, "PD000031", new OfficeRoom(1, "JAVA", 1)));
-        stationsList.add(new WorkStation(3, "PD004411", new OfficeRoom(1, "JAVA", 1)));
+        stationsList.add(new WorkStation(1, "PD002211"));
+        stationsList.add(new WorkStation(2, "PD000031"));
+        stationsList.add(new WorkStation(3, "PD004411"));
 
         Mockito.when(workStationService.getAll()).thenReturn(stationsList);
 
@@ -100,9 +99,9 @@ public class WorkStationControllerTest {
     @Test
     public void Should_Update_WorkStation() throws Exception {
 
-        WorkStation stationNew = new WorkStation("PD741474", new OfficeRoom(1,"JAVA", 1));
+        WorkStation stationNew = new WorkStation(1, "PD741474");
         stationNew.setUniqueCode("PD111000");
-        stationNew.setRoom(new OfficeRoom(1, "QA", 1));
+
 
         Mockito.when(workStationService.update(any(),anyInt())).thenReturn(stationNew);
 
@@ -118,7 +117,7 @@ public class WorkStationControllerTest {
     @Test
     public void when_Station_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-        WorkStation workStation = new WorkStation(" ", new OfficeRoom("JAVA", 5));
+        WorkStation workStation = new WorkStation(1, " ");
 
         String body = objectMapper.writeValueAsString(workStation);
 

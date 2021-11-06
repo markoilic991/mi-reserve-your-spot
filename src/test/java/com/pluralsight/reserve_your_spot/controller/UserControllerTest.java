@@ -1,14 +1,10 @@
 package com.pluralsight.reserve_your_spot.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pluralsight.reserve_your_spot.exception.NameNotValidException;
-import com.pluralsight.reserve_your_spot.exception.UserNotFoundException;
 import com.pluralsight.reserve_your_spot.model.User;
 import com.pluralsight.reserve_your_spot.repository.UserRepository;
 import com.pluralsight.reserve_your_spot.service.UserService;
 import org.junit.Rule;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ExpectedException;
@@ -21,13 +17,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.xmlunit.builder.Input;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -75,11 +68,11 @@ public class UserControllerTest {
     @Test
     public void Should_Find_User_By_Id() throws Exception {
 
-        User userNew = new User();
+        User userNew = new User(1, "Marko", "marko.ilic@prodyna");
         userNew.setName("Ilija Milic");
         userNew.setEmail("ilija.ilic@prodyna.com");
 
-        Mockito.when(userService.getUserById(anyInt())).thenReturn(userNew);
+        Mockito.when(userService.getUserById((int) anyInt())).thenReturn(userNew);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/users/2"))
                 .andDo(print())
@@ -92,7 +85,7 @@ public class UserControllerTest {
     @Test
     public void Should_Add_New_User() throws Exception {
 
-        User userNew = new User();
+        User userNew = new User(1, "Marko", "marko.ilic@prodyna");
         userNew.setId(1);
         userNew.setName("Ilija Milic");
         userNew.setEmail("ilija.ilic@prodyna.com");
