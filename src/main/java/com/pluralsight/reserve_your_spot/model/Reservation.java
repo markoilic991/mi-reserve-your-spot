@@ -2,6 +2,8 @@ package com.pluralsight.reserve_your_spot.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pluralsight.reserve_your_spot.exception.UniqueDate;
+
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,7 @@ public class Reservation{
     @JsonFormat(pattern="yyyy-MM-dd")
     @NotNull(message = "This field must have date value!")
     @FutureOrPresent(message = "The arrival date must be today or in the future.")
+    @UniqueDate
     private Date date;
 
     @ManyToOne(cascade = CascadeType.MERGE)

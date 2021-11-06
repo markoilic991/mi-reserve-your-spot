@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.io.InputStream;
-
+import java.io.*;
 import java.util.List;
 
 @Service
@@ -26,6 +24,10 @@ public class SampleDataService {
     @Autowired
     public SampleDataService(UserService userService) {
         this.userService = userService;
+    }
+
+    public SampleDataService() {
+
     }
 
     @Bean
@@ -84,8 +86,6 @@ public class SampleDataService {
         };
 
     }
-
-
 
 }
 

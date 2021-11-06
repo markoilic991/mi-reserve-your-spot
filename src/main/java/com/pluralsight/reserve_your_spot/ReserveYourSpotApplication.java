@@ -17,6 +17,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @SpringBootApplication
 public class ReserveYourSpotApplication {

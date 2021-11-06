@@ -9,5 +9,7 @@ import java.util.Date;
 @Repository
 public interface ReservartionRepository extends JpaRepository<Reservation, Integer> {
 
+    Reservation findByDate(Date date);
+
 
 }
