@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.myproject.ReserveYourSpot.model.User;
 import com.myproject.ReserveYourSpot.model.WorkStation;
 import com.myproject.ReserveYourSpot.model.OfficeRoom;
+import lombok.extern.java.Log;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,10 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
+@Log
 @Component
 public class SampleDataService {
-
-    private static final Logger logger = LogManager.getLogger(SampleDataService.class.getName());
-
+    
     private UserService userService;
 
     private OfficeRoomService officeRoomService;
@@ -57,7 +57,7 @@ public class SampleDataService {
         System.out.println(Arrays.asList(users));
 
         userService.saveAll(users);
-        logger.info("Users saved successfully!");
+        log.info("Users saved successfully!");
         return users;
     }
 
@@ -73,7 +73,7 @@ public class SampleDataService {
         System.out.println(Arrays.asList(stations));
 
         workStationService.saveAll(stations);
-        logger.info("WorkStations saved successfully!");
+        log.info("WorkStations saved successfully!");
         return stations;
     }
 
@@ -89,7 +89,7 @@ public class SampleDataService {
         System.out.println(Arrays.asList(rooms));
 
         officeRoomService.saveAll(rooms);
-        logger.info("OfficeRooms saved successfully!");
+        log.info("OfficeRooms saved successfully!");
         return rooms;
     }
 
