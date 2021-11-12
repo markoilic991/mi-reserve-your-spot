@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -64,9 +66,8 @@ public class ReservationService {
 
         int userId = reservation.getUser().getId();
         String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        Date date = reservation.getDate();
-        String date1 = simpleDateFormat.format(date);
+        LocalDate date = reservation.getDate();
+        String date1 = date.format(DateTimeFormatter.ofPattern(pattern));
         int workStationId = reservation.getWorkStation().getId();
 
         List<Reservation> reservations = reservartionRepository.findAll();

@@ -5,13 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@AllArgsConstructor
 @Table(name = "reservations")
 public class Reservation{
 
@@ -19,28 +22,37 @@ public class Reservation{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reservation_Id;
 
-    @Temporal(TemporalType.DATE)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     @FutureOrPresent(message = "The arrival date must be today or in the future.")
-    private Date date;
+    @NotNull
+    private LocalDate date;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JsonIgnoreProperties("reservations")
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JsonIgnoreProperties("reservations")
     @JoinColumn(name = "workStation_id")
+    @NotNull
     private WorkStation workStation;
 
-    public Reservation(Date date, int id, int workStationId) {
+    public Reservation(LocalDate date, int id, int workStationId) {
     }
 
     public Reservation() {
     }
 
-    public Reservation(Date date, User user, WorkStation workStation) {
+    public Reservation(int reservation_Id, LocalDate date, User user, WorkStation workStation) {
+        this.reservation_Id = reservation_Id;
+        this.date = date;
+        this.user = user;
+        this.workStation = workStation;
+    }
+
+    public Reservation(LocalDate date, User user, WorkStation workStation) {
         this.workStation = workStation;
     }
 
@@ -60,9 +72,14 @@ public class Reservation{
        return this.reservation_Id;
     }
 
-    public Date getDate() {
-        return this.date;
-   }
+    public LocalDate getDate() {
+        return date;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
     public WorkStation getWorkStation() {
         return workStation;
@@ -76,10 +93,6 @@ public class Reservation{
       this.reservation_Id = reservation_Id;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    public void setDate(Date date) {
-        this.date = date;
-   }
 
 }
 
