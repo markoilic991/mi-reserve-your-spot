@@ -17,7 +17,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .paths(PathSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.pluralsight.reserve_your_spot"))
+                .apis(RequestHandlerSelectors.basePackage("com.myproject.ReserveYourSpot"))
                 .build();
     }
 }
