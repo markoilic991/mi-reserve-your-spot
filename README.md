@@ -1,4 +1,4 @@
-# Reserve_your_spot 
+# ReserveYourSpot
 
 This project should ensure that employees in a company can successfully reserve a place in the office. They can choose the office where they will work as well as the desk. 
 
