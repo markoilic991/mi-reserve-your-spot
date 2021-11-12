@@ -40,7 +40,7 @@ public class OfficeRoomService {
     }
 
     public OfficeRoom getById(int id){
-        return officeRoomRepository.findById(id).orElseThrow(()-> new OfficeNotFoundException("OfficeRoom do not exist with id: " + id));
+        return officeRoomRepository.findById(id).orElse(null);
     }
 
     public String deleteById(int id){
@@ -54,6 +54,5 @@ public class OfficeRoomService {
         oldRoom.setOrderNo(officeRoom.getOrderNo());
         return officeRoomRepository.save(oldRoom);
     }
-
 
 }

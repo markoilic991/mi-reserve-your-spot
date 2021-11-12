@@ -55,7 +55,7 @@ public class UserServiceTest {
         User userNew = new User(1,"Marko Ilic", "marko.ilic@prodyna.com");
         userService.getUserById(userNew.getId());
 
-        Mockito.verify(userRepository, Mockito.times(1)).getById(userNew.getId());
+        Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.getId());
 
     }
 

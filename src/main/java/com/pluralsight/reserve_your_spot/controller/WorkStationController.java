@@ -4,12 +4,16 @@ import com.pluralsight.reserve_your_spot.model.OfficeRoom;
 import com.pluralsight.reserve_your_spot.model.WorkStation;
 import com.pluralsight.reserve_your_spot.service.WorkStationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/stations")
 public class WorkStationController {
 
@@ -50,4 +54,5 @@ public class WorkStationController {
     public WorkStation update(@Valid @RequestBody WorkStation workStation,@PathVariable int id){
         return workStationService.update(workStation, id);
     }
+
 }

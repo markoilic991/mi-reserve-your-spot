@@ -120,7 +120,7 @@ public class OfficeRoomControllerTest {
     @Test
     public void when_Room_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-        OfficeRoom officeRoom = new OfficeRoom("",5);
+        OfficeRoom officeRoom = new OfficeRoom("", 5);
 
         String body = objectMapper.writeValueAsString(officeRoom);
 

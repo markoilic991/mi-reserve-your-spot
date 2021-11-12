@@ -15,7 +15,7 @@ public class ErrorDetails {
     private String message;
     private ZonedDateTime timeStamp;
     private String path;
-    Map<String, String> validationErrors;
+
 
     public ErrorDetails(HttpStatus httpStatus, String message, ZonedDateTime timeStamp, String path) {
         this.httpStatus = httpStatus;

@@ -20,7 +20,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //add one
     @PostMapping("/")
     public User addUser(@Valid @RequestBody User user){
         return userService.addUser(user);
@@ -31,7 +30,6 @@ public class UserController {
         return userService.saveAll(users);
     }
 
-    // get users
     @GetMapping("/")
     public List<User> getUsers() {
             return userService.getUsers();
@@ -42,13 +40,11 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    //delete user
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable int id){
-        userService.deleteById(id);
+       userService.deleteById(id);
     }
 
-    //update User
     @PutMapping("/{id}")
     public User updateUser(@RequestBody User user, @PathVariable int id){
         return userService.updateUser(user,id);

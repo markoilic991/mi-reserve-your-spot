@@ -58,8 +58,21 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
                 request.getDescription(true)
         );
         return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
+
     }
 
+    @ExceptionHandler(StationAlreadyExistException.class)
+    public ResponseEntity<Object> StationAlreadyExistHandler(StationAlreadyExistException e, WebRequest request){
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                HttpStatus.BAD_REQUEST,
+                e.getMessage(),
+                ZonedDateTime.now(),
+                request.getDescription(true)
+        );
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+
+    }
 
     @ExceptionHandler(OfficeNotFoundException.class)
     public ResponseEntity<Object> handleOfficeNotFound(OfficeNotFoundException e, WebRequest request){
@@ -73,8 +86,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
         return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
     }
 
-
-    //making custom exception for our controller OfficeRoom
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleContraintViolationException(ConstraintViolationException e){
@@ -100,7 +111,41 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler{
 
     }
 
+    @ExceptionHandler(ReservationAlreadyExistException.class)
+    public ResponseEntity<?> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
 
+        ErrorDetails errorDetails = new ErrorDetails(
+                HttpStatus.BAD_REQUEST,
+                e.getMessage(),
+                ZonedDateTime.now(),
+                request.getDescription(true));
+
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(WorkStationBusyException.class)
+    public ResponseEntity<?> workStationBusyExceptionHandler(WorkStationBusyException e, ServletWebRequest request) {
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                HttpStatus.BAD_REQUEST,
+                e.getMessage(),
+                ZonedDateTime.now(),
+                request.getDescription(true));
+
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserAlreadyReservedWorkStationException.class)
+    public ResponseEntity<?> userReservedStationExceptionHandler(UserAlreadyReservedWorkStationException e, ServletWebRequest request) {
+
+        ErrorDetails errorDetails = new ErrorDetails(
+                HttpStatus.BAD_REQUEST,
+                e.getMessage(),
+                ZonedDateTime.now(),
+                request.getDescription(true));
+
+        return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }
 
 

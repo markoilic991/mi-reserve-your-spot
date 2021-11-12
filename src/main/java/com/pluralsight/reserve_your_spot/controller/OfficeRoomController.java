@@ -26,7 +26,6 @@ public class OfficeRoomController {
         this.officeRoomService = officeRoomService;
     }
 
-    //add
     @PostMapping("/")
     public OfficeRoom addOne(@Valid @RequestBody OfficeRoom officeRoom){
         return officeRoomService.addRoom(officeRoom);
@@ -37,26 +36,24 @@ public class OfficeRoomController {
         return officeRoomService.saveAll(rooms);
     }
 
-    //get all
     @GetMapping("/")
     public List<OfficeRoom>getAll(){
         return officeRoomService.getAll();
     }
 
-    //get by Id
+
     @GetMapping("/{id}")
     public OfficeRoom getById(@PathVariable @Min(1) @Max(4) int id){
         return officeRoomService.getById(id);
     }
 
 
-    //delete
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable int id){
         officeRoomService.deleteById(id);
     }
 
-    //update
+
     @PutMapping("/{id}")
     public OfficeRoom update(@Valid @RequestBody OfficeRoom officeRoom, @PathVariable int id){
         return officeRoomService.update(officeRoom, id);

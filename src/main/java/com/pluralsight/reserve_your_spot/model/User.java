@@ -15,14 +15,21 @@ public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SerializedName("id")
+    @Expose
     private int id;
     @NotBlank
     @NotNull(message = "User name must have a value!")
+    @SerializedName("name")
+    @Expose
     private String name;
     @NotNull(message = "Email must have a value!")
     @Email
+    @Expose
+    @SerializedName("email")
     private String email;
 
+    @Expose
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Collection<Reservation> reservations = new ArrayList<>();
 

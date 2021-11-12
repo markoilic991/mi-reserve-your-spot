@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.*;
+import java.util.Arrays;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 @Validated
@@ -44,7 +45,7 @@ public class UserService {
     }
 
     public User getUserById(int id){
-        return userRepository.findById((int) id).orElseThrow(()-> new UserNotFoundException("User not found with id: " + id));
+        return userRepository.findById((int) id).orElse(null);
     }
 
     public String deleteById(int id){
@@ -63,5 +64,25 @@ public class UserService {
         System.out.println("User is validated!");
     }
 
+    public boolean checkIfUserExistInDB(User user){
+
+        //dohvatili smo sve usere u listu iz baza podataka
+        List<User>userList = userRepository.findAll();
+        User newUser = userRepository.getById(user.getId());
+
+        String name= user.getName();
+
+        for(int i = 0; i<userList.size(); i++){
+            if(name.equals("Marko Ilic")){
+              throw new RuntimeException("This user is already in database!");
+           }else{
+               System.out.println(Arrays.asList(userList));
+            }
+    }
+
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
+        return true;
+    }
 
 }

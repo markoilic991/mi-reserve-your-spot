@@ -110,8 +110,8 @@ public class WorkStationControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                         .andExpect(status().isOk())
-                        .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD111000"))
-                        .andExpect(MockMvcResultMatchers.jsonPath("$.room").value(new OfficeRoom(1, "QA", 1)));
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD111000"));
+
     }
 
     @Test
