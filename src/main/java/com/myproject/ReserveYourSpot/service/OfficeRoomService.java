@@ -13,10 +13,12 @@ public class OfficeRoomService {
     private OfficeRoomRepository officeRoomRepository;
 
     @Autowired
+    // Advice: very good (autowiring with constructor), this can be covered with lombok annotations like @AllArgsConstructor
     public OfficeRoomService(OfficeRoomRepository officeRoomRepository) {
         this.officeRoomRepository = officeRoomRepository;
     }
 
+    // Comment: in case of naming we should use always the same rules like if there is saveAll, than saving (adding) one room should be just save
     public OfficeRoom addRoom(OfficeRoom officeRoom){
         return officeRoomRepository.save(officeRoom);
     }
@@ -40,6 +42,8 @@ public class OfficeRoomService {
 
     public OfficeRoom update(OfficeRoom officeRoom, int id){
         OfficeRoom oldRoom = officeRoomRepository.findById(id).orElse(null);
+        // Comment: possible NullPointerException
+        // Comment: could use lombok builder functionality here
         oldRoom.setName(officeRoom.getName());
         oldRoom.setOrderNo(officeRoom.getOrderNo());
         return officeRoomRepository.save(oldRoom);

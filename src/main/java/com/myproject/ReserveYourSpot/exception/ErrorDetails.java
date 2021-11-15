@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 import java.time.ZonedDateTime;
 
+// Comment: general formatting
+// Comment: use lombok annotations like @Getter, @Builder, @NoArgsConstructor, @AllArgsConstructor, @ToString, @EqualsAndHashCode instead of @Data
 @Data
 public class ErrorDetails {
 
@@ -12,7 +14,7 @@ public class ErrorDetails {
     private ZonedDateTime timeStamp;
     private String path;
 
-
+    // Comment: use lombok
     public ErrorDetails(HttpStatus httpStatus, String message, ZonedDateTime timeStamp, String path) {
         this.httpStatus = httpStatus;
         this.message = message;

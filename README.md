@@ -1,4 +1,9 @@
-# ReserveYourSpot
+# ReserveYourSpot // Comment: headline should be "Reserve your spot"
+
+// Comment: root folder name should be reserve-your-spot
+// Comment: documentation link, confluence link
+// Comment: prerequisites like java 11, locally installed mySql (setup of it)...
+// Comment: missing endpoints
 
 This project should ensure that employees in a company can successfully reserve a place in the office. They can choose the office where they will work as well as the desk. 
 

@@ -7,16 +7,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Comment: general formatting
 @Service
 public class WorkStationService {
 
     private WorkStationRepository workStationRepository;
 
     @Autowired
+    // Advice: very good (autowiring with constructor), this can be covered with lombok annotations like @AllArgsConstructor
     public WorkStationService(WorkStationRepository workStationRepository) {
         this.workStationRepository = workStationRepository;
     }
 
+    // Comment: in case of naming we should use always the same rules like if there is saveAll, than saving (adding) one work station should be just save
     public WorkStation addOne(WorkStation workStation){
         return workStationRepository.save(workStation);
     }
@@ -40,6 +43,8 @@ public class WorkStationService {
 
     public WorkStation update(WorkStation workStation, int id){
         WorkStation oldStation = workStationRepository.findById(id).orElse(null);
+        // Comment: possible NullPointerException
+        // Comment: could use lombok builder functionality here
         oldStation.setUniqueCode(workStation.getUniqueCode());
         return workStationRepository.save(oldStation);
     }

@@ -1,1 +1,2 @@
 rootProject.name = 'reserve_your_spot'
+// Comment: no underscore should be used in java, this is common for other languages like python

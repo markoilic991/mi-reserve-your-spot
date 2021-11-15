@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+// Comment: general formatting
+// Comment: .*; should not be used, import only what we need
 @Service
 @Validated
 public class ReservationService {
@@ -25,18 +27,20 @@ public class ReservationService {
 
 
     @Autowired
+    // Advice: very good (autowiring with constructor), this can be covered with lombok annotations like @AllArgsConstructor
     public ReservationService(ReservartionRepository reservartionRepository, UserRepository userRepository, WorkStationRepository workStationRepository) {
         this.reservartionRepository = reservartionRepository;
         this.userRepository = userRepository;
         this.workStationRepository = workStationRepository;
     }
 
-
+    // Comment: in case of naming we should use always the same rules like if there is saveAll, than saving (adding) one reservation should be just save
     public Reservation addReservation(Reservation reservation) {
         checkIfReservationExistUsingStream(reservation);
         return reservartionRepository.save(reservation);
     }
 
+    // Comment: missing validation if spot is reserved already
     public List<Reservation> saveAll(List<Reservation> revs){
         return reservartionRepository.saveAll(revs);
     }
@@ -61,11 +65,12 @@ public class ReservationService {
         int userId = reservation.getUser().getId();
         String pattern = "yyyy-MM-dd";
         LocalDate date = reservation.getDate();
-        String date1 = date.format(DateTimeFormatter.ofPattern(pattern));
+        String date1 = date.format(DateTimeFormatter.ofPattern(pattern)); // Comment: date1 is not descriptive enough, formattedDate is
         int workStationId = reservation.getWorkStation().getId();
 
         List<Reservation> reservations = reservartionRepository.findAll();
 
+        // Comment: what if we have milions of reservations in our system? is there a better way to handle this case?
         reservations.stream()
                 .filter(temp -> {
                     if (temp.getDate().toString().equals(date1) && temp.getUser().getId() == userId && temp.getWorkStation().getId() == workStationId) {
@@ -85,7 +90,7 @@ public class ReservationService {
                     }
                     return true;
                 })
-                .forEach(System.out::println);
+                .forEach(System.out::println); // Comment: should use logging instead
 
     }
 }

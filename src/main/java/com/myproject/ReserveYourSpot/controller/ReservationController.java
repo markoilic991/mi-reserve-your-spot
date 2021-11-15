@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+// Comment: general formatting
+// Comment: .*; should not be used, import only what we need
 @RestController
 @RequestMapping("/reservations")
 public class ReservationController {
@@ -19,6 +21,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @Autowired
+    // Advice: very good (autowiring with constructor), this can be covered with lombok annotations like @AllArgsConstructor
     public ReservationController(UserService userService, WorkStationService workStationService, ReservationService reservationService) {
         this.userService = userService;
         this.workStationService = workStationService;
@@ -32,6 +35,7 @@ public class ReservationController {
     }
 
     @GetMapping("/")
+    // Comment: naming
     public List<Reservation> getAll(){
         List<Reservation>reservations = reservationService.getAll();
         return reservations;
@@ -43,6 +47,7 @@ public class ReservationController {
     }
 
     @PostMapping("/list")
+    // Comment: naming
     public List<Reservation> listOfReservations(@RequestBody List<Reservation> reservations){
         return reservationService.saveAll(reservations);
     }

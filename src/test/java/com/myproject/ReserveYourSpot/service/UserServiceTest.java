@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-
+// Comment: general formatting
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserService.class)
+@WebMvcTest(UserService.class) // Advice: there is a newer version that should be used jUnit5
 public class UserServiceTest {
 
     @Autowired
@@ -38,6 +38,7 @@ public class UserServiceTest {
     private User user;
 
     @Test
+    // Comment: naming getSomething_whenSomething_thenSomething, method names should start with lowercase letter
     public void Should_Get_All_Users(){
 
         User newUser = new User(1, "Marko Ilic", "marko@prodyna.com");
@@ -50,6 +51,7 @@ public class UserServiceTest {
     }
 
     @Test
+    // Comment: naming getSomething_whenSomething_thenSomething, method names should start with lowercase letter
     public void Should_Get_User_By_Id(){
 
         User userNew = new User(1,"Marko Ilic", "marko.ilic@prodyna.com");
@@ -60,6 +62,7 @@ public class UserServiceTest {
     }
 
     @Test
+    // Comment: naming getSomething_whenSomething_thenSomething, method names should start with lowercase letter
     public void Should_Delete_User_By_Id(){
 
         User userNew = new User(1,"Marko Ilic", "marko.ilic@prodyna.com");
@@ -70,6 +73,7 @@ public class UserServiceTest {
     }
 
     @Test
+    // Comment: naming getSomething_whenSomething_thenSomething
     public void when_User_Is_Invalid_Then_Throws_Exception(){
 
         User newUser = new User("", "dasdasdasdasd");

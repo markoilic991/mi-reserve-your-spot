@@ -26,8 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
+// Comment: general formatting
+// Comment: .*; should not be used, import only what we need
+// Comment: naming getSomething_whenSomething_thenSomething, method names should start with lowercase letter
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(UserController.class)
+@WebMvcTest(UserController.class) // Comment: there is a newer version that should be used jUnit5
 public class UserControllerTest {
 
     @Autowired

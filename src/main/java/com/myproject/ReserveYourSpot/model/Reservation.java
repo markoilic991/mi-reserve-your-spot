@@ -7,12 +7,15 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+// Comment: .*; should not be used, import only what we need
+// Comment: use lombok annotations like @Getter, @Builder, @NoArgsConstructor, @AllArgsConstructor, @ToString, @EqualsAndHashCode
 @Entity
 @Table(name = "reservations")
 public class Reservation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // Comment: why reservation_Id instead of id?
     private int reservation_Id;
 
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
@@ -35,9 +38,11 @@ public class Reservation{
     public Reservation(LocalDate date, int id, int workStationId) {
     }
 
+    // Comment: use lombok
     public Reservation() {
     }
 
+    // Comment: use lombok
     public Reservation(int reservation_Id, LocalDate date, User user, WorkStation workStation) {
         this.reservation_Id = reservation_Id;
         this.date = date;
@@ -53,6 +58,8 @@ public class Reservation{
         this.user = user;
     }
 
+    // Comment: use lombok
+    // Comment: getters and setters go in pair like getX, detX, getY, setY
     public User getUser() {
         return user;
     }
