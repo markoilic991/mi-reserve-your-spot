@@ -1,4 +1,4 @@
-# ReserveYourSpot
+# Reserve your spot
 
 This project should ensure that employees in a company can successfully reserve a place in the office. They can choose the office where they will work as well as the desk. 
 
@@ -6,6 +6,9 @@ This project should ensure that employees in a company can successfully reserve 
 ##  Used By
 
 * PRODYNA Innovative IT Consultancy
+##  Documentation Link
+
+* https://secure.prodyna.de/confluence/display/PS/Spring+boot+microservice+task
 ## Technology Stack
 ##### This project was built using InteliiJ IDEA and uses the following technologies:
 * Java 11
@@ -15,6 +18,8 @@ This project should ensure that employees in a company can successfully reserve 
 * Spring DATA MySQL
 * Test coverage
 * Rest error handlers
+* Locally installed mySql (setup of it: database name: prodyna, username: root, password: 1234)
+
 ## API Reference
 
 ### Users
@@ -23,8 +28,6 @@ This project should ensure that employees in a company can successfully reserve 
 ```http
   GET /users/
 ```
-
-
 
 #### Get user
 
@@ -36,6 +39,11 @@ This project should ensure that employees in a company can successfully reserve 
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of user to fetch |
 
+#### Add user
+
+```http
+  POST/users/
+```
 
 #### Delete user
 
@@ -71,6 +79,11 @@ This project should ensure that employees in a company can successfully reserve 
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of room to fetch |
 
+#### Add rooms
+
+```http
+  POST /rooms/
+```
 
 #### Delete OfficeRoom
 
@@ -91,25 +104,29 @@ This project should ensure that employees in a company can successfully reserve 
 #### Get all stations
 
 ```http
-  GET /stations/
+  GET /workStations/
 ```
 
 
 #### Get WorkStation
 
 ```http
-  GET /stations/${id}
+  GET /workStations/${id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of station to fetch |
 
+#### Add WorkStation
 
+```http
+  POST /workStations/
+```
 #### Delete WorkStation
 
 ```http
-  DELETE /stations/${id}
+  DELETE /workStations/${id}
 ```
 
 | Parameter | Type     | Description                       |
@@ -119,8 +136,43 @@ This project should ensure that employees in a company can successfully reserve 
 #### Update WorkStation
 
 ```http
-  PUT /stations/update
+  PUT /workStations/update
 ```
+### Reservations
+#### Get all reservations
+
+```http
+  GET /reservations/
+```
+
+
+#### Get Reservation
+
+```http
+  GET /reservations/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of reservation to fetch |
+
+
+#### Delete Reservation
+
+```http
+  DELETE /reservations/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of reservation to delete |
+
+#### Add Reservation
+
+```http
+  POST /reservations/
+```
+
 ## Authors
 
 - [@markoilic](https://bitbucket.prodyna.com/profile)
