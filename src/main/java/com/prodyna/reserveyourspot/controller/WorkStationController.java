@@ -48,7 +48,6 @@ public class WorkStationController {
     return workStationService.findById(id);
   }
 
-
   @DeleteMapping("/{id}")
   public void deleteById(@PathVariable int id) {
     workStationService.deleteById(id);

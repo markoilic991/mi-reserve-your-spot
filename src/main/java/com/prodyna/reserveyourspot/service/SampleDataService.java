@@ -6,7 +6,7 @@ import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
-import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-@Log
+@Slf4j
 @Component
 public class SampleDataService {
 
@@ -34,7 +34,6 @@ public class SampleDataService {
     this.userService = userService;
     this.officeRoomService = officeRoomService;
     this.workStationService = workStationService;
-
     this.officeSpaceService = officeSpaceService;
   }
 
@@ -53,6 +52,7 @@ public class SampleDataService {
   @PostConstruct
   public List<User> readUsersJsonFile() {
 
+    log.debug("Reading json file and pushing data to mysql database!");
     Gson gson = new Gson();
 
     ClassLoader classLoader = gson.getClass().getClassLoader();
@@ -76,6 +76,7 @@ public class SampleDataService {
   @PostConstruct
   public List<WorkStation> readStationsJsonFile() {
 
+    log.debug("Reading json file and pushing data to mysql database!");
     Gson gson = new Gson();
 
     ClassLoader classLoader = gson.getClass().getClassLoader();
@@ -96,6 +97,7 @@ public class SampleDataService {
   @PostConstruct
   public List<OfficeRoom> readRoomsJsonFile() {
 
+    log.debug("Reading json file and pushing data to mysql database!");
     Gson gson = new Gson();
 
     ClassLoader classLoader = gson.getClass().getClassLoader();
@@ -116,6 +118,7 @@ public class SampleDataService {
   @PostConstruct
   public List<OfficeSpace> readSpaceJsonFile() {
 
+    log.debug("Reading json file and pushing data to mysql database!");
     Gson gson = new Gson();
 
     ClassLoader classLoader = gson.getClass().getClassLoader();

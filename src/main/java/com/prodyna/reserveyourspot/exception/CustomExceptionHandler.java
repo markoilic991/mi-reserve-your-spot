@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(NameNotValidException.class)
-  public ResponseEntity<?> nameNotValidExceptionHandler(NameNotValidException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> nameNotValidExceptionHandler(NameNotValidException e, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
@@ -34,7 +34,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(DateNotValidException.class)
-  public ResponseEntity<?> dateNotValidExceptionHandler(DateNotValidException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> dateNotValidExceptionHandler(DateNotValidException e, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
@@ -59,7 +59,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(WorkStationAlreadyExistException.class)
-  public ResponseEntity<Object> workStationAlreadyExistHandler(WorkStationAlreadyExistException e, WebRequest request) {
+  public ResponseEntity<ErrorDetails> workStationAlreadyExistHandler(WorkStationAlreadyExistException e, WebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
@@ -72,7 +72,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(OfficeRoomNotFoundException.class)
-  public ResponseEntity<Object> handleOfficeRoomNotFound(OfficeRoomNotFoundException e, WebRequest request) {
+  public ResponseEntity<ErrorDetails> handleOfficeRoomNotFound(OfficeRoomNotFoundException e, WebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.NOT_FOUND,
@@ -109,7 +109,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(ReservationAlreadyExistException.class)
-  public ResponseEntity<?> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
@@ -121,7 +121,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(WorkStationBusyException.class)
-  public ResponseEntity<?> workStationBusyExceptionHandler(WorkStationBusyException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> workStationBusyExceptionHandler(WorkStationBusyException e, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
@@ -133,7 +133,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   @ExceptionHandler(UserAlreadyReservedWorkStationException.class)
-  public ResponseEntity<?> userReservedStationExceptionHandler(UserAlreadyReservedWorkStationException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> userReservedStationExceptionHandler(UserAlreadyReservedWorkStationException e, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
