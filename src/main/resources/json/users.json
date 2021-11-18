@@ -1,51 +1,41 @@
 [
   {
-    "id": 1,
     "name": "Marko Ilic",
     "email": "marko.ilic@prodyna.com"
   },
   {
-    "id": 2,
     "name": "Miroslav Perovic",
     "email": "miroslav.perovic@prodyna.com"
   },
   {
-    "id": 3,
     "name": "Dragana Groj",
     "email": "dragana.groj@prodyna.com"
   },
   {
-    "id": 4,
     "name": "Milan Gajic",
     "email": "milan.gajic@prodyna.com"
   },
   {
-    "id": 5,
     "name": "Bojana Belojevic",
     "email": "bojana.belojevic@prodyna.com"
   },
   {
-    "id": 6,
     "name": "Milos Tadic",
     "email": "milos.tadic@prodyna.com"
   },
   {
-    "id": 7,
     "name": "Dejan Dimitrijevic",
     "email": "dejan.dimitrijevic@prodyna.com"
   },
   {
-    "id": 8,
     "name": "Dusan Stankovski",
     "email": "dejan.stankovski@prodyna.com"
   },
   {
-    "id": 9,
     "name": "Jovana Lazarevic",
     "email": "jovana.lazarevic@prodyna.com"
   },
   {
-    "id": 10,
     "name": "Nemanja Mitic",
     "email": "nemanja.mitic@prodyna.com"
   }

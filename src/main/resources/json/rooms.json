@@ -1,23 +1,17 @@
-// Comment: why do we pass an id?
-
 [
   {
-    "id": 1,
     "name": "JAVA",
     "orderNo": 1
   },
   {
-    "id": 2,
     "name": "QA",
     "orderNo": 2
   },
   {
-    "id": 3,
     "name": ".NET",
     "orderNo": 3
   },
   {
-    "id": 4,
     "name": "Front",
     "orderNo": 4
   }

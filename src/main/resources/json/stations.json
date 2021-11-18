@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "uniqueCode": "PD0001",
     "officeRoom": {
       "id": 1,
@@ -13,7 +12,6 @@
     }
   },
   {
-    "id": 2,
     "uniqueCode": "PD0002",
     "officeRoom": {
       "id": 1,
@@ -26,7 +24,6 @@
     }
   },
   {
-    "id": 3,
     "uniqueCode": "PD0003",
     "officeRoom": {
       "id": 1,
@@ -39,7 +36,6 @@
     }
   },
   {
-    "id": 4,
     "uniqueCode": "PD0004",
     "officeRoom": {
       "id": 1,
@@ -52,7 +48,6 @@
     }
   },
   {
-    "id": 5,
     "uniqueCode": "PD0005",
     "officeRoom": {
       "id": 2,
@@ -65,7 +60,6 @@
     }
   },
   {
-    "id": 6,
     "uniqueCode": "PD0006",
     "officeRoom": {
       "id": 2,
@@ -78,7 +72,6 @@
     }
   },
   {
-    "id": 7,
     "uniqueCode": "PD0007",
     "officeRoom": {
       "id": 2,
@@ -91,7 +84,6 @@
     }
   },
   {
-    "id": 8,
     "uniqueCode": "PD0008",
     "officeRoom": {
       "id": 2,
@@ -104,7 +96,6 @@
     }
   },
   {
-    "id": 9,
     "uniqueCode": "PD0009",
     "officeRoom": {
       "id": 3,
@@ -117,7 +108,6 @@
     }
   },
   {
-    "id": 10,
     "uniqueCode": "PD0010",
     "officeRoom": {
       "id": 3,
@@ -130,7 +120,6 @@
     }
   },
   {
-    "id": 11,
     "uniqueCode": "PD0011",
     "officeRoom": {
       "id": 3,
@@ -143,7 +132,6 @@
     }
   },
   {
-    "id": 12,
     "uniqueCode": "PD0012",
     "officeRoom": {
       "id": 3,
@@ -156,7 +144,6 @@
     }
   },
   {
-    "id": 13,
     "uniqueCode": "PD0013",
     "officeRoom": {
       "id": 4,
@@ -169,7 +156,6 @@
     }
   },
   {
-    "id": 14,
     "uniqueCode": "PD0014",
     "officeRoom": {
       "id": 4,
@@ -182,7 +168,6 @@
     }
   },
   {
-    "id": 15,
     "uniqueCode": "PD0015",
     "officeRoom": {
       "id": 4,
@@ -195,7 +180,6 @@
     }
   },
   {
-    "id": 16,
     "uniqueCode": "PD0016",
     "officeRoom": {
       "id": 4,
