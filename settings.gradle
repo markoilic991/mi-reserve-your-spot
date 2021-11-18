@@ -1,6 +1,2 @@
-<<<<<<< HEAD
 rootProject.name = 'reserve-your-spot'
-=======
-rootProject.name = 'reserve_your_spot'
-// Comment: no underscore should be used in java, this is common for other languages like python
->>>>>>> c640802f12ff2a17c16602c949b5315361a0c59d
+
