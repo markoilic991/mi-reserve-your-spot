@@ -17,36 +17,36 @@ import java.util.Optional;
 @RequestMapping("/rooms")
 public class OfficeRoomController {
 
-    private OfficeRoomService officeRoomService;
+  private OfficeRoomService officeRoomService;
 
-    @Autowired
-    public OfficeRoomController(OfficeRoomService officeRoomService) {
-        this.officeRoomService = officeRoomService;
-    }
+  @Autowired
+  public OfficeRoomController(OfficeRoomService officeRoomService) {
+    this.officeRoomService = officeRoomService;
+  }
 
-    @PostMapping("/")
-    public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
-        return officeRoomService.save(officeRoom);
-    }
+  @PostMapping("/")
+  public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
+    return officeRoomService.save(officeRoom);
+  }
 
-    @PostMapping("/list")
-    public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
-        return officeRoomService.saveAll(rooms);
-    }
+  @PostMapping("/list")
+  public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
+    return officeRoomService.saveAll(rooms);
+  }
 
-    @GetMapping("/")
-    public List<OfficeRoom> findAll() {
-        return officeRoomService.findAll();
-    }
+  @GetMapping("/")
+  public List<OfficeRoom> findAll() {
+    return officeRoomService.findAll();
+  }
 
-    @GetMapping("/{id}")
-    public Optional<OfficeRoom> findById(@PathVariable @Min(1) @Max(4) int id) {
-        return officeRoomService.findById(id);
-    }
+  @GetMapping("/{id}")
+  public Optional<OfficeRoom> findById(@PathVariable @Min(1) @Max(4) int id) {
+    return officeRoomService.findById(id);
+  }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable int id) {
-        officeRoomService.deleteById(id);
-    }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable int id) {
+    officeRoomService.deleteById(id);
+  }
 
 }

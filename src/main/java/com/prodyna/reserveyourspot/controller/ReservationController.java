@@ -24,63 +24,63 @@ import java.util.Optional;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-    private UserService userService;
-    private WorkStationService workStationService;
-    private ReservationService reservationService;
+  private UserService userService;
+  private WorkStationService workStationService;
+  private ReservationService reservationService;
 
-    @Autowired
-    public ReservationController(UserService userService, WorkStationService workStationService, ReservationService reservationService) {
-        this.userService = userService;
-        this.workStationService = workStationService;
-        this.reservationService = reservationService;
-    }
+  @Autowired
+  public ReservationController(UserService userService, WorkStationService workStationService, ReservationService reservationService) {
+    this.userService = userService;
+    this.workStationService = workStationService;
+    this.reservationService = reservationService;
+  }
 
-    @PostMapping("/")
-    public Reservation save(@Valid @RequestBody Reservation reservation) {
-        return reservationService.save(reservation);
+  @PostMapping("/")
+  public Reservation save(@Valid @RequestBody Reservation reservation) {
+    return reservationService.save(reservation);
 
-    }
+  }
 
-    @GetMapping("/")
-    public List<Reservation> findAll() {
-        List<Reservation> reservations = reservationService.findAll();
-        return reservations;
-    }
+  @GetMapping("/")
+  public List<Reservation> findAll() {
+    List<Reservation> reservations = reservationService.findAll();
+    return reservations;
+  }
 
-    @GetMapping("/{id}")
-    public Optional<Reservation> findById(@PathVariable int id) {
-        return reservationService.findById(id);
-    }
+  @GetMapping("/{id}")
+  public Optional<Reservation> findById(@PathVariable int id) {
+    return reservationService.findById(id);
+  }
 
-    @PostMapping("/list")
-    public List<Reservation> saveAll(@RequestBody List<Reservation> reservations) {
-        return reservationService.saveAll(reservations);
-    }
+  @PostMapping("/list")
+  public List<Reservation> saveAll(@RequestBody List<Reservation> reservations) {
+    return reservationService.saveAll(reservations);
+  }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable int id) {
-        reservationService.deleteById(id);
-    }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable int id) {
+    reservationService.deleteById(id);
+  }
 
-    //using JPQL query
-    @GetMapping("/reserve2")
-    public Reservation findByDateAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                  @RequestParam(value = "workStationId") int workStationId) {
-        return reservationService.findByDateAndWorkStationId(date, workStationId);
-    }
+  //using JPQL query
+  @GetMapping("/reserve2")
+  public Reservation findByDateAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                @RequestParam(value = "workStationId") int workStationId) {
+    return reservationService.findByDateAndWorkStationId(date, workStationId);
+  }
 
-    @GetMapping("/reserve3")
-    public Reservation findByDateAndUserId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                           @RequestParam(value = "userId") int userId) {
-        return reservationService.findByDateAndUserId(date, userId);
-    }
+  @GetMapping("/reserve3")
+  public Reservation findByDateAndUserId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                         @RequestParam(value = "userId") int userId) {
+    return reservationService.findByDateAndUserId(date, userId);
+  }
 
-    @GetMapping("/reserve4")
-    public Reservation findByDateAndUserIdAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                           @RequestParam(value = "userId") int userId,
-                                                           @RequestParam(value = "workStationId") int workStationId) {
-        return reservationService.findByDateAndUserIdAndWorkStationId(date, userId, workStationId);
-    }
+  @GetMapping("/reserve4")
+  public Reservation findByDateAndUserIdAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+                                                         @RequestParam(value = "userId") int userId,
+                                                         @RequestParam(value = "workStationId") int workStationId) {
+    return reservationService.findByDateAndUserIdAndWorkStationId(date, userId, workStationId);
+  }
 
 }
 

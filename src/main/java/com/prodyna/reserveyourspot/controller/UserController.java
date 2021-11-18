@@ -20,37 +20,37 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
-    private List<User> listUsers = new ArrayList<>();
+  private UserService userService;
+  private List<User> listUsers = new ArrayList<>();
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+  @Autowired
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
 
-    @PostMapping("/")
-    public User save(@Valid @RequestBody User user) {
-        return userService.save(user);
-    }
+  @PostMapping("/")
+  public User save(@Valid @RequestBody User user) {
+    return userService.save(user);
+  }
 
-    @PostMapping("/list")
-    public List<User> saveAll(@RequestBody List<User> users) {
-        return userService.saveAll(users);
-    }
+  @PostMapping("/list")
+  public List<User> saveAll(@RequestBody List<User> users) {
+    return userService.saveAll(users);
+  }
 
-    @GetMapping("/")
-    public List<User> findAll() {
-        return userService.findAll();
-    }
+  @GetMapping("/")
+  public List<User> findAll() {
+    return userService.findAll();
+  }
 
-    @GetMapping("/{id}")
-    public Optional<User> findById(@PathVariable int id) {
-        return userService.findById(id);
-    }
+  @GetMapping("/{id}")
+  public Optional<User> findById(@PathVariable int id) {
+    return userService.findById(id);
+  }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable int id) {
-        userService.deleteById(id);
-    }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable int id) {
+    userService.deleteById(id);
+  }
 
 }

@@ -30,86 +30,86 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(WorkStationController.class)
 public class WorkStationControllerTest {
 
-    @Autowired
-    private WorkStationController workStationController;
+  @Autowired
+  private WorkStationController workStationController;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @MockBean
-    private WorkStationService workStationService;
+  @MockBean
+  private WorkStationService workStationService;
 
-    @MockBean
-    private WorkStationRepository workStationRepository;
+  @MockBean
+  private WorkStationRepository workStationRepository;
 
-    @MockBean
-    private WorkStation workStation;
+  @MockBean
+  private WorkStation workStation;
 
-    @MockBean
-    private OfficeRoom officeRoom;
+  @MockBean
+  private OfficeRoom officeRoom;
 
-    @Test
-    public void Should_Add_New_WorkStation() throws Exception {
-
-
-        WorkStation workStationNew = new WorkStation(1, "PD002211");
-        workStationNew.setId(1);
-        workStationNew.setUniqueCode("PD0011111");
+  @Test
+  public void Should_Add_New_WorkStation() throws Exception {
 
 
-        Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationNew);
+    WorkStation workStationNew = new WorkStation(1, "PD002211");
+    workStationNew.setId(1);
+    workStationNew.setUniqueCode("PD0011111");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/workStations/")
-                        .content(objectMapper.writeValueAsString(workStationNew))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 
-    }
+    Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationNew);
 
-    @Test
-    public void Should_Find_WorkStation_By_Id() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.post("/workStations/")
+                    .content(objectMapper.writeValueAsString(workStationNew))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
 
-        WorkStation workStationNew = new WorkStation(1, "PD002211");
-        workStationNew.setUniqueCode("PD002211");
+  }
 
-        Mockito.when(workStationService.findById(anyInt())).thenReturn(java.util.Optional.of(workStationNew));
+  @Test
+  public void Should_Find_WorkStation_By_Id() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/workStations/2"))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD002211"))
-                .andExpect(status().isOk());
+    WorkStation workStationNew = new WorkStation(1, "PD002211");
+    workStationNew.setUniqueCode("PD002211");
 
-    }
+    Mockito.when(workStationService.findById(anyInt())).thenReturn(java.util.Optional.of(workStationNew));
 
-    @Test
-    public void Should_Find_All_WorkStations() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/workStations/2"))
+            .andDo(print())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD002211"))
+            .andExpect(status().isOk());
 
-        List<WorkStation> stationsList = new ArrayList<>();
-        stationsList.add(new WorkStation(1, "PD002211"));
-        stationsList.add(new WorkStation(2, "PD000031"));
-        stationsList.add(new WorkStation(3, "PD004411"));
+  }
 
-        Mockito.when(workStationService.findAll()).thenReturn(stationsList);
+  @Test
+  public void Should_Find_All_WorkStations() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/workStations/"))
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
+    List<WorkStation> stationsList = new ArrayList<>();
+    stationsList.add(new WorkStation(1, "PD002211"));
+    stationsList.add(new WorkStation(2, "PD000031"));
+    stationsList.add(new WorkStation(3, "PD004411"));
 
-    @Test
-    public void when_Station_Is_Invalid_Then_Return_Exception400() throws Exception {
+    Mockito.when(workStationService.findAll()).thenReturn(stationsList);
 
-        WorkStation workStation = new WorkStation(1, null);
+    mockMvc.perform(MockMvcRequestBuilders.get("/workStations/"))
+            .andDo(print())
+            .andExpect(status().isOk());
+  }
 
-        String body = objectMapper.writeValueAsString(workStation);
+  @Test
+  public void when_Station_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/workStations/").contentType("application/json").content(body))
-                .andExpect(status().isBadRequest());
-    }
+    WorkStation workStation = new WorkStation(1, null);
+
+    String body = objectMapper.writeValueAsString(workStation);
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/workStations/").contentType("application/json").content(body))
+            .andExpect(status().isBadRequest());
+  }
 
 }

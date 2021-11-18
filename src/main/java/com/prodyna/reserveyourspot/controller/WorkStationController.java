@@ -21,37 +21,37 @@ import java.util.Optional;
 @RequestMapping("/workStations")
 public class WorkStationController {
 
-    private WorkStationService workStationService;
+  private WorkStationService workStationService;
 
-    @Autowired
-    public WorkStationController(WorkStationService workStationService) {
-        this.workStationService = workStationService;
-    }
+  @Autowired
+  public WorkStationController(WorkStationService workStationService) {
+    this.workStationService = workStationService;
+  }
 
-    @PostMapping("/")
-    public WorkStation addOne(@Valid @RequestBody WorkStation workStation) {
-        return workStationService.save(workStation);
-    }
+  @PostMapping("/")
+  public WorkStation addOne(@Valid @RequestBody WorkStation workStation) {
+    return workStationService.save(workStation);
+  }
 
-    @PostMapping("/list")
-    public List<WorkStation> listOfRooms(@RequestBody List<WorkStation> stations) {
-        return workStationService.saveAll(stations);
-    }
+  @PostMapping("/list")
+  public List<WorkStation> listOfRooms(@RequestBody List<WorkStation> stations) {
+    return workStationService.saveAll(stations);
+  }
 
-    @GetMapping("/")
-    public List<WorkStation> findAll() {
-        return workStationService.findAll();
-    }
+  @GetMapping("/")
+  public List<WorkStation> findAll() {
+    return workStationService.findAll();
+  }
 
-    @GetMapping("/{id}")
-    public Optional<WorkStation> findById(@PathVariable int id) {
-        return workStationService.findById(id);
-    }
+  @GetMapping("/{id}")
+  public Optional<WorkStation> findById(@PathVariable int id) {
+    return workStationService.findById(id);
+  }
 
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable int id) {
-        workStationService.deleteById(id);
-    }
+  @DeleteMapping("/{id}")
+  public void deleteById(@PathVariable int id) {
+    workStationService.deleteById(id);
+  }
 
 }

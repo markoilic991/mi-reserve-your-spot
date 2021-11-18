@@ -13,32 +13,32 @@ import java.util.Optional;
 @Validated
 public class WorkStationService {
 
-    private WorkStationRepository workStationRepository;
+  private WorkStationRepository workStationRepository;
 
-    @Autowired
-    public WorkStationService(WorkStationRepository workStationRepository) {
-        this.workStationRepository = workStationRepository;
-    }
+  @Autowired
+  public WorkStationService(WorkStationRepository workStationRepository) {
+    this.workStationRepository = workStationRepository;
+  }
 
-    public WorkStation save(WorkStation workStation) {
-        return workStationRepository.save(workStation);
-    }
+  public WorkStation save(WorkStation workStation) {
+    return workStationRepository.save(workStation);
+  }
 
-    public List<WorkStation> saveAll(List<WorkStation> stations) {
-        return workStationRepository.saveAll(stations);
-    }
+  public List<WorkStation> saveAll(List<WorkStation> stations) {
+    return workStationRepository.saveAll(stations);
+  }
 
-    public List<WorkStation> findAll() {
-        return workStationRepository.findAll();
-    }
+  public List<WorkStation> findAll() {
+    return workStationRepository.findAll();
+  }
 
-    public Optional<WorkStation> findById(int id) {
-        return workStationRepository.findById(id);
-    }
+  public Optional<WorkStation> findById(int id) {
+    return workStationRepository.findById(id);
+  }
 
-    public String deleteById(int id) {
-        workStationRepository.deleteById(id);
-        return "Station deleted!";
-    }
+  public String deleteById(int id) {
+    workStationRepository.deleteById(id);
+    return "Station deleted!";
+  }
 
 }

@@ -23,63 +23,62 @@ import java.util.stream.Stream;
 @WebMvcTest(UserService.class)
 public class UserServiceTest {
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @MockBean
-    private UserRepository userRepository;
+  @MockBean
+  private UserRepository userRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @MockBean
-    private User user;
+  @MockBean
+  private User user;
 
-    @Test
-    public void Should_Get_All_Users() {
+  @Test
+  public void Should_Get_All_Users() {
 
-        User newUser = new User(1, "Marko Ilic", "marko@prodyna.com");
-        User newUser1 = new User(2, "Ivan Kotic", "ivan@gmail.com");
+    User newUser = new User(1, "Marko Ilic", "marko@prodyna.com");
+    User newUser1 = new User(2, "Ivan Kotic", "ivan@gmail.com");
 
-        Mockito.when(userRepository.findAll())
-                .thenReturn((List<User>) Stream.of(newUser, newUser1).collect(Collectors.toList()));
+    Mockito.when(userRepository.findAll())
+            .thenReturn((List<User>) Stream.of(newUser, newUser1).collect(Collectors.toList()));
 
-        Assertions.assertEquals(2, userService.findAll().size());
-    }
+    Assertions.assertEquals(2, userService.findAll().size());
+  }
 
-    @Test
-    public void Should_Get_User_By_Id() {
+  @Test
+  public void Should_Get_User_By_Id() {
 
-        User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
-        userService.findById(userNew.getId());
+    User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
+    userService.findById(userNew.getId());
 
-        Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.getId());
+    Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.getId());
 
-    }
+  }
 
-    @Test
-    public void Should_Delete_User_By_Id() {
+  @Test
+  public void Should_Delete_User_By_Id() {
 
-        User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
-        userService.deleteById(userNew.getId());
+    User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
+    userService.deleteById(userNew.getId());
 
-        Mockito.verify(userRepository, Mockito.times(1)).deleteById(userNew.getId());
+    Mockito.verify(userRepository, Mockito.times(1)).deleteById(userNew.getId());
 
-    }
+  }
 
-    @Test
-    public void when_User_Is_Invalid_Then_Throws_Exception() {
+  @Test
+  public void when_User_Is_Invalid_Then_Throws_Exception() {
 
-        User newUser = new User("", "dasdasdasdasd");
+    User newUser = new User("", "dasdasdasdasd");
 
-        Assertions.assertThrows(ConstraintViolationException.class, () -> {
+    Assertions.assertThrows(ConstraintViolationException.class, () -> {
 
-            userService.validateUser(newUser);
-        });
-    }
-
+      userService.validateUser(newUser);
+    });
+  }
 
 }

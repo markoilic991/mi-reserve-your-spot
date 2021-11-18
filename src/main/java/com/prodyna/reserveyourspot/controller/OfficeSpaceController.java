@@ -13,17 +13,16 @@ import java.util.List;
 @RequestMapping("/officeSpaces")
 public class OfficeSpaceController {
 
-    private OfficeSpaceService officeSpaceService;
+  private OfficeSpaceService officeSpaceService;
 
-    @Autowired
-    public OfficeSpaceController(OfficeSpaceService officeSpaceService) {
-        this.officeSpaceService = officeSpaceService;
-    }
+  @Autowired
+  public OfficeSpaceController(OfficeSpaceService officeSpaceService) {
+    this.officeSpaceService = officeSpaceService;
+  }
 
-    @GetMapping("/")
-    public List<OfficeSpace> findAll(){
-        return officeSpaceService.findAll();
-    }
-
+  @GetMapping("/")
+  public List<OfficeSpace> findAll() {
+    return officeSpaceService.findAll();
+  }
 
 }

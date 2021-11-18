@@ -18,50 +18,51 @@ import java.util.stream.Stream;
 @WebMvcTest(WorkStationService.class)
 public class WorkStationServiceTest {
 
-    @Autowired
-    private WorkStationService workStationService;
+  @Autowired
+  private WorkStationService workStationService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private WorkStationRepository workStationRepository;
+  @MockBean
+  private WorkStationRepository workStationRepository;
 
-    @MockBean
-    private WorkStation workStation;
+  @MockBean
+  private WorkStation workStation;
 
-    @Test
-    public void Should_Get_All_Stations() {
+  @Test
+  public void Should_Get_All_Stations() {
 
-        WorkStation workStation1 = new WorkStation(1, "PD441100");
-        WorkStation workStation2 = new WorkStation(2, "PD447711");
-        WorkStation workStation3 = new WorkStation(3, "PD445566");
+    WorkStation workStation1 = new WorkStation(1, "PD441100");
+    WorkStation workStation2 = new WorkStation(2, "PD447711");
+    WorkStation workStation3 = new WorkStation(3, "PD445566");
 
-        Mockito.when(workStationRepository.findAll())
-                .thenReturn((List<WorkStation>) Stream.of(workStation1, workStation2, workStation3)
-                        .collect(Collectors.toList()));
+    Mockito.when(workStationRepository.findAll())
+            .thenReturn((List<WorkStation>) Stream.of(workStation1, workStation2, workStation3)
+                    .collect(Collectors.toList()));
 
-        Assertions.assertEquals(3, workStationService.findAll().size());
-    }
+    Assertions.assertEquals(3, workStationService.findAll().size());
+  }
 
-    @Test
-    public void Should_Get_Station_By_Id() {
+  @Test
+  public void Should_Get_Station_By_Id() {
 
-        WorkStation workStation1 = new WorkStation(1, "PD441100");
-        workStationService.findById(workStation1.getId());
+    WorkStation workStation1 = new WorkStation(1, "PD441100");
+    workStationService.findById(workStation1.getId());
 
-        Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.getId());
-    }
+    Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.getId());
+  }
 
-    @Test
-    public void Should_Delete_Station() {
+  @Test
+  public void Should_Delete_Station() {
 
-       WorkStation workStation1 = new WorkStation(1, "PD441100");
-       workStationService.deleteById(workStation1.getId());
+    WorkStation workStation1 = new WorkStation(1, "PD441100");
+    workStationService.deleteById(workStation1.getId());
 
-       Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStation1.getId());
-    }
+    Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStation1.getId());
+  }
+
 }

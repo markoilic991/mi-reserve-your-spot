@@ -13,32 +13,32 @@ import java.util.Optional;
 @Validated
 public class OfficeRoomService {
 
-    private OfficeRoomRepository officeRoomRepository;
+  private OfficeRoomRepository officeRoomRepository;
 
-    @Autowired
-    public OfficeRoomService(OfficeRoomRepository officeRoomRepository) {
-        this.officeRoomRepository = officeRoomRepository;
-    }
+  @Autowired
+  public OfficeRoomService(OfficeRoomRepository officeRoomRepository) {
+    this.officeRoomRepository = officeRoomRepository;
+  }
 
-    public OfficeRoom save(OfficeRoom officeRoom) {
-        return officeRoomRepository.save(officeRoom);
-    }
+  public OfficeRoom save(OfficeRoom officeRoom) {
+    return officeRoomRepository.save(officeRoom);
+  }
 
-    public List<OfficeRoom> saveAll(List<OfficeRoom> rooms) {
-        return officeRoomRepository.saveAll(rooms);
-    }
+  public List<OfficeRoom> saveAll(List<OfficeRoom> rooms) {
+    return officeRoomRepository.saveAll(rooms);
+  }
 
-    public List<OfficeRoom> findAll() {
-        return officeRoomRepository.findAll();
-    }
+  public List<OfficeRoom> findAll() {
+    return officeRoomRepository.findAll();
+  }
 
-    public Optional<OfficeRoom> findById(int id) {
-        return officeRoomRepository.findById(id);
-    }
+  public Optional<OfficeRoom> findById(int id) {
+    return officeRoomRepository.findById(id);
+  }
 
-    public String deleteById(int id) {
-        officeRoomRepository.deleteById(id);
-        return "Room deleted!";
-    }
+  public String deleteById(int id) {
+    officeRoomRepository.deleteById(id);
+    return "Room deleted!";
+  }
 
 }

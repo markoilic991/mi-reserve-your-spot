@@ -29,30 +29,29 @@ import java.time.LocalDate;
 @Table(name = "reservations")
 public class Reservation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @FutureOrPresent(message = "The arrival date must be today or in the future.")
-    @NotNull
-    private LocalDate date;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @FutureOrPresent(message = "The arrival date must be today or in the future.")
+  @NotNull
+  private LocalDate date;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("reservations")
-    @JoinColumn(name = "user_id")
-    @NotNull
-    private User user;
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JsonIgnoreProperties("reservations")
+  @JoinColumn(name = "user_id")
+  @NotNull
+  private User user;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JsonIgnoreProperties("reservations")
-    @JoinColumn(name = "workStation_id")
-    @NotNull
-    private WorkStation workStation;
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JsonIgnoreProperties("reservations")
+  @JoinColumn(name = "workStation_id")
+  @NotNull
+  private WorkStation workStation;
 
-    public Reservation(LocalDate date, int id, int workStationId) {
-    }
-
+  public Reservation(LocalDate date, int id, int workStationId) {
+  }
 
 }
 

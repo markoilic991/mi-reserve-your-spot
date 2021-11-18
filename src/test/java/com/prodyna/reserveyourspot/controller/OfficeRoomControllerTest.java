@@ -29,84 +29,84 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(OfficeRoomController.class)
 public class OfficeRoomControllerTest {
 
-    @Autowired
-    private OfficeRoomController officeRoomController;
+  @Autowired
+  private OfficeRoomController officeRoomController;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @MockBean
-    private OfficeRoomService officeRoomService;
+  @MockBean
+  private OfficeRoomService officeRoomService;
 
-    @MockBean
-    private OfficeRoom officeRoom;
+  @MockBean
+  private OfficeRoom officeRoom;
 
-    @MockBean
-    private WorkStation workStation;
+  @MockBean
+  private WorkStation workStation;
 
-    @Test
-    public void Should_Add_New_OfficeRoom() throws Exception {
+  @Test
+  public void Should_Add_New_OfficeRoom() throws Exception {
 
-        OfficeRoom officeRoomNew = new OfficeRoom();
-        officeRoomNew.setId(1);
-        officeRoomNew.setName("JAVA");
-        officeRoomNew.setOrderNo(3);
+    OfficeRoom officeRoomNew = new OfficeRoom();
+    officeRoomNew.setId(1);
+    officeRoomNew.setName("JAVA");
+    officeRoomNew.setOrderNo(3);
 
-        Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomNew);
+    Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomNew);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/rooms/")
-                        .content(objectMapper.writeValueAsString(officeRoomNew))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orderNo").value(3));
-    }
+    mockMvc.perform(MockMvcRequestBuilders.post("/rooms/")
+                    .content(objectMapper.writeValueAsString(officeRoomNew))
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.orderNo").value(3));
+  }
 
-    @Test
-    public void Should_Find_OfficeRoom_By_Id() throws Exception {
+  @Test
+  public void Should_Find_OfficeRoom_By_Id() throws Exception {
 
-        OfficeRoom officeRoomNew = new OfficeRoom();
-        officeRoomNew.setName("JAVA");
-        officeRoomNew.setOrderNo(23);
+    OfficeRoom officeRoomNew = new OfficeRoom();
+    officeRoomNew.setName("JAVA");
+    officeRoomNew.setOrderNo(23);
 
-        Mockito.when(officeRoomService.findById(anyInt())).thenReturn(java.util.Optional.of(officeRoomNew));
+    Mockito.when(officeRoomService.findById(anyInt())).thenReturn(java.util.Optional.of(officeRoomNew));
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/rooms/1"))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.orderNo").value(23))
-                .andExpect(status().isOk());
-    }
+    mockMvc.perform(MockMvcRequestBuilders.get("/rooms/1"))
+            .andDo(print())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.orderNo").value(23))
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void Should_Find_All_Rooms() throws Exception {
+  @Test
+  public void Should_Find_All_Rooms() throws Exception {
 
-        List<OfficeRoom> roomsList = new ArrayList<>();
-        roomsList.add(new OfficeRoom(1, "JAVA", 23));
-        roomsList.add(new OfficeRoom(2, "QA", 17));
-        roomsList.add(new OfficeRoom(3, ".NET", 10));
+    List<OfficeRoom> roomsList = new ArrayList<>();
+    roomsList.add(new OfficeRoom(1, "JAVA", 23));
+    roomsList.add(new OfficeRoom(2, "QA", 17));
+    roomsList.add(new OfficeRoom(3, ".NET", 10));
 
-        Mockito.when(officeRoomService.findAll()).thenReturn(roomsList);
+    Mockito.when(officeRoomService.findAll()).thenReturn(roomsList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/rooms/")).andDo(print())
-                .andExpect(status().isOk());
-    }
+    mockMvc.perform(MockMvcRequestBuilders.get("/rooms/")).andDo(print())
+            .andExpect(status().isOk());
+  }
 
-    @Test
-    public void when_Room_Is_Invalid_Then_Return_Exception400() throws Exception {
+  @Test
+  public void when_Room_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-        OfficeRoom officeRoom = new OfficeRoom("", 7);
+    OfficeRoom officeRoom = new OfficeRoom("", 7);
 
-        String body = objectMapper.writeValueAsString(officeRoom);
+    String body = objectMapper.writeValueAsString(officeRoom);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/rooms/").contentType("application/json").content(body))
-                .andExpect(status().isBadRequest());
+    mockMvc.perform(MockMvcRequestBuilders.post("/rooms/").contentType("application/json").content(body))
+            .andExpect(status().isBadRequest());
 
-    }
+  }
 
 }

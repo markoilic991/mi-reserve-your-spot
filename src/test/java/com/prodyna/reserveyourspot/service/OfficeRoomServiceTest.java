@@ -19,55 +19,54 @@ import java.util.stream.Stream;
 @WebMvcTest(OfficeRoomService.class)
 public class OfficeRoomServiceTest {
 
-    @Autowired
-    private OfficeRoomService officeRoomService;
+  @Autowired
+  private OfficeRoomService officeRoomService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private OfficeRoomRepository officeRoomRepository;
+  @MockBean
+  private OfficeRoomRepository officeRoomRepository;
 
-    @MockBean
-    private OfficeRoom officeRoom;
-
-
-    @Test
-    public void Should_Find_All_Rooms() {
-
-        OfficeRoom officeRoom1 = new OfficeRoom(1, "JAVA", 2);
-        OfficeRoom officeRoom2 = new OfficeRoom(2, "QA", 3);
-        OfficeRoom officeRoom3 = new OfficeRoom(3, ".NET", 4);
-
-        Mockito.when(officeRoomRepository.findAll())
-                .thenReturn((List<OfficeRoom>) Stream.of(officeRoom1, officeRoom2, officeRoom3)
-                        .collect(Collectors.toList()));
-
-        Assertions.assertEquals(3, officeRoomService.findAll().size());
+  @MockBean
+  private OfficeRoom officeRoom;
 
 
-    }
+  @Test
+  public void Should_Find_All_Rooms() {
 
-    @Test
-    public void Should_Find_Room_By_Id() {
+    OfficeRoom officeRoom1 = new OfficeRoom(1, "JAVA", 2);
+    OfficeRoom officeRoom2 = new OfficeRoom(2, "QA", 3);
+    OfficeRoom officeRoom3 = new OfficeRoom(3, ".NET", 4);
 
-        OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 2);
-        officeRoomService.findById(officeRoom.getId());
+    Mockito.when(officeRoomRepository.findAll())
+            .thenReturn((List<OfficeRoom>) Stream.of(officeRoom1, officeRoom2, officeRoom3)
+                    .collect(Collectors.toList()));
 
-        Mockito.verify(officeRoomRepository, Mockito.times(1)).findById(officeRoom.getId());
+    Assertions.assertEquals(3, officeRoomService.findAll().size());
+
+  }
+
+  @Test
+  public void Should_Find_Room_By_Id() {
+
+    OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 2);
+    officeRoomService.findById(officeRoom.getId());
+
+    Mockito.verify(officeRoomRepository, Mockito.times(1)).findById(officeRoom.getId());
 
 
-    }
+  }
 
-    @Test
-    public void Should_Delete_Room_By_Id() {
+  @Test
+  public void Should_Delete_Room_By_Id() {
 
-        OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 3);
-        officeRoomService.deleteById(officeRoom.getId());
+    OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 3);
+    officeRoomService.deleteById(officeRoom.getId());
 
-        Mockito.verify(officeRoomRepository, Mockito.times(1)).deleteById(officeRoom.getId());
-    }
+    Mockito.verify(officeRoomRepository, Mockito.times(1)).deleteById(officeRoom.getId());
+  }
 }

@@ -34,28 +34,33 @@ import java.util.List;
 @Table(name = "workStations")
 public class WorkStation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @NotNull(message = "Every workStation must have it's unique code!")
-    private String uniqueCode;
+  @NotNull(message = "Every workStation must have it's unique code!")
+  private String uniqueCode;
 
-    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("workStations")
-    @JoinColumn(name = "officeRoom_id")
-    private OfficeRoom officeRoom;
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @JsonIgnoreProperties("workStations")
+  @JoinColumn(name = "officeRoom_id")
+  private OfficeRoom officeRoom;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Reservation> reservations = new ArrayList<>();
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @JsonIgnoreProperties("workStations")
+  @JoinColumn(name = "officeSpace_Id")
+  private OfficeSpace officeSpace;
 
-    public WorkStation(int id) {
-        this.id = id;
-    }
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
+  private List<Reservation> reservations = new ArrayList<>();
 
-    public WorkStation(int id, String uniqueCode) {
-        this.id = id;
-        this.uniqueCode = uniqueCode;
-    }
+  public WorkStation(int id) {
+    this.id = id;
+  }
+
+  public WorkStation(int id, String uniqueCode) {
+    this.id = id;
+    this.uniqueCode = uniqueCode;
+  }
 
 }
