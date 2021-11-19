@@ -39,7 +39,7 @@ public class UserServiceTest {
   private User user;
 
   @Test
-  public void Should_Get_All_Users() {
+  public void should_Get_All_Users() {
 
     User newUser = new User(1, "Marko Ilic", "marko@prodyna.com");
     User newUser1 = new User(2, "Ivan Kotic", "ivan@gmail.com");
@@ -51,7 +51,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void Should_Get_User_By_Id() {
+  public void should_Get_User_By_Id() {
 
     User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
     userService.findById(userNew.getId());
@@ -61,7 +61,7 @@ public class UserServiceTest {
   }
 
   @Test
-  public void Should_Delete_User_By_Id() {
+  public void should_Delete_User_By_Id() {
 
     User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
     userService.deleteById(userNew.getId());

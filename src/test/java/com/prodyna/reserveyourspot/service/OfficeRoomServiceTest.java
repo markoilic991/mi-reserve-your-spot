@@ -36,7 +36,7 @@ public class OfficeRoomServiceTest {
 
 
   @Test
-  public void Should_Find_All_Rooms() {
+  public void should_Find_All_Rooms() {
 
     OfficeRoom officeRoom1 = new OfficeRoom(1, "JAVA", 2);
     OfficeRoom officeRoom2 = new OfficeRoom(2, "QA", 3);
@@ -51,7 +51,7 @@ public class OfficeRoomServiceTest {
   }
 
   @Test
-  public void Should_Find_Room_By_Id() {
+  public void should_Find_Room_By_Id() {
 
     OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 2);
     officeRoomService.findById(officeRoom.getId());
@@ -62,7 +62,7 @@ public class OfficeRoomServiceTest {
   }
 
   @Test
-  public void Should_Delete_Room_By_Id() {
+  public void should_Delete_Room_By_Id() {
 
     OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 3);
     officeRoomService.deleteById(officeRoom.getId());

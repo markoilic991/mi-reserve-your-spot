@@ -48,7 +48,7 @@ public class OfficeRoomControllerTest {
   private WorkStation workStation;
 
   @Test
-  public void Should_Add_New_OfficeRoom() throws Exception {
+  public void should_Add_New_OfficeRoom() throws Exception {
 
     OfficeRoom officeRoomNew = new OfficeRoom();
     officeRoomNew.setId(1);
@@ -68,7 +68,7 @@ public class OfficeRoomControllerTest {
   }
 
   @Test
-  public void Should_Find_OfficeRoom_By_Id() throws Exception {
+  public void should_Find_OfficeRoom_By_Id() throws Exception {
 
     OfficeRoom officeRoomNew = new OfficeRoom();
     officeRoomNew.setName("JAVA");
@@ -84,7 +84,7 @@ public class OfficeRoomControllerTest {
   }
 
   @Test
-  public void Should_Find_All_Rooms() throws Exception {
+  public void should_Find_All_Rooms() throws Exception {
 
     List<OfficeRoom> roomsList = new ArrayList<>();
     roomsList.add(new OfficeRoom(1, "JAVA", 23));

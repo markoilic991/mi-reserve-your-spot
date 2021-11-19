@@ -34,7 +34,7 @@ public class WorkStationServiceTest {
   private WorkStation workStation;
 
   @Test
-  public void Should_Get_All_Stations() {
+  public void should_Get_All_Stations() {
 
     WorkStation workStation1 = new WorkStation(1, "PD441100");
     WorkStation workStation2 = new WorkStation(2, "PD447711");
@@ -48,7 +48,7 @@ public class WorkStationServiceTest {
   }
 
   @Test
-  public void Should_Get_Station_By_Id() {
+  public void should_Get_Station_By_Id() {
 
     WorkStation workStation1 = new WorkStation(1, "PD441100");
     workStationService.findById(workStation1.getId());
@@ -57,7 +57,7 @@ public class WorkStationServiceTest {
   }
 
   @Test
-  public void Should_Delete_Station() {
+  public void should_Delete_Station() {
 
     WorkStation workStation1 = new WorkStation(1, "PD441100");
     workStationService.deleteById(workStation1.getId());

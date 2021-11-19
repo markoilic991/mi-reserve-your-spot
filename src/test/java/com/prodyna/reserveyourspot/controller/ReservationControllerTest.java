@@ -62,7 +62,7 @@ public class ReservationControllerTest {
   private User user;
 
   @Test
-  public void Should_Find_All_Reservations() throws Exception {
+  public void should_Find_All_Reservations() throws Exception {
 
     String date = "2021-12-30";
     LocalDate parseDate = LocalDate.parse("2021-12-30");
@@ -82,7 +82,7 @@ public class ReservationControllerTest {
   }
 
   @Test
-  public void Should_Find_Reservation_By_Id() throws Exception {
+  public void should_Find_Reservation_By_Id() throws Exception {
 
     String date = "2021-12-30";
     LocalDate parseDate = LocalDate.parse("2021-12-30");
@@ -102,7 +102,7 @@ public class ReservationControllerTest {
   }
 
   @Test
-  public void Should_Add_New_Reservation() throws Exception {
+  public void should_Add_New_Reservation() throws Exception {
 
     String date = "2021-12-30";
     LocalDate parseDate = LocalDate.parse("2021-12-30");

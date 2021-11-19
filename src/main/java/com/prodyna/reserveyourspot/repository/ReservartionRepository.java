@@ -17,7 +17,5 @@ public interface ReservartionRepository extends JpaRepository<Reservation, Integ
   @Query(value = "select * from reservations r where r.date=:date and r.user_id = :user_id", nativeQuery = true)
   public Reservation findReservationByDateAndByUserId(@Param("date") LocalDate date, @Param("user_id") int userId);
 
-  @Query(value = "select * from reservations r where r.date=:date and r.user_id=:user_id and r.work_station_id = :workStation_id", nativeQuery = true)
-  public Reservation findReservationByDateAndUserIdAndWorkStationId(@Param("date") LocalDate date, @Param("user_id") int userId, @Param("workStation_id") int workStationId);
 
 }

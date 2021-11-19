@@ -62,24 +62,17 @@ public class ReservationController {
     reservationService.deleteById(id);
   }
 
-  //using JPQL query
-  @GetMapping("/reserve2")
+
+  @GetMapping("/reserve")
   public Reservation findByDateAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                                 @RequestParam(value = "workStationId") int workStationId) {
     return reservationService.findByDateAndWorkStationId(date, workStationId);
   }
 
-  @GetMapping("/reserve3")
+  @GetMapping("/reserve1")
   public Reservation findByDateAndUserId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                          @RequestParam(value = "userId") int userId) {
     return reservationService.findByDateAndUserId(date, userId);
-  }
-
-  @GetMapping("/reserve4")
-  public Reservation findByDateAndUserIdAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                         @RequestParam(value = "userId") int userId,
-                                                         @RequestParam(value = "workStationId") int workStationId) {
-    return reservationService.findByDateAndUserIdAndWorkStationId(date, userId, workStationId);
   }
 
 }

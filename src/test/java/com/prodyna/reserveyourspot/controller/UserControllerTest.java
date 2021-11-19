@@ -53,7 +53,7 @@ public class UserControllerTest {
   public ExpectedException thrown = ExpectedException.none();
 
   @Test
-  public void Should_Find_All_Users() throws Exception {
+  public void should_Find_All_Users() throws Exception {
 
     List<User> usersNewList = new ArrayList<>();
     usersNewList.add(new User(1, "Marko", "marko.ilic@prodyna"));
@@ -67,7 +67,7 @@ public class UserControllerTest {
   }
 
   @Test
-  public void Should_Find_User_By_Id() throws Exception {
+  public void should_Find_User_By_Id() throws Exception {
 
     User userNew = new User(1, "Marko", "marko.ilic@prodyna");
     userNew.setName("Ilija Milic");
@@ -84,7 +84,7 @@ public class UserControllerTest {
 
 
   @Test
-  public void Should_Add_New_User() throws Exception {
+  public void should_Add_New_User() throws Exception {
 
     User userNew = new User(1, "Marko", "marko.ilic@prodyna");
     userNew.setId(1);
