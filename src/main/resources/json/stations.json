@@ -5,10 +5,6 @@
       "id": 1,
       "name": "JAVA",
       "orderNo": 1
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -17,10 +13,6 @@
       "id": 1,
       "name": "JAVA",
       "orderNo": 1
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -29,10 +21,6 @@
       "id": 1,
       "name": "JAVA",
       "orderNo": 1
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -41,10 +29,6 @@
       "id": 1,
       "name": "JAVA",
       "orderNo": 1
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -53,10 +37,6 @@
       "id": 2,
       "name": "QA",
       "orderNo": 2
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -65,10 +45,6 @@
       "id": 2,
       "name": "QA",
       "orderNo": 2
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -77,10 +53,6 @@
       "id": 2,
       "name": "QA",
       "orderNo": 2
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -89,10 +61,6 @@
       "id": 2,
       "name": "QA",
       "orderNo": 2
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -101,10 +69,6 @@
       "id": 3,
       "name": ".NET",
       "orderNo": 3
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -113,10 +77,6 @@
       "id": 3,
       "name": ".NET",
       "orderNo": 3
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -125,10 +85,6 @@
       "id": 3,
       "name": ".NET",
       "orderNo": 3
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -137,10 +93,6 @@
       "id": 3,
       "name": ".NET",
       "orderNo": 3
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -149,10 +101,6 @@
       "id": 4,
       "name": "Front",
       "orderNo": 4
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -161,10 +109,6 @@
       "id": 4,
       "name": "Front",
       "orderNo": 4
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -173,10 +117,6 @@
       "id": 4,
       "name": "Front",
       "orderNo": 4
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   },
   {
@@ -185,10 +125,6 @@
       "id": 4,
       "name": "Front",
       "orderNo": 4
-    },
-    "officeSpace": {
-      "id": 1,
-      "description": "PRODYNA Business garden 14th floor"
     }
   }
 ]

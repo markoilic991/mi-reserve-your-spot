@@ -1,18 +1,34 @@
 [
   {
     "name": "JAVA",
-    "orderNo": 1
+    "orderNo": 1,
+    "officeSpace": {
+      "id": 1,
+      "description": "PRODYNA Business garden 14th floor"
+    }
   },
   {
     "name": "QA",
-    "orderNo": 2
+    "orderNo": 2,
+    "officeSpace": {
+      "id": 1,
+      "description": "PRODYNA Business garden 14th floor"
+    }
   },
   {
     "name": ".NET",
-    "orderNo": 3
+    "orderNo": 3,
+    "officeSpace": {
+      "id": 1,
+      "description": "PRODYNA Business garden 14th floor"
+    }
   },
   {
     "name": "Front",
-    "orderNo": 4
+    "orderNo": 4,
+    "officeSpace": {
+      "id": 1,
+      "description": "PRODYNA Business garden 14th floor"
+    }
   }
 ]

@@ -55,23 +55,29 @@ public class ReservationService {
     return "Reservations deleted!";
   }
 
-  public Reservation findByDateAndWorkStationId(LocalDate date, int workStationId) {
-    return reservartionRepository.findReservationByDateAndByWorkStationId(date, workStationId);
+  public Reservation findByDateAndWorkStationId(LocalDate dateFrom, LocalDate dateTo, int workStationId) {
+    return reservartionRepository.findReservationByDateAndByWorkStationId(dateFrom, dateTo, workStationId);
   }
 
-  public Reservation findByDateAndUserId(LocalDate date, int userId) {
-    return reservartionRepository.findReservationByDateAndByUserId(date, userId);
+  public Reservation findByDateAndUserId(LocalDate dateFrom, LocalDate dateTo, int userId) {
+    return reservartionRepository.findReservationByDateAndByUserId(dateFrom, dateTo, userId);
+  }
+
+  //query
+  public List<Reservation> findAllReservations() {
+    return reservartionRepository.findAllReservations();
   }
 
   public boolean checkIfReservationExist(Reservation reservation) {
 
     int userId = reservation.getUser().getId();
-    LocalDate date = reservation.getDate();
+    LocalDate dateFrom = reservation.getDateFrom();
+    LocalDate dateTo = reservation.getDateTo();
     int workStationId = reservation.getWorkStation().getId();
     boolean reservationExist = true;
 
-    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findReservationByDateAndByWorkStationId(date, workStationId));
-    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findReservationByDateAndByUserId(date, userId));
+    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findReservationByDateAndByWorkStationId(dateFrom, dateTo, workStationId));
+    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findReservationByDateAndByUserId(dateFrom, dateTo, userId));
 
     if (newReservation1.isPresent()) {
       return reservationExist;
@@ -80,6 +86,9 @@ public class ReservationService {
     }
     return false;
   }
+
 }
+
+
 
 

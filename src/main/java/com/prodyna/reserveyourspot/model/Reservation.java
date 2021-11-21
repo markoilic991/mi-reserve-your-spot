@@ -36,7 +36,11 @@ public class Reservation {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   @FutureOrPresent(message = "The arrival date must be today or in the future.")
   @NotNull
-  private LocalDate date;
+  private LocalDate dateFrom;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @NotNull
+  private LocalDate dateTo;
 
   @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("reservations")
@@ -50,7 +54,7 @@ public class Reservation {
   @NotNull
   private WorkStation workStation;
 
-  public Reservation(LocalDate date, int id, int workStationId) {
+  public Reservation(LocalDate dateFrom, LocalDate dateTo, int id, int workStationId) {
   }
 
 }

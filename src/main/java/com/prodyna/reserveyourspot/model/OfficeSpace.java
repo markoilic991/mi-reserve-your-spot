@@ -34,7 +34,7 @@ public class OfficeSpace {
   private String description;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeSpace", orphanRemoval = true)
-  private List<WorkStation> workStations = new ArrayList<>();
+  private List<OfficeRoom> rooms = new ArrayList<>();
 
   public OfficeSpace(int id, String description) {
     this.id = id;

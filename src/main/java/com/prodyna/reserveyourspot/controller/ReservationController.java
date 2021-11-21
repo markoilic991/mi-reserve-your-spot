@@ -38,7 +38,6 @@ public class ReservationController {
   @PostMapping("/")
   public Reservation save(@Valid @RequestBody Reservation reservation) {
     return reservationService.save(reservation);
-
   }
 
   @GetMapping("/")
@@ -64,15 +63,22 @@ public class ReservationController {
 
 
   @GetMapping("/reserve")
-  public Reservation findByDateAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+  public Reservation findByDateAndWorkStationId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                                @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
                                                 @RequestParam(value = "workStationId") int workStationId) {
-    return reservationService.findByDateAndWorkStationId(date, workStationId);
+    return reservationService.findByDateAndWorkStationId(dateFrom, dateTo, workStationId);
   }
 
   @GetMapping("/reserve1")
-  public Reservation findByDateAndUserId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+  public Reservation findByDateAndUserId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                         @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
                                          @RequestParam(value = "userId") int userId) {
-    return reservationService.findByDateAndUserId(date, userId);
+    return reservationService.findByDateAndUserId(dateFrom, dateTo, userId);
+  }
+
+  @GetMapping("/findAll")
+  public List<Reservation> findAllReservations() {
+    return reservationService.findAllReservations();
   }
 
 }

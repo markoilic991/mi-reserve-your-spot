@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,9 +10,12 @@ import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
@@ -44,6 +48,11 @@ public class OfficeRoom {
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true)
   private List<WorkStation> workStations = new ArrayList<>();
+
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @JsonIgnoreProperties("rooms")
+  @JoinColumn(name = "officeSpace_Id")
+  private OfficeSpace officeSpace;
 
   public OfficeRoom(String name, int orderNo) {
     this.name = name;

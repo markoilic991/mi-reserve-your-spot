@@ -64,16 +64,18 @@ public class ReservationControllerTest {
   @Test
   public void should_Find_All_Reservations() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse("2021-12-30");
+    String dateFrom = "2021-12-30";
+    String dateTo = "2022-01-11";
+    LocalDate parseDateFrom = LocalDate.parse("2021-12-30");
+    LocalDate parseDateTo = LocalDate.parse("2022-01-11");
     List<Reservation> reservations = new ArrayList<>();
     reservations
             .add(new Reservation
-                    (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+                    (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
                             new WorkStation(1, "PD0001")));
     reservations
             .add(new Reservation
-                    (2, parseDate, new User(2, "Miroslav Perovic", "miroslav.perovic@gmail.com"),
+                    (2, parseDateFrom, parseDateTo, new User(2, "Miroslav Perovic", "miroslav.perovic@gmail.com"),
                             new WorkStation(4, "PD0004")));
 
     Mockito.when(reservationService.findAll()).thenReturn(reservations);
@@ -84,11 +86,13 @@ public class ReservationControllerTest {
   @Test
   public void should_Find_Reservation_By_Id() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse("2021-12-30");
+    String dateFrom = "2021-12-30";
+    String dateTo = "2022-01-11";
+    LocalDate parseDateFrom = LocalDate.parse("2021-12-30");
+    LocalDate parseDateTo = LocalDate.parse("2022-01-11");
 
     Reservation reservation = new Reservation
-            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+            (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
                     new WorkStation(1, "PD0001"));
 
     reservation.setUser(new User(2, "Miroslav Perovic", "miroslav@gmail.com"));
@@ -105,10 +109,12 @@ public class ReservationControllerTest {
   public void should_Add_New_Reservation() throws Exception {
 
     String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse("2021-12-30");
+    String dateTo = "2022-01-11";
+    LocalDate parseDateFrom = LocalDate.parse("2021-12-30");
+    LocalDate parseDateTo = LocalDate.parse("2022-01-11");
 
     Reservation reservation = new Reservation
-            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+            (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
                     new WorkStation(1, "PD0001"));
 
     reservation.setId(1);
@@ -129,10 +135,12 @@ public class ReservationControllerTest {
   @Test
   public void when_User_Is_Invalid_Then_Reservation_Is_Invalid_Return_Status400() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse("2021-12-30");
+    String dateFrom = "2021-12-30";
+    String dateTo = "2022-01-15";
+    LocalDate parseDateFrom = LocalDate.parse("2021-12-30");
+    LocalDate parseDateTo = LocalDate.parse("2022-01-15");
     Reservation reservation = new Reservation
-            (1, parseDate, new User("", "saasdasdasdasdasd"),
+            (1, parseDateFrom, parseDateTo, new User("", "saasdasdasdasdasd"),
                     new WorkStation(1, "PD0001"));
 
     String body = objectMapper.writeValueAsString(new User("", "saasdasdasdasdasd"));

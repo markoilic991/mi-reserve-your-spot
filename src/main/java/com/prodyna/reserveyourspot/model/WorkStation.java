@@ -46,10 +46,10 @@ public class WorkStation {
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-  @JsonIgnoreProperties("workStations")
-  @JoinColumn(name = "officeSpace_Id")
-  private OfficeSpace officeSpace;
+  //@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  //@JsonIgnoreProperties("workStations")
+  //JoinColumn(name = "officeSpace_Id")
+  //private OfficeSpace officeSpace;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Reservation> reservations = new ArrayList<>();
