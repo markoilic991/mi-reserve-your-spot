@@ -62,10 +62,6 @@ public class ReservationService {
     return reservartionRepository.findReservationByDateAndByUserId(dateFrom, dateTo, userId);
   }
 
-  public List<Reservation> findAllReservations() {
-    return reservartionRepository.findAllReservations();
-  }
-
   public boolean checkIfReservationExist(Reservation reservation) {
 
     int userId = reservation.getUser().getId();
@@ -85,28 +81,23 @@ public class ReservationService {
     return false;
   }
 
-  public boolean checkIfReservationsExist(List<Reservation> reservationList) {
+  public boolean checkIfReservationsExist(List<Reservation> reservations) {
 
     boolean reservationsExist = true;
-    List<Reservation> reservations = reservartionRepository.findAllReservations();
-    Reservation reservation = null;
-
-    for (int i = 0; i < reservationList.size(); i++) {
-      reservation = reservationList.get(i);
-    }
+    Optional<Reservation> reservation = null;
 
     for (int i = 0; i < reservations.size(); i++) {
-      Reservation temp = reservations.get(i);
+      reservation = Optional.ofNullable(reservations.get(i));
+    }
 
-      if (reservation.getDateFrom().equals(temp.getDateFrom()) &&
-              reservation.getDateTo().equals(temp.getDateTo()) &&
-              reservation.getWorkStation().getId() == temp.getWorkStation().getId()) {
-        return reservationsExist;
-      }
+    reservation = Optional.ofNullable(reservartionRepository.findReservationByDateAndByWorkStationId(reservation.get().getDateFrom(),
+            reservation.get().getDateTo(), reservation.get().getWorkStation().getId()));
+
+    if (reservation.isPresent()) {
+      return reservationsExist;
     }
     return false;
   }
-
 
 }
 

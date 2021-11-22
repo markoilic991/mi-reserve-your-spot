@@ -70,11 +70,6 @@ public class ReservationController {
     return reservationService.findByDateAndUserId(dateFrom, dateTo, userId);
   }
 
-  @GetMapping("/findAll")
-  public List<Reservation> findAllReservations() {
-    return reservationService.findAllReservations();
-  }
-
 }
 
 
