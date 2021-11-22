@@ -80,7 +80,7 @@ public class SampleDataService {
     Gson gson = new Gson();
 
     ClassLoader classLoader = gson.getClass().getClassLoader();
-    InputStream in = classLoader.getResourceAsStream("json/stations.json");
+    InputStream in = classLoader.getResourceAsStream("json/workStations.json");
 
     List<WorkStation> stations = null;
     try {
@@ -101,7 +101,7 @@ public class SampleDataService {
     Gson gson = new Gson();
 
     ClassLoader classLoader = gson.getClass().getClassLoader();
-    InputStream in = classLoader.getResourceAsStream("json/rooms.json");
+    InputStream in = classLoader.getResourceAsStream("json/officeRooms.json");
 
     List<OfficeRoom> rooms = null;
     try {

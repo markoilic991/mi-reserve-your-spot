@@ -120,6 +120,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(ListOfReservationsAlreadyExistException.class)
+  public ResponseEntity<ErrorDetails> listOfReservationsAlreadyExistExceptionHandler(ListOfReservationsAlreadyExistException e, ServletWebRequest request) {
+
+    ErrorDetails errorDetails = new ErrorDetails(
+            HttpStatus.BAD_REQUEST,
+            e.getMessage(),
+            ZonedDateTime.now(),
+            request.getDescription(true));
+
+    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+  }
+
   @ExceptionHandler(WorkStationBusyException.class)
   public ResponseEntity<ErrorDetails> workStationBusyExceptionHandler(WorkStationBusyException e, ServletWebRequest request) {
 

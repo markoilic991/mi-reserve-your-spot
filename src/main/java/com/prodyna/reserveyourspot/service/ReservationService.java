@@ -1,11 +1,10 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.ListOfReservationsAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.repository.ReservartionRepository;
-import com.prodyna.reserveyourspot.repository.UserRepository;
-import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -19,14 +18,10 @@ import java.util.Optional;
 public class ReservationService {
 
   private ReservartionRepository reservartionRepository;
-  private UserRepository userRepository;
-  private WorkStationRepository workStationRepository;
 
   @Autowired
-  public ReservationService(ReservartionRepository reservartionRepository, UserRepository userRepository, WorkStationRepository workStationRepository) {
+  public ReservationService(ReservartionRepository reservartionRepository) {
     this.reservartionRepository = reservartionRepository;
-    this.userRepository = userRepository;
-    this.workStationRepository = workStationRepository;
   }
 
   public Reservation save(Reservation reservation) throws WorkStationBusyException {
@@ -38,7 +33,11 @@ public class ReservationService {
   }
 
   public List<Reservation> saveAll(List<Reservation> revs) {
-    return reservartionRepository.saveAll(revs);
+    if (checkIfReservationsExist(revs)) {
+      throw new ListOfReservationsAlreadyExistException("Reservations already exist in database!!!");
+    } else {
+      return reservartionRepository.saveAll(revs);
+    }
   }
 
   public List<Reservation> findAll() {
@@ -63,7 +62,6 @@ public class ReservationService {
     return reservartionRepository.findReservationByDateAndByUserId(dateFrom, dateTo, userId);
   }
 
-  //query
   public List<Reservation> findAllReservations() {
     return reservartionRepository.findAllReservations();
   }
@@ -87,6 +85,27 @@ public class ReservationService {
     return false;
   }
 
+  public boolean checkIfReservationsExist(List<Reservation> reservationList) {
+
+    boolean reservationsExist = true;
+    List<Reservation> reservations = reservartionRepository.findAllReservations();
+    Reservation reservation = null;
+
+    for (int i = 0; i < reservationList.size(); i++) {
+      reservation = reservationList.get(i);
+    }
+
+    for (int i = 0; i < reservations.size(); i++) {
+      Reservation temp = reservations.get(i);
+
+      if (reservation.getDateFrom().equals(temp.getDateFrom()) &&
+              reservation.getDateTo().equals(temp.getDateTo()) &&
+              reservation.getWorkStation().getId() == temp.getWorkStation().getId()) {
+        return reservationsExist;
+      }
+    }
+    return false;
+  }
 }
 
 

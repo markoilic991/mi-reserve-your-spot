@@ -11,7 +11,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,17 +40,12 @@ public class WorkStation {
   @NotNull(message = "Every workStation must have it's unique code!")
   private String uniqueCode;
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("workStations")
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;
 
-  //@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-  //@JsonIgnoreProperties("workStations")
-  //JoinColumn(name = "officeSpace_Id")
-  //private OfficeSpace officeSpace;
-
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true)
   private List<Reservation> reservations = new ArrayList<>();
 
   public WorkStation(int id) {

@@ -2,7 +2,6 @@ package com.prodyna.reserveyourspot.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
-import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

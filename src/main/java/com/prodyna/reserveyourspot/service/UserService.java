@@ -1,6 +1,5 @@
 package com.prodyna.reserveyourspot.service;
 
-import com.prodyna.reserveyourspot.exception.NameNotValidException;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
