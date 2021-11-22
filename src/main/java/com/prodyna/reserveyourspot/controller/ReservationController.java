@@ -2,8 +2,6 @@ package com.prodyna.reserveyourspot.controller;
 
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.service.ReservationService;
-import com.prodyna.reserveyourspot.service.UserService;
-import com.prodyna.reserveyourspot.service.WorkStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,14 +22,10 @@ import java.util.Optional;
 @RequestMapping("/reservations")
 public class ReservationController {
 
-  private UserService userService;
-  private WorkStationService workStationService;
   private ReservationService reservationService;
 
   @Autowired
-  public ReservationController(UserService userService, WorkStationService workStationService, ReservationService reservationService) {
-    this.userService = userService;
-    this.workStationService = workStationService;
+  public ReservationController(ReservationService reservationService) {
     this.reservationService = reservationService;
   }
 
@@ -62,14 +56,14 @@ public class ReservationController {
   }
 
 
-  @GetMapping("/reserve")
+  @GetMapping("/dateAndWorkStation")
   public Reservation findByDateAndWorkStationId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                 @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
                                                 @RequestParam(value = "workStationId") int workStationId) {
     return reservationService.findByDateAndWorkStationId(dateFrom, dateTo, workStationId);
   }
 
-  @GetMapping("/reserve1")
+  @GetMapping("/dateAndUser")
   public Reservation findByDateAndUserId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                          @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
                                          @RequestParam(value = "userId") int userId) {
