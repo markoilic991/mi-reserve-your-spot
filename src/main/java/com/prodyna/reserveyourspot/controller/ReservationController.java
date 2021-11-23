@@ -55,12 +55,11 @@ public class ReservationController {
     reservationService.deleteById(id);
   }
 
-
   @GetMapping("/dateAndWorkStation")
   public Reservation findByDateAndWorkStationId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                 @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
                                                 @RequestParam(value = "workStationId") int workStationId) {
-    return reservationService.findByDateAndWorkStationId(dateFrom, dateTo, workStationId);
+    return reservationService.findByDateFromAndDateToAndWorkStationId(dateFrom, dateTo, workStationId);
   }
 
   @GetMapping("/dateAndUser")

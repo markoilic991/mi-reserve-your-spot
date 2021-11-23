@@ -54,12 +54,12 @@ public class ReservationService {
     return "Reservations deleted!";
   }
 
-  public Reservation findByDateAndWorkStationId(LocalDate dateFrom, LocalDate dateTo, int workStationId) {
-    return reservartionRepository.findReservationByDateAndByWorkStationId(dateFrom, dateTo, workStationId);
+  public Reservation findByDateFromAndDateToAndWorkStationId(LocalDate dateFrom, LocalDate dateTo, int workStationId) {
+    return reservartionRepository.findByDateFromAndDateToAndWorkStationId(dateFrom, dateTo, workStationId);
   }
 
   public Reservation findByDateAndUserId(LocalDate dateFrom, LocalDate dateTo, int userId) {
-    return reservartionRepository.findReservationByDateAndByUserId(dateFrom, dateTo, userId);
+    return reservartionRepository.findByDateFromAndDateToAndUserId(dateFrom, dateTo, userId);
   }
 
   public boolean checkIfReservationExist(Reservation reservation) {
@@ -70,8 +70,8 @@ public class ReservationService {
     int workStationId = reservation.getWorkStation().getId();
     boolean reservationExist = true;
 
-    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findReservationByDateAndByWorkStationId(dateFrom, dateTo, workStationId));
-    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findReservationByDateAndByUserId(dateFrom, dateTo, userId));
+    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findByDateFromAndDateToAndWorkStationId(dateFrom, dateTo, workStationId));
+    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findByDateFromAndDateToAndUserId(dateFrom, dateTo, userId));
 
     if (newReservation1.isPresent()) {
       return reservationExist;
@@ -90,7 +90,7 @@ public class ReservationService {
       reservation = Optional.ofNullable(reservations.get(i));
     }
 
-    reservation = Optional.ofNullable(reservartionRepository.findReservationByDateAndByWorkStationId(reservation.get().getDateFrom(),
+    reservation = Optional.ofNullable(reservartionRepository.findByDateFromAndDateToAndWorkStationId(reservation.get().getDateFrom(),
             reservation.get().getDateTo(), reservation.get().getWorkStation().getId()));
 
     if (reservation.isPresent()) {
