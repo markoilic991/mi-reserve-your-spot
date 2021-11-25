@@ -36,9 +36,9 @@ public class WorkStationServiceTest {
   @Test
   public void should_Get_All_Stations() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD441100");
-    WorkStation workStation2 = new WorkStation(2, "PD447711");
-    WorkStation workStation3 = new WorkStation(3, "PD445566");
+    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
+    WorkStation workStation2 = new WorkStation(2, "PD002211", "Work Station");
+    WorkStation workStation3 = new WorkStation(3, "PD002211", "Work Station");
 
     Mockito.when(workStationRepository.findAll())
             .thenReturn((List<WorkStation>) Stream.of(workStation1, workStation2, workStation3)
@@ -50,7 +50,7 @@ public class WorkStationServiceTest {
   @Test
   public void should_Get_Station_By_Id() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD441100");
+    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
     workStationService.findById(workStation1.getId());
 
     Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.getId());
@@ -59,7 +59,7 @@ public class WorkStationServiceTest {
   @Test
   public void should_Delete_Station() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD441100");
+    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
     workStationService.deleteById(workStation1.getId());
 
     Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStation1.getId());

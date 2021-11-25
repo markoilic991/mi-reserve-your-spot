@@ -54,24 +54,27 @@ public class ReservationService {
     return "Reservations deleted!";
   }
 
-  public Reservation findByDateFromAndDateToAndWorkStationId(LocalDate dateFrom, LocalDate dateTo, int workStationId) {
-    return reservartionRepository.findByDateFromAndDateToAndWorkStationId(dateFrom, dateTo, workStationId);
+  public List<Reservation> findAllReservationsByDateRange(LocalDate dateFrom, LocalDate dateTo) {
+    return reservartionRepository.findAllReservationByDateRange(dateFrom, dateTo);
   }
 
-  public Reservation findByDateAndUserId(LocalDate dateFrom, LocalDate dateTo, int userId) {
-    return reservartionRepository.findByDateFromAndDateToAndUserId(dateFrom, dateTo, userId);
+  public Reservation findByDateAndWorkStationId(LocalDate date, int workStationId) {
+    return reservartionRepository.findByDateAndWorkStationId(date, workStationId);
+  }
+
+  public Reservation findByDateAndUserId(LocalDate date, int userId) {
+    return reservartionRepository.findByDateAndUserId(date, userId);
   }
 
   public boolean checkIfReservationExist(Reservation reservation) {
 
     int userId = reservation.getUser().getId();
-    LocalDate dateFrom = reservation.getDateFrom();
-    LocalDate dateTo = reservation.getDateTo();
+    LocalDate date = reservation.getDate();
     int workStationId = reservation.getWorkStation().getId();
     boolean reservationExist = true;
 
-    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findByDateFromAndDateToAndWorkStationId(dateFrom, dateTo, workStationId));
-    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findByDateFromAndDateToAndUserId(dateFrom, dateTo, userId));
+    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findByDateAndWorkStationId(date, workStationId));
+    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findByDateAndUserId(date, userId));
 
     if (newReservation1.isPresent()) {
       return reservationExist;
@@ -90,8 +93,7 @@ public class ReservationService {
       reservation = Optional.ofNullable(reservations.get(i));
     }
 
-    reservation = Optional.ofNullable(reservartionRepository.findByDateFromAndDateToAndWorkStationId(reservation.get().getDateFrom(),
-            reservation.get().getDateTo(), reservation.get().getWorkStation().getId()));
+    reservation = Optional.ofNullable(reservartionRepository.findByDateAndWorkStationId(reservation.get().getDate(), reservation.get().getWorkStation().getId()));
 
     if (reservation.isPresent()) {
       return reservationsExist;

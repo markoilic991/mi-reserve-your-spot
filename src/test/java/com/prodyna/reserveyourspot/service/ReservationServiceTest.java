@@ -39,17 +39,15 @@ public class ReservationServiceTest {
   @Test
   public void should_Find_All_Reservations() {
 
-    String dateFrom = "2021-12-30";
-    String dateTo = "2022-01-11";
-    LocalDate parseDateFrom = LocalDate.parse(dateFrom);
-    LocalDate parseDateTo = LocalDate.parse(dateTo);
+    String date = "2021-12-30";
+    LocalDate parseDate = LocalDate.parse(date);
 
     Reservation reservation1 = new Reservation
-            (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001"));
+            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+                    new WorkStation(1, "PD0001", "Mac"));
     Reservation reservation2 = new Reservation
-            (2, parseDateFrom, parseDateTo, new User(2, "Milos Mikic", "milos@gmail.com"),
-                    new WorkStation(3, "PD0003"));
+            (2, parseDate, new User(2, "Milos Mikic", "milos@gmail.com"),
+                    new WorkStation(3, "PD0003", "Mac"));
 
     Mockito.when(reservartionRepository.findAll())
             .thenReturn((List<Reservation>) Stream.of(reservation1, reservation2)
@@ -62,14 +60,13 @@ public class ReservationServiceTest {
   @Test
   public void should_Find_Reservation_By_Id() {
 
-    String dateFrom = "2021-12-30";
-    String dateTo = "2022-01-11";
-    LocalDate parseDateFrom = LocalDate.parse(dateFrom);
-    LocalDate parseDateTo = LocalDate.parse(dateTo);
+    String date = "2021-12-30";
+    LocalDate parseDate = LocalDate.parse(date);
+
 
     Reservation reservation1 = new Reservation
-            (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001"));
+            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+                    new WorkStation(1, "PD0001", "Linux"));
 
     reservationService.findById(reservation1.getId());
 
@@ -79,14 +76,12 @@ public class ReservationServiceTest {
   @Test
   public void should_Delete_Reservation() {
 
-    String dateFrom = "2021-12-30";
-    String dateTo = "2022-01-11";
-    LocalDate parseDateFrom = LocalDate.parse(dateFrom);
-    LocalDate parseDateTo = LocalDate.parse(dateTo);
+    String date = "2021-12-30";
+    LocalDate parseDate = LocalDate.parse(date);
 
     Reservation reservation1 = new Reservation
-            (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001"));
+            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+                    new WorkStation(1, "PD0001", "Mac"));
 
     reservationService.deleteById(reservation1.getId());
 
@@ -96,19 +91,17 @@ public class ReservationServiceTest {
   @Test
   public void should_Find_Reservation_By_Date_And_Work_Station_Id() {
 
-    String dateFrom = "2021-12-30";
-    String dateTo = "2022-01-11";
-    LocalDate parseDateFrom = LocalDate.parse(dateFrom);
-    LocalDate parseDateTo = LocalDate.parse(dateTo);
+    String date = "2021-12-30";
+    LocalDate parseDate = LocalDate.parse(date);
 
     Reservation reservation1 = new Reservation
-            (1, parseDateFrom, parseDateTo, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001"));
+            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+                    new WorkStation(1, "PD0001", "Linux"));
 
-    reservationService.findByDateAndWorkStationId(reservation1.getDateFrom(), reservation1.getDateTo(), reservation1.getWorkStation().getId());
+    reservationService.findByDateAndWorkStationId(reservation1.getDate(), reservation1.getWorkStation().getId());
 
     Mockito.verify(reservartionRepository, Mockito.times(1))
-            .findReservationByDateAndByWorkStationId(reservation1.getDateFrom(), reservation1.getDateTo(), reservation1.getWorkStation().getId());
+            .findByDateAndWorkStationId(reservation1.getDate(), reservation1.getWorkStation().getId());
 
   }
 }

@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class User {
   @Email
   private String email;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Reservation> reservations = new ArrayList<>();
 
   public User(int id, String name, String email) {

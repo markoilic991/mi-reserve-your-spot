@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +27,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "officeSpace")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class OfficeSpace {
 
   @Id
@@ -33,7 +36,7 @@ public class OfficeSpace {
 
   private String description;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeSpace", orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeSpace", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<OfficeRoom> rooms = new ArrayList<>();
 
   public OfficeSpace(int id, String description) {

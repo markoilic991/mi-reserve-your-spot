@@ -10,6 +10,7 @@ import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +32,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "officeRooms")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class OfficeRoom {
 
   @Id
@@ -45,10 +47,10 @@ public class OfficeRoom {
   @Max(4)
   private int orderNo;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<WorkStation> workStations = new ArrayList<>();
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   @JsonIgnoreProperties("rooms")
   @JoinColumn(name = "officeSpace_Id")
   private OfficeSpace officeSpace;

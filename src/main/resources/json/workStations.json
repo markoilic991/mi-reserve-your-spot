@@ -1,6 +1,7 @@
 [
   {
     "uniqueCode": "PD0001",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 1,
       "name": "JAVA",
@@ -9,6 +10,7 @@
   },
   {
     "uniqueCode": "PD0002",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 1,
       "name": "JAVA",
@@ -17,6 +19,7 @@
   },
   {
     "uniqueCode": "PD0003",
+    "description": "Mac Work Station",
     "officeRoom": {
       "id": 1,
       "name": "JAVA",
@@ -25,6 +28,7 @@
   },
   {
     "uniqueCode": "PD0004",
+    "description": "Mac Work Station",
     "officeRoom": {
       "id": 1,
       "name": "JAVA",
@@ -33,6 +37,7 @@
   },
   {
     "uniqueCode": "PD0005",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 2,
       "name": "QA",
@@ -41,6 +46,7 @@
   },
   {
     "uniqueCode": "PD0006",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 2,
       "name": "QA",
@@ -49,6 +55,7 @@
   },
   {
     "uniqueCode": "PD0007",
+    "description": "Linux Work Station",
     "officeRoom": {
       "id": 2,
       "name": "QA",
@@ -57,6 +64,7 @@
   },
   {
     "uniqueCode": "PD0008",
+    "description": "Linux Work Station",
     "officeRoom": {
       "id": 2,
       "name": "QA",
@@ -65,6 +73,7 @@
   },
   {
     "uniqueCode": "PD0009",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 3,
       "name": ".NET",
@@ -73,6 +82,7 @@
   },
   {
     "uniqueCode": "PD0010",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 3,
       "name": ".NET",
@@ -81,6 +91,7 @@
   },
   {
     "uniqueCode": "PD0011",
+    "description": "Mac Work Station",
     "officeRoom": {
       "id": 3,
       "name": ".NET",
@@ -89,6 +100,7 @@
   },
   {
     "uniqueCode": "PD0012",
+    "description": "Linux Work Station",
     "officeRoom": {
       "id": 3,
       "name": ".NET",
@@ -97,6 +109,7 @@
   },
   {
     "uniqueCode": "PD0013",
+    "description": "Windows Work Station",
     "officeRoom": {
       "id": 4,
       "name": "Front",
@@ -105,6 +118,7 @@
   },
   {
     "uniqueCode": "PD0014",
+    "description": "Mac Work Station",
     "officeRoom": {
       "id": 4,
       "name": "Front",
@@ -113,6 +127,7 @@
   },
   {
     "uniqueCode": "PD0015",
+    "description": "Mac Work Station",
     "officeRoom": {
       "id": 4,
       "name": "Front",
@@ -121,6 +136,7 @@
   },
   {
     "uniqueCode": "PD0016",
+    "description": "Linux Work Station",
     "officeRoom": {
       "id": 4,
       "name": "Front",

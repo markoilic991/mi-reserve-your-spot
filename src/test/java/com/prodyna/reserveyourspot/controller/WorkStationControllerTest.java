@@ -54,9 +54,10 @@ public class WorkStationControllerTest {
   public void should_Add_New_WorkStation() throws Exception {
 
 
-    WorkStation workStationNew = new WorkStation(1, "PD002211");
+    WorkStation workStationNew = new WorkStation(1, "PD002211", "Work Station");
     workStationNew.setId(1);
     workStationNew.setUniqueCode("PD0011111");
+    workStationNew.setDescription("Linux");
 
 
     Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationNew);
@@ -73,14 +74,16 @@ public class WorkStationControllerTest {
   @Test
   public void should_Find_WorkStation_By_Id() throws Exception {
 
-    WorkStation workStationNew = new WorkStation(1, "PD002211");
+    WorkStation workStationNew = new WorkStation(1, "PD002211", "Mac");
     workStationNew.setUniqueCode("PD002211");
+    workStationNew.setDescription("Mac");
 
     Mockito.when(workStationService.findById(anyInt())).thenReturn(java.util.Optional.of(workStationNew));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/workStations/2"))
             .andDo(print())
             .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD002211"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Mac"))
             .andExpect(status().isOk());
 
   }
@@ -89,9 +92,9 @@ public class WorkStationControllerTest {
   public void should_Find_All_WorkStations() throws Exception {
 
     List<WorkStation> stationsList = new ArrayList<>();
-    stationsList.add(new WorkStation(1, "PD002211"));
-    stationsList.add(new WorkStation(2, "PD000031"));
-    stationsList.add(new WorkStation(3, "PD004411"));
+    stationsList.add(new WorkStation(1, "PD002211", "Mac"));
+    stationsList.add(new WorkStation(2, "PD000031", "Linux"));
+    stationsList.add(new WorkStation(3, "PD004411", "Mac"));
 
     Mockito.when(workStationService.findAll()).thenReturn(stationsList);
 
@@ -103,7 +106,7 @@ public class WorkStationControllerTest {
   @Test
   public void when_Station_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-    WorkStation workStation = new WorkStation(1, null);
+    WorkStation workStation = new WorkStation(1, null, null);
 
     String body = objectMapper.writeValueAsString(workStation);
 

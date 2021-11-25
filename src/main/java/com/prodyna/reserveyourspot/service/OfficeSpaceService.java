@@ -28,4 +28,8 @@ public class OfficeSpaceService {
   public List<OfficeSpace> findAll() {
     return officeSpaceRepository.findAll();
   }
+
+  public OfficeSpace findOfficeSpaceById(int id){
+    return officeSpaceRepository.findOfficeSpaceById(id);
+  }
 }

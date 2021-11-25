@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,6 +32,7 @@ import java.util.List;
 @Entity
 @Validated
 @Table(name = "workStations")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class WorkStation {
 
   @Id
@@ -40,21 +42,24 @@ public class WorkStation {
   @NotNull(message = "Every workStation must have it's unique code!")
   private String uniqueCode;
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @NotNull
+  private String description;
+
+  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   @JsonIgnoreProperties("workStations")
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;
 
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Reservation> reservations = new ArrayList<>();
 
   public WorkStation(int id) {
     this.id = id;
   }
 
-  public WorkStation(int id, String uniqueCode) {
+  public WorkStation(int id, String uniqueCode, String description) {
     this.id = id;
     this.uniqueCode = uniqueCode;
+    this.description = description;
   }
-
 }

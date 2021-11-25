@@ -40,6 +40,12 @@ public class ReservationController {
     return reservations;
   }
 
+  @GetMapping("/dateRange")
+  public List<Reservation> findAllByDateRange(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                              @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+    return reservationService.findAllReservationsByDateRange(dateFrom, dateTo);
+  }
+
   @GetMapping("/{id}")
   public Optional<Reservation> findById(@PathVariable int id) {
     return reservationService.findById(id);
@@ -56,17 +62,15 @@ public class ReservationController {
   }
 
   @GetMapping("/dateAndWorkStation")
-  public Reservation findByDateAndWorkStationId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                                @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+  public Reservation findByDateAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                                 @RequestParam(value = "workStationId") int workStationId) {
-    return reservationService.findByDateFromAndDateToAndWorkStationId(dateFrom, dateTo, workStationId);
+    return reservationService.findByDateAndWorkStationId(date, workStationId);
   }
 
   @GetMapping("/dateAndUser")
-  public Reservation findByDateAndUserId(@RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                         @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+  public Reservation findByDateAndUserId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                          @RequestParam(value = "userId") int userId) {
-    return reservationService.findByDateAndUserId(dateFrom, dateTo, userId);
+    return reservationService.findByDateAndUserId(date, userId);
   }
 
 }
