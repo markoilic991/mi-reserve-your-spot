@@ -11,4 +11,5 @@ public interface OfficeSpaceRepository extends JpaRepository<OfficeSpace, Intege
 
   @Query("select os from OfficeSpace os where id=:id")
   public OfficeSpace findOfficeSpaceById(@Param("id") int id);
+
 }

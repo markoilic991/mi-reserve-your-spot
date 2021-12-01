@@ -5,19 +5,26 @@ import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.repository.ReservartionRepository;
+import com.prodyna.reserveyourspot.repository.UserRepository;
+import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Validated
 public class ReservationService {
 
   private ReservartionRepository reservartionRepository;
+  private UserRepository userRepository;
+  private WorkStationRepository workStationRepository;
 
   @Autowired
   public ReservationService(ReservartionRepository reservartionRepository) {
@@ -101,6 +108,28 @@ public class ReservationService {
     return false;
   }
 
+  public List<LocalDate> dateRangeFromTo(LocalDate dateFrom, LocalDate dateTo) {
+
+    List<LocalDate> listDate = new ArrayList<LocalDate>();
+    LocalDate tmp = dateFrom;
+
+    while (tmp.isBefore(dateTo) || tmp.equals(dateTo)) {
+      listDate.add(tmp);
+      tmp = tmp.plusDays(1);
+    }
+    return listDate;
+  }
+
+  //method to write data into database by date range
+  //public List<Reservation> saveAllRevs(int userId, int workStationId, LocalDate from, LocalDate to) {
+
+    //List<Reservation> reservations = dateRangeFromTo(from, to).stream()
+            //.map(date -> new Reservation(userId, workStationId, date))
+            //.collect(Collectors.toList());
+
+    //return reservartionRepository.saveAll(reservations);
+
+  //}
 }
 
 

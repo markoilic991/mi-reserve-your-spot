@@ -39,20 +39,18 @@ public class Reservation {
   @NotNull
   private LocalDate date;
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("reservations")
   @JoinColumn(name = "user_id")
   @NotNull
   private User user;
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("reservations")
   @JoinColumn(name = "workStation_id")
   @NotNull
   private WorkStation workStation;
 
-  public Reservation(LocalDate date, int id, int workStationId) {
-  }
 
 }
 
