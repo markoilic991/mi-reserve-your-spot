@@ -43,4 +43,8 @@ public class OfficeSpace {
     this.id = id;
     this.description = description;
   }
+
+  public OfficeSpace(String description) {
+    this.description = description;
+  }
 }

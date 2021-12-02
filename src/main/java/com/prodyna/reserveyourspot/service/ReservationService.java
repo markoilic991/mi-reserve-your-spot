@@ -4,6 +4,8 @@ import com.prodyna.reserveyourspot.exception.ListOfReservationsAlreadyExistExcep
 import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
 import com.prodyna.reserveyourspot.model.Reservation;
+import com.prodyna.reserveyourspot.model.User;
+import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.ReservartionRepository;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
@@ -13,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,8 +28,10 @@ public class ReservationService {
   private WorkStationRepository workStationRepository;
 
   @Autowired
-  public ReservationService(ReservartionRepository reservartionRepository) {
+  public ReservationService(ReservartionRepository reservartionRepository, UserRepository userRepository, WorkStationRepository workStationRepository) {
     this.reservartionRepository = reservartionRepository;
+    this.userRepository = userRepository;
+    this.workStationRepository = workStationRepository;
   }
 
   public Reservation save(Reservation reservation) throws WorkStationBusyException {
@@ -121,15 +124,32 @@ public class ReservationService {
   }
 
   //method to write data into database by date range
-  //public List<Reservation> saveAllRevs(int userId, int workStationId, LocalDate from, LocalDate to) {
+  public List<Reservation> saveAllRevs(int userId, int workStationId, LocalDate from, LocalDate to) {
 
-    //List<Reservation> reservations = dateRangeFromTo(from, to).stream()
-            //.map(date -> new Reservation(userId, workStationId, date))
-            //.collect(Collectors.toList());
+    User user = userRepository.findById(userId).orElse(null);
+    WorkStation workStation = workStationRepository.findById(workStationId).orElse(null);
 
-    //return reservartionRepository.saveAll(reservations);
+    List<Reservation> reservations = dateRangeFromTo(from, to).stream()
+            .map(date -> new Reservation(date, user, workStation))
+            .collect(Collectors.toList());
 
-  //}
+    return reservartionRepository.saveAll(reservations);
+
+  }
+
+  //method to cancel/delete reservation for particular date
+  public void cancelReservation(int userId, int workStationId, LocalDate date) {
+
+    User user = userRepository.findById(userId).orElse(null);
+    WorkStation workStation = workStationRepository.findById(workStationId).orElse(null);
+
+    Reservation reservation = reservartionRepository.findByUserIdAndWorkStationIdAndDate(date, user.getId(), workStation.getId());
+    reservartionRepository.delete(reservation);
+
+    System.out.println("Reservation cancelled!!!");
+
+  }
+
 }
 
 

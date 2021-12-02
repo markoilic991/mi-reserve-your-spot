@@ -3,7 +3,6 @@ package com.prodyna.reserveyourspot.controller;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,16 +73,20 @@ public class ReservationController {
     return reservationService.findByDateAndUserId(date, userId);
   }
 
-  /*
   @PostMapping("/saveReservations")
   public List<Reservation> saveAllRevs(@RequestParam(value = "userId") int userId,
                                        @RequestParam(value = "workStationId") int workStationId,
                                        @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                       @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo){
-    return  reservationService.saveAllRevs(userId, workStationId, dateFrom, dateTo);
+                                       @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+    return reservationService.saveAllRevs(userId, workStationId, dateFrom, dateTo);
   }
 
-   */
+  @DeleteMapping("/cancelReservation")
+  public void cancelReservation(@RequestParam(value = "userId") int userId,
+                                @RequestParam(value = "workStationId") int workStationId,
+                                @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    reservationService.cancelReservation(userId, workStationId, date);
+  }
 
 }
 

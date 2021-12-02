@@ -7,10 +7,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,6 +23,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
@@ -51,7 +52,11 @@ public class Reservation {
   @NotNull
   private WorkStation workStation;
 
-
+  public Reservation(LocalDate date, User user, WorkStation workStation) {
+    this.date = date;
+    this.user = user;
+    this.workStation = workStation;
+  }
 }
 
 

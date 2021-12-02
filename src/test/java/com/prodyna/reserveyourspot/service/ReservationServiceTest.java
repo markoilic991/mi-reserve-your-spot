@@ -5,6 +5,8 @@ import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.ReservartionRepository;
+import com.prodyna.reserveyourspot.repository.UserRepository;
+import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,6 +34,12 @@ public class ReservationServiceTest {
 
   @MockBean
   private ReservartionRepository reservartionRepository;
+
+  @MockBean
+  private UserRepository userRepository;
+
+  @MockBean
+  private WorkStationRepository workStationRepository;
 
   @MockBean
   private Reservation reservation;

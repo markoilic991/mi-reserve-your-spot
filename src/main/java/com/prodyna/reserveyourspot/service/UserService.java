@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +15,6 @@ import java.util.Optional;
 public class UserService {
 
   private UserRepository userRepository;
-
-  private Validator validator;
-
-  public UserService(Validator validator) {
-    this.validator = validator;
-  }
 
   @Autowired
   public UserService(UserRepository userRepository) {
