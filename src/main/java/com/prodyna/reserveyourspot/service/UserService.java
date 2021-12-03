@@ -38,9 +38,8 @@ public class UserService {
     Optional<User> optionalUser = userRepository.findById(id);
     if (optionalUser.isPresent()) {
       return optionalUser.get();
-    } else {
-      throw new UserNotFoundException("User with id: " + id + " does not exist!");
     }
+    throw new UserNotFoundException("User with id: " + id + " does not exist!");
   }
 
   public String deleteById(int id) {

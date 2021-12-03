@@ -147,11 +147,8 @@ public class ReservationService {
               .collect(Collectors.toList());
 
       return reservartionRepository.saveAll(reservations);
-
-    } else {
-      throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
     }
-
+    throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
   }
 
   //method to cancel/delete reservation for particular date

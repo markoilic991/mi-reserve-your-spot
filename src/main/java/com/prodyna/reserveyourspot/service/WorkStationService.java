@@ -37,9 +37,8 @@ public class WorkStationService {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
     if (optionalWorkStation.isPresent()) {
       return optionalWorkStation.get();
-    } else {
-      throw new WorkStationNotFoundException("WorkStation with id: " + " does not exist!");
     }
+    throw new WorkStationNotFoundException("WorkStation with id: " + " does not exist!");
   }
 
   public String deleteById(int id) {

@@ -37,9 +37,8 @@ public class OfficeRoomService {
     Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
     if (optionalOfficeRoom.isPresent()) {
       return optionalOfficeRoom.get();
-    } else {
-      throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
     }
+    throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
   }
 
   public String deleteById(int id) {
