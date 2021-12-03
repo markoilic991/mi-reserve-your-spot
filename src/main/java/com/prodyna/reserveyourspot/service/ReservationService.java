@@ -3,6 +3,7 @@ package com.prodyna.reserveyourspot.service;
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.ListOfReservationsAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
+import com.prodyna.reserveyourspot.exception.ReservationNotFoundException;
 import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
@@ -60,8 +61,14 @@ public class ReservationService {
     return reservations;
   }
 
-  public Optional<Reservation> findById(int id) {
-    return reservartionRepository.findById(id);
+  public Reservation findById(int id) {
+    Optional<Reservation> optionalReservation = reservartionRepository.findById(id);
+    if (optionalReservation.isPresent()) {
+      return optionalReservation.get();
+    } else {
+      throw new ReservationNotFoundException("Reservation with id: " + " does not exist!");
+    }
+
   }
 
   public String deleteById(int id) {
