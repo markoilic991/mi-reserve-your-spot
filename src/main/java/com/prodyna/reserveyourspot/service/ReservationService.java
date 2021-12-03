@@ -1,10 +1,9 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.ListOfReservationsAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
-import com.prodyna.reserveyourspot.exception.UserNotFoundException;
 import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
-import com.prodyna.reserveyourspot.exception.WorkStationNotFoundException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
@@ -133,24 +132,18 @@ public class ReservationService {
   public List<Reservation> saveReservations(int userId, int workStationId, LocalDate from, LocalDate to) {
 
     Optional<User> optionalUser = userRepository.findById(userId);
-    if (optionalUser.isPresent()) {
-      optionalUser.get();
-    } else {
-      throw new UserNotFoundException("User with id: " + userId + " does not exist in database!");
-    }
-
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
-    if (optionalWorkStation.isPresent()) {
-      optionalWorkStation.get();
+    if (optionalUser.isPresent() && optionalWorkStation.isPresent()) {
+
+      List<Reservation> reservations = dateRangeFromTo(from, to).stream()
+              .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
+              .collect(Collectors.toList());
+
+      return reservartionRepository.saveAll(reservations);
+
     } else {
-      throw new WorkStationNotFoundException("WorkStation with id: " + workStationId + " does not exist in database!");
+      throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
     }
-
-    List<Reservation> reservations = dateRangeFromTo(from, to).stream()
-            .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
-            .collect(Collectors.toList());
-
-    return reservartionRepository.saveAll(reservations);
 
   }
 

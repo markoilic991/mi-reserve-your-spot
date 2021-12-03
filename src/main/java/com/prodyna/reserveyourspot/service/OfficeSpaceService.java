@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,11 @@ public class OfficeSpaceService {
 
   public OfficeSpace findOfficeSpaceById(int id) {
     Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
-    return optionalOfficeSpace.get();
+    if (optionalOfficeSpace.isPresent()) {
+      return optionalOfficeSpace.get();
+    } else {
+      throw new EntityNotFoundException("OfficeSpace with id: " + " does not exist!");
+    }
   }
 
   public String deleteById(int id) {

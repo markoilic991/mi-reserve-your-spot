@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.UserNotFoundException;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,11 @@ public class UserService {
 
   public User findById(int id) {
     Optional<User> optionalUser = userRepository.findById(id);
-    return optionalUser.get();
+    if (optionalUser.isPresent()) {
+      return optionalUser.get();
+    } else {
+      throw new UserNotFoundException("User with id: " + id + " does not exist!");
+    }
   }
 
   public String deleteById(int id) {
