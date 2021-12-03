@@ -78,7 +78,7 @@ public class WorkStationControllerTest {
     workStationNew.setUniqueCode("PD002211");
     workStationNew.setDescription("Mac");
 
-    Mockito.when(workStationService.findById(anyInt())).thenReturn(java.util.Optional.of(workStationNew));
+    Mockito.when(workStationService.findById(anyInt())).thenReturn((workStationNew));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/workStations/2"))
             .andDo(print())

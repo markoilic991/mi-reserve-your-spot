@@ -32,8 +32,9 @@ public class WorkStationService {
     return workStationRepository.findAll();
   }
 
-  public Optional<WorkStation> findById(int id) {
-    return workStationRepository.findById(id);
+  public WorkStation findById(int id) {
+    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
+    return optionalWorkStation.get();
   }
 
   public String deleteById(int id) {

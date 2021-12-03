@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Validated
@@ -44,7 +43,7 @@ public class WorkStationController {
   }
 
   @GetMapping("/{id}")
-  public Optional<WorkStation> findById(@PathVariable int id) {
+  public WorkStation findById(@PathVariable int id) {
     return workStationService.findById(id);
   }
 

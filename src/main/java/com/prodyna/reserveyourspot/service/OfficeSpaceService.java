@@ -30,8 +30,9 @@ public class OfficeSpaceService {
     return officeSpaceRepository.findAll();
   }
 
-  public Optional<OfficeSpace> findOfficeSpaceById(int id) {
-    return officeSpaceRepository.findById(id);
+  public OfficeSpace findOfficeSpaceById(int id) {
+    Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
+    return optionalOfficeSpace.get();
   }
 
   public String deleteById(int id) {

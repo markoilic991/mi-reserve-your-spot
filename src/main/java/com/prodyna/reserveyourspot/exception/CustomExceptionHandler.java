@@ -155,6 +155,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
+
+  @ExceptionHandler(WorkStationNotFoundException.class)
+  public ResponseEntity<ErrorDetails> WorkStationNotFoundExceptionHandler(WorkStationNotFoundException e, ServletWebRequest request) {
+
+    ErrorDetails errorDetails = new ErrorDetails(
+            HttpStatus.BAD_REQUEST,
+            e.getMessage(),
+            ZonedDateTime.now(),
+            request.getDescription(true));
+
+    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+  }
 }
 
 

@@ -1,6 +1,5 @@
 package com.prodyna.reserveyourspot.model;
 
-import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +32,6 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @SerializedName("id")
   private int id;
 
   @NotBlank(message = "User name must have a value!")

@@ -2,13 +2,16 @@ package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.ListOfReservationsAlreadyExistException;
 import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
+import com.prodyna.reserveyourspot.exception.UserNotFoundException;
 import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
+import com.prodyna.reserveyourspot.exception.WorkStationNotFoundException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.ReservartionRepository;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Validated
 public class ReservationService {
@@ -28,7 +32,9 @@ public class ReservationService {
   private WorkStationRepository workStationRepository;
 
   @Autowired
-  public ReservationService(ReservartionRepository reservartionRepository, UserRepository userRepository, WorkStationRepository workStationRepository) {
+  public ReservationService(ReservartionRepository reservartionRepository,
+                            UserRepository userRepository,
+                            WorkStationRepository workStationRepository) {
     this.reservartionRepository = reservartionRepository;
     this.userRepository = userRepository;
     this.workStationRepository = workStationRepository;
@@ -124,13 +130,24 @@ public class ReservationService {
   }
 
   //method to write data into database by date range
-  public List<Reservation> saveAllRevs(int userId, int workStationId, LocalDate from, LocalDate to) {
+  public List<Reservation> saveReservations(int userId, int workStationId, LocalDate from, LocalDate to) {
 
-    User user = userRepository.findById(userId).orElse(null);
-    WorkStation workStation = workStationRepository.findById(workStationId).orElse(null);
+    Optional<User> optionalUser = userRepository.findById(userId);
+    if (optionalUser.isPresent()) {
+      optionalUser.get();
+    } else {
+      throw new UserNotFoundException("User with id: " + userId + " does not exist in database!");
+    }
+
+    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
+    if (optionalWorkStation.isPresent()) {
+      optionalWorkStation.get();
+    } else {
+      throw new WorkStationNotFoundException("WorkStation with id: " + workStationId + " does not exist in database!");
+    }
 
     List<Reservation> reservations = dateRangeFromTo(from, to).stream()
-            .map(date -> new Reservation(date, user, workStation))
+            .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
             .collect(Collectors.toList());
 
     return reservartionRepository.saveAll(reservations);
@@ -140,13 +157,10 @@ public class ReservationService {
   //method to cancel/delete reservation for particular date
   public void cancelReservation(int userId, int workStationId, LocalDate date) {
 
-    User user = userRepository.findById(userId).orElse(null);
-    WorkStation workStation = workStationRepository.findById(workStationId).orElse(null);
-
-    Reservation reservation = reservartionRepository.findByUserIdAndWorkStationIdAndDate(date, user.getId(), workStation.getId());
+    Reservation reservation = reservartionRepository.findByUserIdAndWorkStationIdAndDate(date, userId, workStationId);
     reservartionRepository.delete(reservation);
 
-    System.out.println("Reservation cancelled!!!");
+    log.info("Reservation cancelled!!!");
 
   }
 

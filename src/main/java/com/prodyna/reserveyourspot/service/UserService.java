@@ -33,8 +33,9 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public Optional<User> findById(int id) {
-    return userRepository.findById((int) id);
+  public User findById(int id) {
+    Optional<User> optionalUser = userRepository.findById(id);
+    return optionalUser.get();
   }
 
   public String deleteById(int id) {

@@ -73,15 +73,15 @@ public class ReservationController {
     return reservationService.findByDateAndUserId(date, userId);
   }
 
-  @PostMapping("/saveReservations")
-  public List<Reservation> saveAllRevs(@RequestParam(value = "userId") int userId,
-                                       @RequestParam(value = "workStationId") int workStationId,
-                                       @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
-                                       @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
-    return reservationService.saveAllRevs(userId, workStationId, dateFrom, dateTo);
+  @PostMapping("/save")
+  public List<Reservation> saveReservations(@RequestParam(value = "userId") int userId,
+                                            @RequestParam(value = "workStationId") int workStationId,
+                                            @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                            @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+    return reservationService.saveReservations(userId, workStationId, dateFrom, dateTo);
   }
 
-  @DeleteMapping("/cancelReservation")
+  @DeleteMapping("/cancel")
   public void cancelReservation(@RequestParam(value = "userId") int userId,
                                 @RequestParam(value = "workStationId") int workStationId,
                                 @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {

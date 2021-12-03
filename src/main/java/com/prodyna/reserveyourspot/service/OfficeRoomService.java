@@ -32,8 +32,9 @@ public class OfficeRoomService {
     return officeRoomRepository.findAll();
   }
 
-  public Optional<OfficeRoom> findById(int id) {
-    return officeRoomRepository.findById(id);
+  public OfficeRoom findById(int id) {
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
+    return optionalOfficeRoom.get();
   }
 
   public String deleteById(int id) {

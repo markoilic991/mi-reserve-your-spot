@@ -57,6 +57,7 @@ public class Reservation {
     this.user = user;
     this.workStation = workStation;
   }
+
 }
 
 

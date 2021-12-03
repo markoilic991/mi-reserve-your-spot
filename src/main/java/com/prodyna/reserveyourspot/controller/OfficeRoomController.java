@@ -16,7 +16,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @Validated
@@ -46,7 +45,7 @@ public class OfficeRoomController {
   }
 
   @GetMapping("/{id}")
-  public Optional<OfficeRoom> findById(@PathVariable @Min(1) @Max(4) int id) {
+  public OfficeRoom findById(@PathVariable @Min(1) @Max(4) int id) {
     return officeRoomService.findById(id);
   }
 
