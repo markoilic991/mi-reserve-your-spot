@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Optional.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -73,7 +74,7 @@ public class UserControllerTest {
     userNew.setName("Ilija Milic");
     userNew.setEmail("ilija.ilic@prodyna.com");
 
-    Mockito.when(userService.findById((int) anyInt())).thenReturn(java.util.Optional.of(userNew));
+    Mockito.when(userService.findById((int) anyInt())).thenReturn(userNew);
 
     mockMvc.perform(MockMvcRequestBuilders.get("/users/2"))
             .andDo(print())

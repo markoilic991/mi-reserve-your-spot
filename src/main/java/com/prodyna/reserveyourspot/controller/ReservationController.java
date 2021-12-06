@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/reservations")
@@ -47,7 +46,7 @@ public class ReservationController {
   }
 
   @GetMapping("/{id}")
-  public Optional<Reservation> findById(@PathVariable int id) {
+  public Reservation findById(@PathVariable int id) {
     return reservationService.findById(id);
   }
 
@@ -71,6 +70,21 @@ public class ReservationController {
   public Reservation findByDateAndUserId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
                                          @RequestParam(value = "userId") int userId) {
     return reservationService.findByDateAndUserId(date, userId);
+  }
+
+  @PostMapping("/save")
+  public List<Reservation> saveReservations(@RequestParam(value = "userId") int userId,
+                                            @RequestParam(value = "workStationId") int workStationId,
+                                            @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                            @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+    return reservationService.saveReservations(userId, workStationId, dateFrom, dateTo);
+  }
+
+  @DeleteMapping("/cancel")
+  public void cancelReservation(@RequestParam(value = "userId") int userId,
+                                @RequestParam(value = "workStationId") int workStationId,
+                                @RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    reservationService.cancelReservation(userId, workStationId, date);
   }
 
 }

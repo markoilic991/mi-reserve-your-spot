@@ -50,7 +50,7 @@ public class OfficeRoom {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<WorkStation> workStations = new ArrayList<>();
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("rooms")
   @JoinColumn(name = "officeSpace_Id")
   private OfficeSpace officeSpace;

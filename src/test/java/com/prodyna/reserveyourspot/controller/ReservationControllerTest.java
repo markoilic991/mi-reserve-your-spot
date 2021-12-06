@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
-import com.prodyna.reserveyourspot.repository.ReservartionRepository;
+import com.prodyna.reserveyourspot.repository.ReservationRepository;
 import com.prodyna.reserveyourspot.service.ReservationService;
 import com.prodyna.reserveyourspot.service.UserService;
 import com.prodyna.reserveyourspot.service.WorkStationService;
@@ -47,7 +47,7 @@ public class ReservationControllerTest {
   private Reservation reservation;
 
   @MockBean
-  private ReservartionRepository reservartionRepository;
+  private ReservationRepository reservationRepository;
 
   @MockBean
   private ReservationService reservationService;
@@ -94,7 +94,7 @@ public class ReservationControllerTest {
     reservation.setUser(new User(2, "Miroslav Perovic", "miroslav@gmail.com"));
     reservation.setWorkStation(new WorkStation(3, "PD0003", "Linux"));
 
-    Mockito.when(reservationService.findById((int) anyInt())).thenReturn(java.util.Optional.of(reservation));
+    Mockito.when(reservationService.findById((int) anyInt())).thenReturn((reservation));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/reservations/2"))
             .andDo(print())

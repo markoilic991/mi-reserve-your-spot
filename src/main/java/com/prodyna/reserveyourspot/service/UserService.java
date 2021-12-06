@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.UserNotFoundException;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,12 +16,6 @@ import java.util.Optional;
 public class UserService {
 
   private UserRepository userRepository;
-
-  private Validator validator;
-
-  public UserService(Validator validator) {
-    this.validator = validator;
-  }
 
   @Autowired
   public UserService(UserRepository userRepository) {
@@ -40,8 +34,12 @@ public class UserService {
     return userRepository.findAll();
   }
 
-  public Optional<User> findById(int id) {
-    return userRepository.findById((int) id);
+  public User findById(int id) {
+    Optional<User> optionalUser = userRepository.findById(id);
+    if (optionalUser.isPresent()) {
+      return optionalUser.get();
+    }
+    throw new UserNotFoundException("User with id: " + id + " does not exist!");
   }
 
   public String deleteById(int id) {

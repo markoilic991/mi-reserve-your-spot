@@ -1,11 +1,13 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OfficeSpaceService {
@@ -29,7 +31,16 @@ public class OfficeSpaceService {
     return officeSpaceRepository.findAll();
   }
 
-  public OfficeSpace findOfficeSpaceById(int id){
-    return officeSpaceRepository.findOfficeSpaceById(id);
+  public OfficeSpace findOfficeSpaceById(int id) {
+    Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
+    if (optionalOfficeSpace.isPresent()) {
+      return optionalOfficeSpace.get();
+    }
+    throw new EntityNotFoundException("OfficeSpace with id: " + " does not exist!");
+  }
+
+  public String deleteById(int id) {
+    officeSpaceRepository.deleteById((int) id);
+    return "OfficeSpace deleted!";
   }
 }

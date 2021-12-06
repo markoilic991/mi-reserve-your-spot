@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -44,7 +43,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  public Optional<User> findById(@PathVariable int id) {
+  public User findById(@PathVariable int id) {
     return userService.findById(id);
   }
 

@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.WorkStationNotFoundException;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,12 @@ public class WorkStationService {
     return workStationRepository.findAll();
   }
 
-  public Optional<WorkStation> findById(int id) {
-    return workStationRepository.findById(id);
+  public WorkStation findById(int id) {
+    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
+    if (optionalWorkStation.isPresent()) {
+      return optionalWorkStation.get();
+    }
+    throw new WorkStationNotFoundException("WorkStation with id: " + " does not exist!");
   }
 
   public String deleteById(int id) {

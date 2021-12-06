@@ -73,7 +73,7 @@ public class OfficeRoomControllerTest {
     officeRoomNew.setName("JAVA");
     officeRoomNew.setOrderNo(23);
 
-    Mockito.when(officeRoomService.findById(anyInt())).thenReturn(java.util.Optional.of(officeRoomNew));
+    Mockito.when(officeRoomService.findById(anyInt())).thenReturn((officeRoomNew));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/rooms/1"))
             .andDo(print())

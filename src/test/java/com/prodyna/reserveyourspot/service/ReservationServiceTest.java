@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
-import com.prodyna.reserveyourspot.repository.ReservartionRepository;
+import com.prodyna.reserveyourspot.repository.ReservationRepository;
+import com.prodyna.reserveyourspot.repository.UserRepository;
+import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -31,7 +33,13 @@ public class ReservationServiceTest {
   private MockMvc mockMvc;
 
   @MockBean
-  private ReservartionRepository reservartionRepository;
+  private ReservationRepository reservationRepository;
+
+  @MockBean
+  private UserRepository userRepository;
+
+  @MockBean
+  private WorkStationRepository workStationRepository;
 
   @MockBean
   private Reservation reservation;
@@ -49,7 +57,7 @@ public class ReservationServiceTest {
             (2, parseDate, new User(2, "Milos Mikic", "milos@gmail.com"),
                     new WorkStation(3, "PD0003", "Mac"));
 
-    Mockito.when(reservartionRepository.findAll())
+    Mockito.when(reservationRepository.findAll())
             .thenReturn((List<Reservation>) Stream.of(reservation1, reservation2)
                     .collect(Collectors.toList()));
 
@@ -70,7 +78,7 @@ public class ReservationServiceTest {
 
     reservationService.findById(reservation1.getId());
 
-    Mockito.verify(reservartionRepository, Mockito.times(1)).findById(reservation1.getId());
+    Mockito.verify(reservationRepository, Mockito.times(1)).findById(reservation1.getId());
   }
 
   @Test
@@ -85,7 +93,7 @@ public class ReservationServiceTest {
 
     reservationService.deleteById(reservation1.getId());
 
-    Mockito.verify(reservartionRepository, Mockito.times(1)).deleteById(reservation1.getId());
+    Mockito.verify(reservationRepository, Mockito.times(1)).deleteById(reservation1.getId());
   }
 
   @Test
@@ -100,7 +108,7 @@ public class ReservationServiceTest {
 
     reservationService.findByDateAndWorkStationId(reservation1.getDate(), reservation1.getWorkStation().getId());
 
-    Mockito.verify(reservartionRepository, Mockito.times(1))
+    Mockito.verify(reservationRepository, Mockito.times(1))
             .findByDateAndWorkStationId(reservation1.getDate(), reservation1.getWorkStation().getId());
 
   }

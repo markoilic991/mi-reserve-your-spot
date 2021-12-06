@@ -45,7 +45,7 @@ public class WorkStation {
   @NotNull
   private String description;
 
-  @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("workStations")
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;

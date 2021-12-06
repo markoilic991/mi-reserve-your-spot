@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,12 @@ public class OfficeRoomService {
     return officeRoomRepository.findAll();
   }
 
-  public Optional<OfficeRoom> findById(int id) {
-    return officeRoomRepository.findById(id);
+  public OfficeRoom findById(int id) {
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
+    if (optionalOfficeRoom.isPresent()) {
+      return optionalOfficeRoom.get();
+    }
+    throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
   }
 
   public String deleteById(int id) {

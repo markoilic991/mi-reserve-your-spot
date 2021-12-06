@@ -20,7 +20,7 @@ public class GetWorkStationsByOfficeSpaceController {
   }
 
   @GetMapping("/{id}")
-  public OfficeSpace getWorkStationsByOfficeSpace(@PathVariable("id") int id){
+  public OfficeSpace getWorkStationsByOfficeSpace(@PathVariable("id") int id) {
     return officeSpaceService.findOfficeSpaceById(id);
   }
 
