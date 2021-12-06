@@ -8,7 +8,7 @@ import com.prodyna.reserveyourspot.exception.WorkStationBusyException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
-import com.prodyna.reserveyourspot.repository.ReservartionRepository;
+import com.prodyna.reserveyourspot.repository.ReservationRepository;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,15 +27,15 @@ import java.util.stream.Collectors;
 @Validated
 public class ReservationService {
 
-  private ReservartionRepository reservartionRepository;
+  private ReservationRepository reservationRepository;
   private UserRepository userRepository;
   private WorkStationRepository workStationRepository;
 
   @Autowired
-  public ReservationService(ReservartionRepository reservartionRepository,
+  public ReservationService(ReservationRepository reservationRepository,
                             UserRepository userRepository,
                             WorkStationRepository workStationRepository) {
-    this.reservartionRepository = reservartionRepository;
+    this.reservationRepository = reservationRepository;
     this.userRepository = userRepository;
     this.workStationRepository = workStationRepository;
   }
@@ -44,7 +44,7 @@ public class ReservationService {
     if (checkIfReservationExist(reservation)) {
       throw new ReservationAlreadyExistException("Reservation already exists in database!!!");
     } else {
-      return reservartionRepository.save(reservation);
+      return reservationRepository.save(reservation);
     }
   }
 
@@ -52,40 +52,39 @@ public class ReservationService {
     if (checkIfReservationsExist(revs)) {
       throw new ListOfReservationsAlreadyExistException("Reservations already exist in database!!!");
     } else {
-      return reservartionRepository.saveAll(revs);
+      return reservationRepository.saveAll(revs);
     }
   }
 
   public List<Reservation> findAll() {
-    List<Reservation> reservations = reservartionRepository.findAll();
+    List<Reservation> reservations = reservationRepository.findAll();
     return reservations;
   }
 
   public Reservation findById(int id) {
-    Optional<Reservation> optionalReservation = reservartionRepository.findById(id);
+    Optional<Reservation> optionalReservation = reservationRepository.findById(id);
     if (optionalReservation.isPresent()) {
       return optionalReservation.get();
-    } else {
-      throw new ReservationNotFoundException("Reservation with id: " + " does not exist!");
     }
+      throw new ReservationNotFoundException("Reservation with id: " + " does not exist!");
 
   }
 
   public String deleteById(int id) {
-    reservartionRepository.deleteById((int) id);
+    reservationRepository.deleteById((int) id);
     return "Reservations deleted!";
   }
 
   public List<Reservation> findAllReservationsByDateRange(LocalDate dateFrom, LocalDate dateTo) {
-    return reservartionRepository.findAllReservationByDateRange(dateFrom, dateTo);
+    return reservationRepository.findAllReservationByDateRange(dateFrom, dateTo);
   }
 
   public Reservation findByDateAndWorkStationId(LocalDate date, int workStationId) {
-    return reservartionRepository.findByDateAndWorkStationId(date, workStationId);
+    return reservationRepository.findByDateAndWorkStationId(date, workStationId);
   }
 
   public Reservation findByDateAndUserId(LocalDate date, int userId) {
-    return reservartionRepository.findByDateAndUserId(date, userId);
+    return reservationRepository.findByDateAndUserId(date, userId);
   }
 
   public boolean checkIfReservationExist(Reservation reservation) {
@@ -95,8 +94,8 @@ public class ReservationService {
     int workStationId = reservation.getWorkStation().getId();
     boolean reservationExist = true;
 
-    Optional<Reservation> newReservation1 = Optional.ofNullable(reservartionRepository.findByDateAndWorkStationId(date, workStationId));
-    Optional<Reservation> newReservation2 = Optional.ofNullable(reservartionRepository.findByDateAndUserId(date, userId));
+    Optional<Reservation> newReservation1 = Optional.ofNullable(reservationRepository.findByDateAndWorkStationId(date, workStationId));
+    Optional<Reservation> newReservation2 = Optional.ofNullable(reservationRepository.findByDateAndUserId(date, userId));
 
     if (newReservation1.isPresent()) {
       return reservationExist;
@@ -115,7 +114,7 @@ public class ReservationService {
       reservation = Optional.ofNullable(reservations.get(i));
     }
 
-    reservation = Optional.ofNullable(reservartionRepository.findByDateAndWorkStationId(reservation.get().getDate(), reservation.get().getWorkStation().getId()));
+    reservation = Optional.ofNullable(reservationRepository.findByDateAndWorkStationId(reservation.get().getDate(), reservation.get().getWorkStation().getId()));
 
     if (reservation.isPresent()) {
       return reservationsExist;
@@ -146,7 +145,7 @@ public class ReservationService {
               .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
               .collect(Collectors.toList());
 
-      return reservartionRepository.saveAll(reservations);
+      return reservationRepository.saveAll(reservations);
     }
     throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
   }
@@ -154,8 +153,8 @@ public class ReservationService {
   //method to cancel/delete reservation for particular date
   public void cancelReservation(int userId, int workStationId, LocalDate date) {
 
-    Reservation reservation = reservartionRepository.findByUserIdAndWorkStationIdAndDate(date, userId, workStationId);
-    reservartionRepository.delete(reservation);
+    Reservation reservation = reservationRepository.findByUserIdAndWorkStationIdAndDate(date, workStationId, userId);
+    reservationRepository.delete(reservation);
 
     log.info("Reservation cancelled!!!");
 
