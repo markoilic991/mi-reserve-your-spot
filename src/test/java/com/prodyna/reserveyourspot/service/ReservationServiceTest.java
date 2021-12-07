@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -71,14 +72,16 @@ public class ReservationServiceTest {
     String date = "2021-12-30";
     LocalDate parseDate = LocalDate.parse(date);
 
-
-    Reservation reservation1 = new Reservation
+    Optional<Reservation> reservation1 = Optional.of(new Reservation
             (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001", "Linux"));
+                    new WorkStation(1, "PD0001", "Linux")));
 
-    reservationService.findById(reservation1.getId());
+    Optional<Reservation> optionalReservation = reservationRepository.findById(reservation1.get().getId());
+    if (optionalReservation.isPresent()) {
+      optionalReservation.get();
+    }
 
-    Mockito.verify(reservationRepository, Mockito.times(1)).findById(reservation1.getId());
+    Mockito.verify(reservationRepository, Mockito.times(1)).findById(reservation1.get().getId());
   }
 
   @Test
@@ -110,6 +113,23 @@ public class ReservationServiceTest {
 
     Mockito.verify(reservationRepository, Mockito.times(1))
             .findByDateAndWorkStationId(reservation1.getDate(), reservation1.getWorkStation().getId());
+
+  }
+
+  @Test
+  public void should_Cancel_Reservation_By_Date_And_User_Id_And_WorkStation_Id() {
+
+    String date = "2021-12-30";
+    LocalDate parseDate = LocalDate.parse(date);
+
+    Reservation reservation1 = new Reservation
+            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
+                    new WorkStation(1, "PD0001", "Linux"));
+
+    reservationService.cancelReservation(reservation1.getUser().getId(), reservation1.getWorkStation().getId(), reservation1.getDate());
+
+    Mockito.verify(reservationRepository, Mockito.times(1))
+            .deleteByDateAndUserIdAndWorkStationId(reservation1.getDate(), reservation1.getUser().getId(), reservation1.getWorkStation().getId());
 
   }
 }

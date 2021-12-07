@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -53,10 +54,14 @@ public class UserServiceTest {
   @Test
   public void should_Get_User_By_Id() {
 
-    User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
-    userService.findById(userNew.getId());
+    Optional<User> userNew = Optional.of(new User(1, "Marko Ilic", "marko.ilic@prodyna.com"));
+    Optional<User> optionalUser = userRepository.findById(userNew.get().getId());
 
-    Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.getId());
+    if (optionalUser.isPresent()) {
+      optionalUser.get();
+    }
+
+    Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.get().getId());
 
   }
 

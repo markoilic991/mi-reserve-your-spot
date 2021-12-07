@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,10 +51,14 @@ public class WorkStationServiceTest {
   @Test
   public void should_Get_Station_By_Id() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
-    workStationService.findById(workStation1.getId());
+    Optional<WorkStation> workStation1 = Optional.of(new WorkStation(1, "PD002211", "Work Station"));
+    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStation1.get().getId());
 
-    Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.getId());
+    if (optionalWorkStation.isPresent()) {
+      optionalWorkStation.get();
+    }
+
+    Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.get().getId());
   }
 
   @Test

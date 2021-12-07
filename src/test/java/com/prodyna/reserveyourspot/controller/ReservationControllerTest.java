@@ -141,4 +141,5 @@ public class ReservationControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.post("/reservations/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());
   }
+
 }

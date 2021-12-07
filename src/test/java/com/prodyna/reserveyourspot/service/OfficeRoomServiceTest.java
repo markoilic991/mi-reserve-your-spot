@@ -12,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -52,11 +53,14 @@ public class OfficeRoomServiceTest {
   @Test
   public void should_Find_Room_By_Id() {
 
-    OfficeRoom officeRoom = new OfficeRoom(1, "JAVA", 2);
-    officeRoomService.findById(officeRoom.getId());
+    Optional<OfficeRoom> officeRoom = Optional.of(new OfficeRoom(1, "JAVA", 2));
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(officeRoom.get().getId());
 
-    Mockito.verify(officeRoomRepository, Mockito.times(1)).findById(officeRoom.getId());
+    if (optionalOfficeRoom.isPresent()) {
+      optionalOfficeRoom.get();
+    }
 
+    Mockito.verify(officeRoomRepository, Mockito.times(1)).findById(officeRoom.get().getId());
 
   }
 
