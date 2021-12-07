@@ -66,7 +66,7 @@ public class ReservationService {
     if (optionalReservation.isPresent()) {
       return optionalReservation.get();
     }
-      throw new ReservationNotFoundException("Reservation with id: " + " does not exist!");
+    throw new ReservationNotFoundException("Reservation with id: " + " does not exist!");
 
   }
 
@@ -153,8 +153,7 @@ public class ReservationService {
   //method to cancel/delete reservation for particular date
   public void cancelReservation(int userId, int workStationId, LocalDate date) {
 
-    Reservation reservation = reservationRepository.findByUserIdAndWorkStationIdAndDate(date, workStationId, userId);
-    reservationRepository.delete(reservation);
+    reservationRepository.deleteByDateAndUserIdAndWorkStationId(date, userId, workStationId);
 
     log.info("Reservation cancelled!!!");
 
