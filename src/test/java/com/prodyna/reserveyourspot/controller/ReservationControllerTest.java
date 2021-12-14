@@ -8,9 +8,12 @@ import com.prodyna.reserveyourspot.repository.ReservationRepository;
 import com.prodyna.reserveyourspot.service.ReservationService;
 import com.prodyna.reserveyourspot.service.UserService;
 import com.prodyna.reserveyourspot.service.WorkStationService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,8 +24,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -61,22 +65,45 @@ public class ReservationControllerTest {
   @MockBean
   private User user;
 
+  Reservation newReservation;
+  Reservation newReservation1;
+
+  @BeforeEach
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+    User user = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
+    WorkStation workStation = new WorkStation(1, "PD0001", "Mac");
+
+    newReservation = new Reservation();
+    newReservation.setId(1);
+    String date = "2021-12-30";
+    LocalDate parseDate = LocalDate.parse(date);
+    newReservation.setDate(parseDate);
+    newReservation.setUser(user);
+    newReservation.setWorkStation(workStation);
+    newReservation1 = new Reservation();
+    newReservation1.setId(2);
+    String date1 = "2022-12-30";
+    LocalDate parseDate1 = LocalDate.parse(date1);
+    newReservation1.setDate(parseDate1);
+    newReservation1.setUser(user);
+    newReservation1.setWorkStation(workStation);
+
+  }
+
+  @AfterEach
+  public void cleanUp() {
+
+    reservationRepository.findAll();
+    reservationRepository.deleteAll();
+
+  }
+
   @Test
   public void should_Find_All_Reservations() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse(date);
-    List<Reservation> reservations = new ArrayList<>();
-    reservations
-            .add(new Reservation
-                    (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
-                            new WorkStation(1, "PD0001", "Windows")));
-    reservations
-            .add(new Reservation
-                    (2, parseDate, new User(2, "Miroslav Perovic", "miroslav.perovic@gmail.com"),
-                            new WorkStation(4, "PD0004", "Linux")));
-
-    Mockito.when(reservationService.findAll()).thenReturn(reservations);
+    Mockito.when(reservationService.findAll())
+            .thenReturn((List<Reservation>) Stream.of(newReservation, newReservation1).collect(Collectors.toList()));
 
     mockMvc.perform(get("/reservations/")).andDo(print()).andExpect(status().isOk());
   }
@@ -84,19 +111,9 @@ public class ReservationControllerTest {
   @Test
   public void should_Find_Reservation_By_Id() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse(date);
+    Mockito.when(reservationService.findById((int) anyInt())).thenReturn((newReservation));
 
-    Reservation reservation = new Reservation
-            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001", "Windows"));
-
-    reservation.setUser(new User(2, "Miroslav Perovic", "miroslav@gmail.com"));
-    reservation.setWorkStation(new WorkStation(3, "PD0003", "Linux"));
-
-    Mockito.when(reservationService.findById((int) anyInt())).thenReturn((reservation));
-
-    mockMvc.perform(MockMvcRequestBuilders.get("/reservations/2"))
+    mockMvc.perform(MockMvcRequestBuilders.get("/reservations/1"))
             .andDo(print())
             .andExpect(status().isOk());
   }
@@ -104,21 +121,10 @@ public class ReservationControllerTest {
   @Test
   public void should_Add_New_Reservation() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse(date);
-
-    Reservation reservation = new Reservation
-            (1, parseDate, new User(1, "Marko Ilic", "marko@gmail.com"),
-                    new WorkStation(1, "PD0001", "Windows"));
-
-    reservation.setId(1);
-    reservation.setUser(new User(2, "Miroslav Perovic", "miroslav@gmail.com"));
-    reservation.setWorkStation(new WorkStation(3, "PD0003", "Linux"));
-
-    Mockito.when(reservationService.save(any(Reservation.class))).thenReturn(reservation);
+    Mockito.when(reservationService.save(any(Reservation.class))).thenReturn(newReservation);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/reservations/")
-                    .content(objectMapper.writeValueAsString(reservation))
+                    .content(objectMapper.writeValueAsString(newReservation))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -129,14 +135,9 @@ public class ReservationControllerTest {
   @Test
   public void when_User_Is_Invalid_Then_Reservation_Is_Invalid_Return_Status400() throws Exception {
 
-    String date = "2021-12-30";
-    LocalDate parseDate = LocalDate.parse(date);
+    newReservation.getUser().setEmail("asdasdafrfsadsdfasda");
 
-    Reservation reservation = new Reservation
-            (1, parseDate, new User("", "saasdasdasdasdasd"),
-                    new WorkStation(1, "PD0001", "Linux"));
-
-    String body = objectMapper.writeValueAsString(new User("", "saasdasdasdasdasd"));
+    String body = objectMapper.writeValueAsString(newReservation.getUser());
 
     mockMvc.perform(MockMvcRequestBuilders.post("/reservations/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());

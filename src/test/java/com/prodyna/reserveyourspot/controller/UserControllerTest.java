@@ -5,10 +5,13 @@ import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import com.prodyna.reserveyourspot.service.UserService;
 import org.junit.Rule;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,10 +21,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static java.util.Optional.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -42,9 +45,11 @@ public class UserControllerTest {
   private ObjectMapper objectMapper;
 
   @MockBean
+  @Autowired
   private UserService userService;
 
   @MockBean
+  @Autowired
   private UserRepository userRepository;
 
   @MockBean
@@ -53,15 +58,37 @@ public class UserControllerTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
+  User newUser;
+  User newUser1;
+
+  @BeforeEach
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+
+    newUser = new User();
+    newUser.setId(1);
+    newUser.setName("Marko Ilic");
+    newUser.setEmail("marko.ilic@prodyna.com");
+    newUser1 = new User();
+    newUser1.setId(2);
+    newUser1.setName("Stefan Markovic");
+    newUser1.setEmail("stefan.markovic@gmail.com");
+
+  }
+
+  @AfterEach
+  public void cleanUp() {
+
+    userRepository.findAll();
+    userRepository.deleteAll();
+
+  }
+
   @Test
   public void should_Find_All_Users() throws Exception {
 
-    List<User> usersNewList = new ArrayList<>();
-    usersNewList.add(new User(1, "Marko", "marko.ilic@prodyna"));
-    usersNewList.add(new User(2, "Milos", "milos.ilic@prodyna"));
-    usersNewList.add(new User(3, "Sloba", "sloba.ilic@prodyna"));
-
-    Mockito.when(userService.findAll()).thenReturn(usersNewList);
+    Mockito.when(userService.findAll())
+            .thenReturn((List<User>) Stream.of(newUser, newUser1).collect(Collectors.toList()));
 
     mockMvc.perform(get("/users/")).andDo(print()).andExpect(status().isOk());
 
@@ -70,45 +97,33 @@ public class UserControllerTest {
   @Test
   public void should_Find_User_By_Id() throws Exception {
 
-    User userNew = new User(1, "Marko", "marko.ilic@prodyna");
-    userNew.setName("Ilija Milic");
-    userNew.setEmail("ilija.ilic@prodyna.com");
+    Mockito.when(userService.findById((int) anyInt())).thenReturn(newUser);
 
-    Mockito.when(userService.findById((int) anyInt())).thenReturn(userNew);
-
-    mockMvc.perform(MockMvcRequestBuilders.get("/users/2"))
+    mockMvc.perform(MockMvcRequestBuilders.get("/users/1"))
             .andDo(print())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Ilija Milic"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("ilija.ilic@prodyna.com"))
             .andExpect(status().isOk());
   }
-
 
   @Test
   public void should_Add_New_User() throws Exception {
 
-    User userNew = new User(1, "Marko", "marko.ilic@prodyna");
-    userNew.setId(1);
-    userNew.setName("Ilija Milic");
-    userNew.setEmail("ilija.ilic@prodyna.com");
-
-    Mockito.when(userService.save(any(User.class))).thenReturn(userNew);
+    Mockito.when(userService.save(any(User.class))).thenReturn(newUser);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/users/")
-                    .content(objectMapper.writeValueAsString(userNew))
+                    .content(objectMapper.writeValueAsString(newUser))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Ilija Milic"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("ilija.ilic@prodyna.com"));
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Marko Ilic"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("marko.ilic@prodyna.com"));
   }
 
   @Test
   public void when_User_is_Invalid_Then_Return_Status400() throws Exception {
 
-    User userNew = new User("", "asdadadasdas");
-    String body = objectMapper.writeValueAsString(userNew);
+    newUser.setEmail("asdasdasfadasasd");
+    String body = objectMapper.writeValueAsString(newUser);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/users/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());

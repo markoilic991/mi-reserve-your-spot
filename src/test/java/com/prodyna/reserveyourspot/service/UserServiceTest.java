@@ -3,10 +3,13 @@ package com.prodyna.reserveyourspot.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserService.class)
@@ -28,6 +32,7 @@ public class UserServiceTest {
   private UserService userService;
 
   @MockBean
+  @Autowired
   private UserRepository userRepository;
 
   @Autowired
@@ -39,51 +44,73 @@ public class UserServiceTest {
   @MockBean
   private User user;
 
+  User newUser;
+  User newUser1;
+
+  @BeforeEach
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+
+    newUser = new User();
+    newUser.setId(1);
+    newUser.setName("Marko Ilic");
+    newUser.setEmail("marko.ilic@prodyna.com");
+    newUser1 = new User();
+    newUser1.setId(2);
+    newUser1.setName("Stefan Markovic");
+    newUser1.setEmail("stefan.markovic@gmail.com");
+
+  }
+
+  @AfterEach
+  public void cleanUp() {
+
+    userRepository.findAll();
+    userRepository.deleteAll();
+
+  }
+
   @Test
   public void should_Get_All_Users() {
-
-    User newUser = new User(1, "Marko Ilic", "marko@prodyna.com");
-    User newUser1 = new User(2, "Ivan Kotic", "ivan@gmail.com");
 
     Mockito.when(userRepository.findAll())
             .thenReturn((List<User>) Stream.of(newUser, newUser1).collect(Collectors.toList()));
 
     Assertions.assertEquals(2, userService.findAll().size());
+
   }
 
   @Test
   public void should_Get_User_By_Id() {
 
-    Optional<User> userNew = Optional.of(new User(1, "Marko Ilic", "marko.ilic@prodyna.com"));
-    Optional<User> optionalUser = userRepository.findById(userNew.get().getId());
+    Mockito.when(userRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(newUser));
 
-    if (optionalUser.isPresent()) {
-      optionalUser.get();
-    }
+    User user = userService.findById(1);
 
-    Mockito.verify(userRepository, Mockito.times(1)).findById(userNew.get().getId());
+    Assertions.assertNotNull(user);
+    Assertions.assertEquals("Marko Ilic", user.getName());
 
   }
 
   @Test
   public void should_Delete_User_By_Id() {
 
-    User userNew = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
-    userService.deleteById(userNew.getId());
+    userService.deleteById(newUser.getId());
 
-    Mockito.verify(userRepository, Mockito.times(1)).deleteById(userNew.getId());
+    Mockito.verify(userRepository, Mockito.times(1)).deleteById(newUser.getId());
 
   }
 
   @Test
   public void when_User_Is_Invalid_Then_Throws_Exception() {
 
-    User newUser = new User("", "dasdasdasdasd");
+    newUser.setEmail("asdasdasdasdasdasdasd");
 
     Assertions.assertThrows(ConstraintViolationException.class, () -> {
 
       userService.validateUser(newUser);
     });
+
   }
 
 }
