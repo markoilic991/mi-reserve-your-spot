@@ -57,7 +57,7 @@ public class OfficeRoomControllerTest {
   private WorkStation workStation;
 
   OfficeRoom officeRoomJava;
-  OfficeRoom officeRoomNet;
+  OfficeRoom officeRoomDotNet;
 
   @BeforeEach
   public void init() {
@@ -67,10 +67,10 @@ public class OfficeRoomControllerTest {
     officeRoomJava.setId(1);
     officeRoomJava.setName("JAVA");
     officeRoomJava.setOrderNo(4);
-    officeRoomNet = new OfficeRoom();
-    officeRoomNet.setId(2);
-    officeRoomNet.setName(".NET");
-    officeRoomNet.setOrderNo(3);
+    officeRoomDotNet = new OfficeRoom();
+    officeRoomDotNet.setId(2);
+    officeRoomDotNet.setName(".NET");
+    officeRoomDotNet.setOrderNo(3);
 
   }
 
@@ -112,7 +112,7 @@ public class OfficeRoomControllerTest {
   public void should_Find_All_Rooms() throws Exception {
 
     Mockito.when(officeRoomService.findAll())
-            .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomNet).collect(Collectors.toList()));
+            .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomDotNet).collect(Collectors.toList()));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/rooms/")).andDo(print())
             .andExpect(status().isOk());

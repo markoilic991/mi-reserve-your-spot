@@ -41,7 +41,7 @@ public class OfficeRoomServiceTest {
   private OfficeRoom officeRoom;
 
   OfficeRoom officeRoomJava;
-  OfficeRoom officeRoomNet;
+  OfficeRoom officeRoomDotNet;
 
   @BeforeEach
   public void init() {
@@ -51,10 +51,10 @@ public class OfficeRoomServiceTest {
     officeRoomJava.setId(1);
     officeRoomJava.setName("JAVA");
     officeRoomJava.setOrderNo(4);
-    officeRoomNet = new OfficeRoom();
-    officeRoomNet.setId(2);
-    officeRoomNet.setName(".NET");
-    officeRoomNet.setOrderNo(3);
+    officeRoomDotNet = new OfficeRoom();
+    officeRoomDotNet.setId(2);
+    officeRoomDotNet.setName(".NET");
+    officeRoomDotNet.setOrderNo(3);
 
   }
 
@@ -69,7 +69,7 @@ public class OfficeRoomServiceTest {
   public void should_Find_All_Rooms() {
 
     Mockito.when(officeRoomRepository.findAll())
-            .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomNet)
+            .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomDotNet)
                     .collect(Collectors.toList()));
 
     Assertions.assertEquals(2, officeRoomService.findAll().size());
