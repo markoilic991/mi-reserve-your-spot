@@ -3,17 +3,23 @@ package com.prodyna.reserveyourspot.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @WebMvcTest(WorkStationService.class)
 public class WorkStationServiceTest {
@@ -27,42 +33,67 @@ public class WorkStationServiceTest {
   @Autowired
   private MockMvc mockMvc;
 
+  @Autowired
   @MockBean
   private WorkStationRepository workStationRepository;
 
   @MockBean
   private WorkStation workStation;
 
+  WorkStation workStationWindows;
+  WorkStation workStationLinux;
+
+  @BeforeEach
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+
+    workStationWindows = new WorkStation();
+    workStationWindows.setId(1);
+    workStationWindows.setUniqueCode("PD00002");
+    workStationWindows.setDescription("Windows WorkStation");
+    workStationLinux = new WorkStation();
+    workStationLinux.setId(2);
+    workStationLinux.setUniqueCode("PD11145");
+    workStationLinux.setDescription("Linux WorkStation");
+
+  }
+
+  @AfterEach
+  public void cleanUp() {
+
+    workStationRepository.deleteAll();
+
+  }
+
   @Test
   public void should_Get_All_Stations() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
-    WorkStation workStation2 = new WorkStation(2, "PD002211", "Work Station");
-    WorkStation workStation3 = new WorkStation(3, "PD002211", "Work Station");
-
     Mockito.when(workStationRepository.findAll())
-            .thenReturn((List<WorkStation>) Stream.of(workStation1, workStation2, workStation3)
+            .thenReturn((List<WorkStation>) Stream.of(workStationWindows, workStationLinux)
                     .collect(Collectors.toList()));
 
-    Assertions.assertEquals(3, workStationService.findAll().size());
+    Assertions.assertEquals(2, workStationService.findAll().size());
   }
 
   @Test
   public void should_Get_Station_By_Id() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
-    workStationService.findById(workStation1.getId());
+    Mockito.when(workStationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(workStationLinux));
 
-    Mockito.verify(workStationRepository, Mockito.times(1)).findById(workStation1.getId());
+    WorkStation workStation = workStationService.findById(1);
+
+    Assertions.assertNotNull(workStation);
+    Assertions.assertEquals("Linux WorkStation", workStationLinux.getDescription());
+
   }
 
   @Test
   public void should_Delete_Station() {
 
-    WorkStation workStation1 = new WorkStation(1, "PD002211", "Work Station");
-    workStationService.deleteById(workStation1.getId());
+    workStationService.deleteById(workStationWindows.getId());
 
-    Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStation1.getId());
+    Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStationWindows.getId());
+
   }
 
 }

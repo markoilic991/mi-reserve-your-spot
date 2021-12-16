@@ -5,9 +5,12 @@ import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import com.prodyna.reserveyourspot.service.WorkStationService;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,8 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -39,9 +43,11 @@ public class WorkStationControllerTest {
   private ObjectMapper objectMapper;
 
   @MockBean
+  @Autowired
   private WorkStationService workStationService;
 
   @MockBean
+  @Autowired
   private WorkStationRepository workStationRepository;
 
   @MockBean
@@ -50,20 +56,38 @@ public class WorkStationControllerTest {
   @MockBean
   private OfficeRoom officeRoom;
 
+  WorkStation workStationWindows;
+  WorkStation workStationLinux;
+
+  @BeforeEach
+  public void init() {
+    MockitoAnnotations.initMocks(this);
+
+    workStationWindows = new WorkStation();
+    workStationWindows.setId(1);
+    workStationWindows.setUniqueCode("PD00002");
+    workStationWindows.setDescription("Windows WorkStation");
+    workStationLinux = new WorkStation();
+    workStationLinux.setId(2);
+    workStationLinux.setUniqueCode("PD11145");
+    workStationLinux.setDescription("Linux WorkStation");
+
+  }
+
+  @AfterEach
+  public void cleanUp() {
+
+    workStationRepository.deleteAll();
+
+  }
+
   @Test
   public void should_Add_New_WorkStation() throws Exception {
 
-
-    WorkStation workStationNew = new WorkStation(1, "PD002211", "Work Station");
-    workStationNew.setId(1);
-    workStationNew.setUniqueCode("PD0011111");
-    workStationNew.setDescription("Linux");
-
-
-    Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationNew);
+    Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationLinux);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/workStations/")
-                    .content(objectMapper.writeValueAsString(workStationNew))
+                    .content(objectMapper.writeValueAsString(workStationLinux))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -74,16 +98,12 @@ public class WorkStationControllerTest {
   @Test
   public void should_Find_WorkStation_By_Id() throws Exception {
 
-    WorkStation workStationNew = new WorkStation(1, "PD002211", "Mac");
-    workStationNew.setUniqueCode("PD002211");
-    workStationNew.setDescription("Mac");
-
-    Mockito.when(workStationService.findById(anyInt())).thenReturn((workStationNew));
+    Mockito.when(workStationService.findById(anyInt())).thenReturn((workStationWindows));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/workStations/2"))
             .andDo(print())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD002211"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Mac"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.uniqueCode").value("PD00002"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Windows WorkStation"))
             .andExpect(status().isOk());
 
   }
@@ -91,12 +111,8 @@ public class WorkStationControllerTest {
   @Test
   public void should_Find_All_WorkStations() throws Exception {
 
-    List<WorkStation> stationsList = new ArrayList<>();
-    stationsList.add(new WorkStation(1, "PD002211", "Mac"));
-    stationsList.add(new WorkStation(2, "PD000031", "Linux"));
-    stationsList.add(new WorkStation(3, "PD004411", "Mac"));
-
-    Mockito.when(workStationService.findAll()).thenReturn(stationsList);
+    Mockito.when(workStationService.findAll())
+            .thenReturn((List<WorkStation>) Stream.of(workStationLinux, workStationWindows).collect(Collectors.toList()));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/workStations/"))
             .andDo(print())
@@ -106,9 +122,9 @@ public class WorkStationControllerTest {
   @Test
   public void when_Station_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-    WorkStation workStation = new WorkStation(1, null, null);
+    workStationWindows.setUniqueCode(null);
 
-    String body = objectMapper.writeValueAsString(workStation);
+    String body = objectMapper.writeValueAsString(workStationWindows);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/workStations/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());
