@@ -1,6 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -48,25 +48,14 @@ public class OfficeRoom {
   @Max(4)
   private int orderNo;
 
+  @JsonBackReference
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
-  @JsonIgnore
   private List<WorkStation> workStations = new ArrayList<>();
 
+  @JsonBackReference
   @ManyToOne(cascade = CascadeType.MERGE)
-  @JsonIgnore
   @JsonIgnoreProperties("rooms")
   @JoinColumn(name = "officeSpace_Id")
   private OfficeSpace officeSpace;
-
-  public OfficeRoom(String name, int orderNo) {
-    this.name = name;
-    this.orderNo = orderNo;
-  }
-
-  public OfficeRoom(int id, String name, int orderNo) {
-    this.id = id;
-    this.name = name;
-    this.orderNo = orderNo;
-  }
 
 }
