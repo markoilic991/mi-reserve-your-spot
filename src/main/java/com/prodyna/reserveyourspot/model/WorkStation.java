@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -46,11 +47,13 @@ public class WorkStation {
   private String description;
 
   @ManyToOne(cascade = CascadeType.MERGE)
+  @JsonIgnore
   @JsonIgnoreProperties("workStations")
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
+  @JsonIgnore
   private List<Reservation> reservations = new ArrayList<>();
 
   public WorkStation(int id) {

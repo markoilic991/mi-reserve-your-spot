@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class User {
   private String email;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+  @JsonIgnore
   private List<Reservation> reservations = new ArrayList<>();
 
   public User(int id, String name, String email) {

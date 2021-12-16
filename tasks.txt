@@ -3,4 +3,3 @@
 3. officeSpace service delete - check if this method delete officeRooms and working stations that belong to this OfficeSpace + if reservations are deleted (for these working stations)
 4. officeSpace service save - check how method save works when we need to update existing entity (when providing only id and description, write test)
 5. officeRoom controller - create method findByOfficeSpaceId
-

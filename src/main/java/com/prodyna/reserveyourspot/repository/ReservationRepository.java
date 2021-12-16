@@ -14,16 +14,16 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
-  @Query("select r from Reservation r JOIN r.user u where u.id=:id and r.date=:date")
+  @Query("select r from Reservation r JOIN FETCH r.user u where u.id=:id and r.date=:date")
   public Reservation findByDateAndUserId(@Param("date") LocalDate date, @Param("id") int userId);
 
-  @Query("select r from Reservation r JOIN r.workStation w where w.id=:id and r.date=:date")
+  @Query("select r from Reservation r JOIN FETCH r.workStation w where w.id=:id and r.date=:date")
   public Reservation findByDateAndWorkStationId(@Param("date") LocalDate date, @Param("id") int workStationId);
 
   @Query("select r from Reservation r where r.date BETWEEN :dateFrom AND :dateTo")
   public List<Reservation> findAllReservationByDateRange(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
-  @Query("select r from Reservation r JOIN r.user u JOIN r.workStation w where r.date=:date and u.id=:id and w.id=:id")
+  @Query("select r from Reservation r JOIN FETCH r.user u JOIN FETCH r.workStation w where r.date=:date and u.id=:id and w.id=:id")
   public Reservation findByUserIdAndWorkStationIdAndDate(@Param("date") LocalDate date, @Param("id") int userId, @Param("id") int workStationId);
 
 }
