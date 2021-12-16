@@ -56,28 +56,27 @@ public class OfficeRoomControllerTest {
   @MockBean
   private WorkStation workStation;
 
-  OfficeRoom newOfficeRoom;
-  OfficeRoom newOfficeRoom1;
+  OfficeRoom officeRoomJava;
+  OfficeRoom officeRoomNet;
 
   @BeforeEach
   public void init() {
     MockitoAnnotations.initMocks(this);
 
-    newOfficeRoom = new OfficeRoom();
-    newOfficeRoom.setId(1);
-    newOfficeRoom.setName("JAVA");
-    newOfficeRoom.setOrderNo(4);
-    newOfficeRoom1 = new OfficeRoom();
-    newOfficeRoom1.setId(2);
-    newOfficeRoom1.setName(".NET");
-    newOfficeRoom1.setOrderNo(3);
+    officeRoomJava = new OfficeRoom();
+    officeRoomJava.setId(1);
+    officeRoomJava.setName("JAVA");
+    officeRoomJava.setOrderNo(4);
+    officeRoomNet = new OfficeRoom();
+    officeRoomNet.setId(2);
+    officeRoomNet.setName(".NET");
+    officeRoomNet.setOrderNo(3);
 
   }
 
   @AfterEach
   public void cleanUp() {
 
-    officeRoomRepository.findAll();
     officeRoomRepository.deleteAll();
 
   }
@@ -85,10 +84,10 @@ public class OfficeRoomControllerTest {
   @Test
   public void should_Add_New_OfficeRoom() throws Exception {
 
-    Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(newOfficeRoom);
+    Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomJava);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/rooms/")
-                    .content(objectMapper.writeValueAsString(newOfficeRoom))
+                    .content(objectMapper.writeValueAsString(officeRoomJava))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -100,7 +99,7 @@ public class OfficeRoomControllerTest {
   @Test
   public void should_Find_OfficeRoom_By_Id() throws Exception {
 
-    Mockito.when(officeRoomService.findById(anyInt())).thenReturn((newOfficeRoom));
+    Mockito.when(officeRoomService.findById(anyInt())).thenReturn((officeRoomJava));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/rooms/1"))
             .andDo(print())
@@ -113,7 +112,7 @@ public class OfficeRoomControllerTest {
   public void should_Find_All_Rooms() throws Exception {
 
     Mockito.when(officeRoomService.findAll())
-            .thenReturn((List<OfficeRoom>) Stream.of(newOfficeRoom, newOfficeRoom1).collect(Collectors.toList()));
+            .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomNet).collect(Collectors.toList()));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/rooms/")).andDo(print())
             .andExpect(status().isOk());
@@ -122,9 +121,9 @@ public class OfficeRoomControllerTest {
   @Test
   public void when_Room_Is_Invalid_Then_Return_Exception400() throws Exception {
 
-    newOfficeRoom.setName(null);
+    officeRoomJava.setName(null);
 
-    String body = objectMapper.writeValueAsString(newOfficeRoom);
+    String body = objectMapper.writeValueAsString(officeRoomJava);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/rooms/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());

@@ -58,28 +58,27 @@ public class UserControllerTest {
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
-  User newUser;
-  User newUser1;
+  User userMarko;
+  User userStefan;
 
   @BeforeEach
   public void init() {
     MockitoAnnotations.initMocks(this);
 
-    newUser = new User();
-    newUser.setId(1);
-    newUser.setName("Marko Ilic");
-    newUser.setEmail("marko.ilic@prodyna.com");
-    newUser1 = new User();
-    newUser1.setId(2);
-    newUser1.setName("Stefan Markovic");
-    newUser1.setEmail("stefan.markovic@gmail.com");
+    userMarko = new User();
+    userMarko.setId(1);
+    userMarko.setName("Marko Ilic");
+    userMarko.setEmail("marko.ilic@prodyna.com");
+    userStefan = new User();
+    userStefan.setId(2);
+    userStefan.setName("Stefan Markovic");
+    userStefan.setEmail("stefan.markovic@gmail.com");
 
   }
 
   @AfterEach
   public void cleanUp() {
 
-    userRepository.findAll();
     userRepository.deleteAll();
 
   }
@@ -88,7 +87,7 @@ public class UserControllerTest {
   public void should_Find_All_Users() throws Exception {
 
     Mockito.when(userService.findAll())
-            .thenReturn((List<User>) Stream.of(newUser, newUser1).collect(Collectors.toList()));
+            .thenReturn((List<User>) Stream.of(userMarko, userStefan).collect(Collectors.toList()));
 
     mockMvc.perform(get("/users/")).andDo(print()).andExpect(status().isOk());
 
@@ -97,7 +96,7 @@ public class UserControllerTest {
   @Test
   public void should_Find_User_By_Id() throws Exception {
 
-    Mockito.when(userService.findById((int) anyInt())).thenReturn(newUser);
+    Mockito.when(userService.findById((int) anyInt())).thenReturn(userMarko);
 
     mockMvc.perform(MockMvcRequestBuilders.get("/users/1"))
             .andDo(print())
@@ -107,10 +106,10 @@ public class UserControllerTest {
   @Test
   public void should_Add_New_User() throws Exception {
 
-    Mockito.when(userService.save(any(User.class))).thenReturn(newUser);
+    Mockito.when(userService.save(any(User.class))).thenReturn(userMarko);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/users/")
-                    .content(objectMapper.writeValueAsString(newUser))
+                    .content(objectMapper.writeValueAsString(userMarko))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -122,8 +121,8 @@ public class UserControllerTest {
   @Test
   public void when_User_is_Invalid_Then_Return_Status400() throws Exception {
 
-    newUser.setEmail("asdasdasfadasasd");
-    String body = objectMapper.writeValueAsString(newUser);
+    userStefan.setEmail("asdasdasfadasasd");
+    String body = objectMapper.writeValueAsString(userStefan);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/users/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());

@@ -44,28 +44,27 @@ public class UserServiceTest {
   @MockBean
   private User user;
 
-  User newUser;
-  User newUser1;
+  User userMarko;
+  User userStefan;
 
   @BeforeEach
   public void init() {
     MockitoAnnotations.initMocks(this);
 
-    newUser = new User();
-    newUser.setId(1);
-    newUser.setName("Marko Ilic");
-    newUser.setEmail("marko.ilic@prodyna.com");
-    newUser1 = new User();
-    newUser1.setId(2);
-    newUser1.setName("Stefan Markovic");
-    newUser1.setEmail("stefan.markovic@gmail.com");
+    userMarko = new User();
+    userMarko.setId(1);
+    userMarko.setName("Marko Ilic");
+    userMarko.setEmail("marko.ilic@prodyna.com");
+    userStefan = new User();
+    userStefan.setId(2);
+    userStefan.setName("Stefan Markovic");
+    userStefan.setEmail("stefan.markovic@gmail.com");
 
   }
 
   @AfterEach
   public void cleanUp() {
 
-    userRepository.findAll();
     userRepository.deleteAll();
 
   }
@@ -74,7 +73,7 @@ public class UserServiceTest {
   public void should_Get_All_Users() {
 
     Mockito.when(userRepository.findAll())
-            .thenReturn((List<User>) Stream.of(newUser, newUser1).collect(Collectors.toList()));
+            .thenReturn((List<User>) Stream.of(userMarko, userStefan).collect(Collectors.toList()));
 
     Assertions.assertEquals(2, userService.findAll().size());
 
@@ -83,7 +82,7 @@ public class UserServiceTest {
   @Test
   public void should_Get_User_By_Id() {
 
-    Mockito.when(userRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(newUser));
+    Mockito.when(userRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(userMarko));
 
     User user = userService.findById(1);
 
@@ -95,20 +94,20 @@ public class UserServiceTest {
   @Test
   public void should_Delete_User_By_Id() {
 
-    userService.deleteById(newUser.getId());
+    userService.deleteById(userStefan.getId());
 
-    Mockito.verify(userRepository, Mockito.times(1)).deleteById(newUser.getId());
+    Mockito.verify(userRepository, Mockito.times(1)).deleteById(userStefan.getId());
 
   }
 
   @Test
   public void when_User_Is_Invalid_Then_Throws_Exception() {
 
-    newUser.setEmail("asdasdasdasdasdasdasd");
+    userStefan.setEmail("asdasdasdasdasdasdasd");
 
     Assertions.assertThrows(ConstraintViolationException.class, () -> {
 
-      userService.validateUser(newUser);
+      userService.validateUser(userStefan);
     });
 
   }

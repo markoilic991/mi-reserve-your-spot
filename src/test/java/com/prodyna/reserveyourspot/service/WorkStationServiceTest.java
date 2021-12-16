@@ -33,35 +33,34 @@ public class WorkStationServiceTest {
   @Autowired
   private MockMvc mockMvc;
 
-  @MockBean
   @Autowired
+  @MockBean
   private WorkStationRepository workStationRepository;
 
   @MockBean
   private WorkStation workStation;
 
-  WorkStation newWorkStation;
-  WorkStation newWorkStation1;
+  WorkStation workStationWindows;
+  WorkStation workStationLinux;
 
   @BeforeEach
   public void init() {
     MockitoAnnotations.initMocks(this);
 
-    newWorkStation = new WorkStation();
-    newWorkStation.setId(1);
-    newWorkStation.setUniqueCode("PD00002");
-    newWorkStation.setDescription("Windows Work Station");
-    newWorkStation1 = new WorkStation();
-    newWorkStation1.setId(2);
-    newWorkStation1.setUniqueCode("PD11145");
-    newWorkStation1.setDescription("Linux WorkStation");
+    workStationWindows = new WorkStation();
+    workStationWindows.setId(1);
+    workStationWindows.setUniqueCode("PD00002");
+    workStationWindows.setDescription("Windows WorkStation");
+    workStationLinux = new WorkStation();
+    workStationLinux.setId(2);
+    workStationLinux.setUniqueCode("PD11145");
+    workStationLinux.setDescription("Linux WorkStation");
 
   }
 
   @AfterEach
   public void cleanUp() {
 
-    workStationRepository.findAll();
     workStationRepository.deleteAll();
 
   }
@@ -70,7 +69,7 @@ public class WorkStationServiceTest {
   public void should_Get_All_Stations() {
 
     Mockito.when(workStationRepository.findAll())
-            .thenReturn((List<WorkStation>) Stream.of(newWorkStation, newWorkStation1)
+            .thenReturn((List<WorkStation>) Stream.of(workStationWindows, workStationLinux)
                     .collect(Collectors.toList()));
 
     Assertions.assertEquals(2, workStationService.findAll().size());
@@ -79,21 +78,21 @@ public class WorkStationServiceTest {
   @Test
   public void should_Get_Station_By_Id() {
 
-    Mockito.when(workStationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(newWorkStation));
+    Mockito.when(workStationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(workStationLinux));
 
     WorkStation workStation = workStationService.findById(1);
 
     Assertions.assertNotNull(workStation);
-    Assertions.assertEquals("Windows Work Station", newWorkStation.getDescription());
+    Assertions.assertEquals("Linux WorkStation", workStationLinux.getDescription());
 
   }
 
   @Test
   public void should_Delete_Station() {
 
-    workStationService.deleteById(newWorkStation.getId());
+    workStationService.deleteById(workStationWindows.getId());
 
-    Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(newWorkStation.getId());
+    Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStationWindows.getId());
 
   }
 

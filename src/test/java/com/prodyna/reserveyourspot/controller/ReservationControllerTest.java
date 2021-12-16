@@ -65,36 +65,36 @@ public class ReservationControllerTest {
   @MockBean
   private User user;
 
-  Reservation newReservation;
-  Reservation newReservation1;
+  Reservation reservationMarko;
+  Reservation reservationStefan;
 
   @BeforeEach
   public void init() {
     MockitoAnnotations.initMocks(this);
-    User user = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
+    User userMarko = new User(1, "Marko Ilic", "marko.ilic@prodyna.com");
+    User userStefan = new User(2, "Stefan Markovic", "stefan.markovic@gmail.com");
     WorkStation workStation = new WorkStation(1, "PD0001", "Mac");
 
-    newReservation = new Reservation();
-    newReservation.setId(1);
+    reservationMarko = new Reservation();
+    reservationMarko.setId(1);
     String date = "2021-12-30";
     LocalDate parseDate = LocalDate.parse(date);
-    newReservation.setDate(parseDate);
-    newReservation.setUser(user);
-    newReservation.setWorkStation(workStation);
-    newReservation1 = new Reservation();
-    newReservation1.setId(2);
+    reservationMarko.setDate(parseDate);
+    reservationMarko.setUser(userMarko);
+    reservationMarko.setWorkStation(workStation);
+    reservationStefan = new Reservation();
+    reservationStefan.setId(2);
     String date1 = "2022-12-30";
     LocalDate parseDate1 = LocalDate.parse(date1);
-    newReservation1.setDate(parseDate1);
-    newReservation1.setUser(user);
-    newReservation1.setWorkStation(workStation);
+    reservationStefan.setDate(parseDate1);
+    reservationStefan.setUser(userStefan);
+    reservationStefan.setWorkStation(workStation);
 
   }
 
   @AfterEach
   public void cleanUp() {
 
-    reservationRepository.findAll();
     reservationRepository.deleteAll();
 
   }
@@ -103,7 +103,7 @@ public class ReservationControllerTest {
   public void should_Find_All_Reservations() throws Exception {
 
     Mockito.when(reservationService.findAll())
-            .thenReturn((List<Reservation>) Stream.of(newReservation, newReservation1).collect(Collectors.toList()));
+            .thenReturn((List<Reservation>) Stream.of(reservationMarko, reservationStefan).collect(Collectors.toList()));
 
     mockMvc.perform(get("/reservations/")).andDo(print()).andExpect(status().isOk());
   }
@@ -111,7 +111,7 @@ public class ReservationControllerTest {
   @Test
   public void should_Find_Reservation_By_Id() throws Exception {
 
-    Mockito.when(reservationService.findById((int) anyInt())).thenReturn((newReservation));
+    Mockito.when(reservationService.findById((int) anyInt())).thenReturn((reservationMarko));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/reservations/1"))
             .andDo(print())
@@ -121,10 +121,10 @@ public class ReservationControllerTest {
   @Test
   public void should_Add_New_Reservation() throws Exception {
 
-    Mockito.when(reservationService.save(any(Reservation.class))).thenReturn(newReservation);
+    Mockito.when(reservationService.save(any(Reservation.class))).thenReturn(reservationStefan);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/reservations/")
-                    .content(objectMapper.writeValueAsString(newReservation))
+                    .content(objectMapper.writeValueAsString(reservationStefan))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().isOk())
@@ -135,9 +135,9 @@ public class ReservationControllerTest {
   @Test
   public void when_User_Is_Invalid_Then_Reservation_Is_Invalid_Return_Status400() throws Exception {
 
-    newReservation.getUser().setEmail("asdasdafrfsadsdfasda");
+    reservationMarko.getUser().setEmail("asdasdafrfsadsdfasda");
 
-    String body = objectMapper.writeValueAsString(newReservation.getUser());
+    String body = objectMapper.writeValueAsString(reservationMarko.getUser());
 
     mockMvc.perform(MockMvcRequestBuilders.post("/reservations/").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());
