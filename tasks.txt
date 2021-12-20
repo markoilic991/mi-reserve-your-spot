@@ -4,4 +4,5 @@
 4. officeSpace service save - check how method save works when we need to update existing entity (when providing only id and description, write test)
 5. officeRoom controller - create method findByOfficeSpaceId
 6. rewrite application.properties to have same values as docker compose file
+7. add mainClassName and plugin Id application inside buildGradle
 
