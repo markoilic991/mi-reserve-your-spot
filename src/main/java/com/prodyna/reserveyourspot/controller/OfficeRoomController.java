@@ -54,4 +54,9 @@ public class OfficeRoomController {
     officeRoomService.deleteById(id);
   }
 
+  @GetMapping("/space/{officeSpaceId}")
+  public List<OfficeRoom> findByOfficeId(@PathVariable ("officeSpaceId") int id){
+    return officeRoomService.findByOfficeSpaceId(id);
+  }
+
 }

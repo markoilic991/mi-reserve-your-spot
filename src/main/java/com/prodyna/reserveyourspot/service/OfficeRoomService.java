@@ -46,4 +46,8 @@ public class OfficeRoomService {
     return "Room deleted!";
   }
 
+  public List<OfficeRoom> findByOfficeSpaceId(int id){
+    return officeRoomRepository.findByOfficeSpaceId(id);
+  }
+
 }
