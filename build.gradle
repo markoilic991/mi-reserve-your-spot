@@ -2,8 +2,11 @@ plugins {
     id 'org.springframework.boot' version '2.5.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'application'
     id 'com.palantir.docker' version '0.22.1'
 }
+
+mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
 group = 'com.pluralsight'
 version = '0.0.1-SNAPSHOT'
