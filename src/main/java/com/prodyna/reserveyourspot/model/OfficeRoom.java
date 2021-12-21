@@ -43,8 +43,6 @@ public class OfficeRoom {
   private String name;
 
   @NotNull(message = "OfficeRoom name must have a order number!")
-  @Min(1)
-  @Max(4)
   private int orderNo;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
