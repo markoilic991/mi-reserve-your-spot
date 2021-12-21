@@ -14,10 +14,10 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
-  @Query("select r from Reservation r JOIN r.user u where u.id=:id and r.date=:date")
+  @Query("select r from Reservation r where r.user.id=:id and r.date=:date")
   public Reservation findByDateAndUserId(@Param("date") LocalDate date, @Param("id") int userId);
 
-  @Query("select r from Reservation r JOIN r.workStation w where w.id=:id and r.date=:date")
+  @Query("select r from Reservation r where r.workStation.id=:id and r.date=:date")
   public Reservation findByDateAndWorkStationId(@Param("date") LocalDate date, @Param("id") int workStationId);
 
   @Query("select r from Reservation r where r.date BETWEEN :dateFrom AND :dateTo")
