@@ -27,7 +27,7 @@ public class WorkStationController {
     this.workStationService = workStationService;
   }
 
-  @PostMapping("/")
+  @PostMapping
   public WorkStation addOne(@Valid @RequestBody WorkStation workStation) {
     return workStationService.save(workStation);
   }
@@ -37,7 +37,7 @@ public class WorkStationController {
     return workStationService.saveAll(stations);
   }
 
-  @GetMapping("/")
+  @GetMapping
   public List<WorkStation> findAll() {
     return workStationService.findAll();
   }

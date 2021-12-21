@@ -28,12 +28,12 @@ public class ReservationController {
     this.reservationService = reservationService;
   }
 
-  @PostMapping("/")
+  @PostMapping
   public Reservation save(@Valid @RequestBody Reservation reservation) {
     return reservationService.save(reservation);
   }
 
-  @GetMapping("/")
+  @GetMapping
   public List<Reservation> findAll() {
     List<Reservation> reservations = reservationService.findAll();
     return reservations;
