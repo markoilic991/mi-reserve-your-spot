@@ -41,14 +41,12 @@ public class Reservation {
   @NotNull
   private LocalDate date;
 
-  @JsonBackReference
   @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("reservations")
   @JoinColumn(name = "user_id")
   @NotNull
   private User user;
 
-  @JsonBackReference
   @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("reservations")
   @JoinColumn(name = "workStation_id")

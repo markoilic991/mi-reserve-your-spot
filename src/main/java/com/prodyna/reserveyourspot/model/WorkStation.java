@@ -46,13 +46,11 @@ public class WorkStation {
   @NotNull
   private String description;
 
-  @JsonBackReference
   @ManyToOne(cascade = CascadeType.MERGE)
   @JsonIgnoreProperties("workStations")
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;
 
-  @JsonBackReference
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Reservation> reservations = new ArrayList<>();
 

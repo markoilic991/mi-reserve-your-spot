@@ -37,7 +37,6 @@ public class OfficeSpace {
 
   private String description;
 
-  @JsonBackReference
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeSpace", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<OfficeRoom> rooms = new ArrayList<>();
 

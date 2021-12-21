@@ -42,7 +42,6 @@ public class User {
   @Email
   private String email;
 
-  @JsonBackReference
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<Reservation> reservations = new ArrayList<>();
 
