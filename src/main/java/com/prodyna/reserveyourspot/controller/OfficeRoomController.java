@@ -29,7 +29,7 @@ public class OfficeRoomController {
     this.officeRoomService = officeRoomService;
   }
 
-  @PostMapping("/")
+  @PostMapping
   public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
     return officeRoomService.save(officeRoom);
   }
@@ -39,7 +39,7 @@ public class OfficeRoomController {
     return officeRoomService.saveAll(rooms);
   }
 
-  @GetMapping("/")
+  @GetMapping
   public List<OfficeRoom> findAll() {
     return officeRoomService.findAll();
   }
