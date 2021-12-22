@@ -52,4 +52,9 @@ public class WorkStationController {
     workStationService.deleteById(id);
   }
 
+  @GetMapping("/room/{officeRoomId}")
+  public List<WorkStation> findByRoomId(@PathVariable("officeRoomId") int id) {
+    return workStationService.findByOfficeRoomId(id);
+  }
+
 }

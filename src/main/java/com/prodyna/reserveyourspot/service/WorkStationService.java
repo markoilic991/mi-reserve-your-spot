@@ -46,4 +46,8 @@ public class WorkStationService {
     return "Station deleted!";
   }
 
+  public List<WorkStation> findByOfficeRoomId(int id){
+    return workStationRepository.findByOfficeRoomId(id);
+  }
+
 }
