@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -47,11 +48,13 @@ public class OfficeRoom {
   @Max(4)
   private int orderNo;
 
+  @JsonIgnore
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<WorkStation> workStations = new ArrayList<>();
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  @JsonIgnoreProperties("rooms")
+  //@JsonIgnoreProperties("rooms")
+  @JsonIgnore
   @JoinColumn(name = "officeSpace_Id")
   private OfficeSpace officeSpace;
 
