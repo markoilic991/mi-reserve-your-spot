@@ -1,5 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,12 +44,4 @@ public class OfficeSpace {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeSpace", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<OfficeRoom> rooms = new ArrayList<>();
 
-  public OfficeSpace(int id, String description) {
-    this.id = id;
-    this.description = description;
-  }
-
-  public OfficeSpace(String description) {
-    this.description = description;
-  }
 }
