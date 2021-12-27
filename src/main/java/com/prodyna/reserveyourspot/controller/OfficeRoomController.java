@@ -45,7 +45,7 @@ public class OfficeRoomController {
   }
 
   @GetMapping("/{id}")
-  public OfficeRoom findById(@PathVariable @Min(1) @Max(4) int id) {
+  public OfficeRoom findById(@PathVariable int id) {
     return officeRoomService.findById(id);
   }
 
