@@ -30,11 +30,11 @@ public class SampleDataService {
     this.officeSpaceService.save(officeSpace);
     OfficeRoom officeRoomOne = new OfficeRoom();
     officeRoomOne.setName("JAVA");
-    officeRoomOne.setOrderNo(1);
+    officeRoomOne.setCode(1);
     officeRoomOne.setOfficeSpace(officeSpace);
     OfficeRoom officeRoomTwo = new OfficeRoom();
     officeRoomTwo.setName("QA");
-    officeRoomTwo.setOrderNo(2);
+    officeRoomTwo.setCode(2);
     officeRoomTwo.setOfficeSpace(officeSpace);
     this.officeRoomService.save(officeRoomOne);
     this.officeRoomService.save(officeRoomTwo);
