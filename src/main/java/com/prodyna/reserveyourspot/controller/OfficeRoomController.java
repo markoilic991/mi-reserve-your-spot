@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping("//api/office-rooms")
+@RequestMapping("/api/office-rooms")
 public class OfficeRoomController {
 
   private OfficeRoomService officeRoomService;
