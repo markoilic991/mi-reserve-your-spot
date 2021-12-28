@@ -2,7 +2,6 @@ package com.prodyna.reserveyourspot.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
-import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
 import com.prodyna.reserveyourspot.service.OfficeRoomService;
 import org.junit.jupiter.api.AfterEach;
@@ -53,8 +52,6 @@ public class OfficeRoomControllerTest {
   @MockBean
   private OfficeRoom officeRoom;
 
-  @MockBean
-  private WorkStation workStation;
 
   OfficeRoom officeRoomJava;
   OfficeRoom officeRoomDotNet;
