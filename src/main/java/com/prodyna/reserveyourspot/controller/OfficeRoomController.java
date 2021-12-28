@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
 @Validated
-@RequestMapping("/rooms")
+@RequestMapping("//api/office-rooms")
 public class OfficeRoomController {
 
   private OfficeRoomService officeRoomService;
@@ -49,13 +47,14 @@ public class OfficeRoomController {
     return officeRoomService.findById(id);
   }
 
+  @GetMapping("/office-space/{officeSpaceId}")
+  public List<OfficeRoom> findByOfficeSpaceId(@PathVariable("officeSpaceId") int id) {
+    return officeRoomService.findByOfficeSpaceId(id);
+  }
+
   @DeleteMapping("/{id}")
   public void deleteById(@PathVariable int id) {
     officeRoomService.deleteById(id);
   }
 
-  @GetMapping("/space/{officeSpaceId}")
-  public List<OfficeRoom> findByOfficeId(@PathVariable ("officeSpaceId") int id){
-    return officeRoomService.findByOfficeSpaceId(id);
-  }
 }
