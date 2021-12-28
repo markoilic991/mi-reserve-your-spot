@@ -1,6 +1,5 @@
 package com.prodyna.reserveyourspot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -47,8 +46,7 @@ public class WorkStation {
   private String description;
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  //@JsonIgnoreProperties("workStations")
-  @JsonIgnore
+  @JsonIgnoreProperties("workStations")
   @JoinColumn(name = "officeRoom_id")
   private OfficeRoom officeRoom;
 

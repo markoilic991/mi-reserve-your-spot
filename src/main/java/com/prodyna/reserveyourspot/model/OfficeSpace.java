@@ -1,6 +1,5 @@
 package com.prodyna.reserveyourspot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,9 +35,11 @@ public class OfficeSpace {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
+  @Column(unique = true)
+  private String name;
+
   private String description;
 
-  //@JsonIgnore
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeSpace", orphanRemoval = true, fetch = FetchType.LAZY)
   private List<OfficeRoom> rooms = new ArrayList<>();
 

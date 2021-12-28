@@ -23,13 +23,13 @@ public class OfficeSpaceController {
     this.officeSpaceService = officeSpaceService;
   }
 
-  @GetMapping("/")
+  @GetMapping
   public List<OfficeSpace> findAll() {
     List<OfficeSpace> officeSpaces = officeSpaceService.findAll();
     return officeSpaces;
   }
 
-  @PostMapping("/")
+  @PostMapping
   public OfficeSpace save(OfficeSpace officeSpace) {
     return officeSpaceService.save(officeSpace);
   }
