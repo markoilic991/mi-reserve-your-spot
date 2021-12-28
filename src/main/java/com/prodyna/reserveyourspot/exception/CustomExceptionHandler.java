@@ -45,31 +45,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(UserNotFoundException.class)
-  public ResponseEntity<Object> handleUserNotFound(UserNotFoundException e, WebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.NOT_FOUND,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true)
-    );
-    return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
-
-  }
-
-  @ExceptionHandler(WorkStationAlreadyExistException.class)
-  public ResponseEntity<ErrorDetails> workStationAlreadyExistHandler(WorkStationAlreadyExistException e, WebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true)
-    );
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-
-  }
 
   @ExceptionHandler(OfficeRoomNotFoundException.class)
   public ResponseEntity<ErrorDetails> handleOfficeRoomNotFound(OfficeRoomNotFoundException e, WebRequest request) {
@@ -108,66 +83,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
   }
 
-  @ExceptionHandler(ReservationAlreadyExistException.class)
-  public ResponseEntity<ErrorDetails> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(ListOfReservationsAlreadyExistException.class)
-  public ResponseEntity<ErrorDetails> listOfReservationsAlreadyExistExceptionHandler(ListOfReservationsAlreadyExistException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(WorkStationBusyException.class)
-  public ResponseEntity<ErrorDetails> workStationBusyExceptionHandler(WorkStationBusyException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(UserAlreadyReservedWorkStationException.class)
-  public ResponseEntity<ErrorDetails> userReservedStationExceptionHandler(UserAlreadyReservedWorkStationException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(WorkStationNotFoundException.class)
-  public ResponseEntity<ErrorDetails> WorkStationNotFoundExceptionHandler(WorkStationNotFoundException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
   @ExceptionHandler(EntityNotFoundException.class)
   public ResponseEntity<ErrorDetails> EntityNotFoundExceptionHandler(EntityNotFoundException e, ServletWebRequest request) {
 
@@ -180,17 +95,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
-  @ExceptionHandler(ReservationNotFoundException.class)
-  public ResponseEntity<ErrorDetails> ReservationNotFoundExceptionHandler(ReservationNotFoundException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
 }
 
 
