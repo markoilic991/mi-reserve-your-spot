@@ -50,11 +50,11 @@ public class OfficeRoomServiceTest {
     officeRoomJava = new OfficeRoom();
     officeRoomJava.setId(1);
     officeRoomJava.setName("JAVA");
-    officeRoomJava.setOrderNo(4);
+    officeRoomJava.setCode(4);
     officeRoomDotNet = new OfficeRoom();
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
-    officeRoomDotNet.setOrderNo(3);
+    officeRoomDotNet.setCode(3);
 
   }
 

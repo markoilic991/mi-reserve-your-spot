@@ -63,11 +63,11 @@ public class OfficeRoomControllerTest {
     officeRoomJava = new OfficeRoom();
     officeRoomJava.setId(1);
     officeRoomJava.setName("JAVA");
-    officeRoomJava.setOrderNo(4);
+    officeRoomJava.setCode(4);
     officeRoomDotNet = new OfficeRoom();
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
-    officeRoomDotNet.setOrderNo(3);
+    officeRoomDotNet.setCode(3);
 
   }
 
@@ -90,7 +90,7 @@ public class OfficeRoomControllerTest {
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.orderNo").value(4));
+            .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(4));
   }
 
   @Test
@@ -101,7 +101,7 @@ public class OfficeRoomControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/rooms/1"))
             .andDo(print())
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.orderNo").value(4))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(4))
             .andExpect(status().isOk());
   }
 
