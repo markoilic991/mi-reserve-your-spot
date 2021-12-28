@@ -2,6 +2,7 @@ package com.prodyna.reserveyourspot.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -42,13 +43,15 @@ public class Reservation {
   private LocalDate date;
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  @JsonIgnoreProperties("reservations")
+  //@JsonIgnoreProperties("reservations")
+  @JsonIgnore
   @JoinColumn(name = "user_id")
   @NotNull
   private User user;
 
   @ManyToOne(cascade = CascadeType.MERGE)
-  @JsonIgnoreProperties("reservations")
+  //@JsonIgnoreProperties("reservations")
+  @JsonIgnore
   @JoinColumn(name = "workStation_id")
   @NotNull
   private WorkStation workStation;

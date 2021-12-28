@@ -58,5 +58,4 @@ public class OfficeRoomController {
   public List<OfficeRoom> findByOfficeId(@PathVariable ("officeSpaceId") int id){
     return officeRoomService.findByOfficeSpaceId(id);
   }
-
 }

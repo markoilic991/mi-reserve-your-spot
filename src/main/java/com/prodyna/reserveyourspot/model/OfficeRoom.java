@@ -1,6 +1,6 @@
 package com.prodyna.reserveyourspot.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -44,6 +44,8 @@ public class OfficeRoom {
   private String name;
 
   @NotNull(message = "OfficeRoom name must have a order number!")
+  @Min(1)
+  @Max(4)
   private int orderNo;
 
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
@@ -53,5 +55,16 @@ public class OfficeRoom {
   @JsonIgnoreProperties("rooms")
   @JoinColumn(name = "officeSpace_Id")
   private OfficeSpace officeSpace;
+
+  public OfficeRoom(String name, int orderNo) {
+    this.name = name;
+    this.orderNo = orderNo;
+  }
+
+  public OfficeRoom(int id, String name, int orderNo) {
+    this.id = id;
+    this.name = name;
+    this.orderNo = orderNo;
+  }
 
 }

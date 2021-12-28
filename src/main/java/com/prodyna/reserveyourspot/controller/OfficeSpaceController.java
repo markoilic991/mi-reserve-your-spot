@@ -25,7 +25,8 @@ public class OfficeSpaceController {
 
   @GetMapping
   public List<OfficeSpace> findAll() {
-    return officeSpaceService.findAll();
+    List<OfficeSpace> officeSpaces = officeSpaceService.findAll();
+    return officeSpaces;
   }
 
   @PostMapping
