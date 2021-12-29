@@ -21,31 +21,6 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(NameNotValidException.class)
-  public ResponseEntity<ErrorDetails> nameNotValidExceptionHandler(NameNotValidException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(DateNotValidException.class)
-  public ResponseEntity<ErrorDetails> dateNotValidExceptionHandler(DateNotValidException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-
   @ExceptionHandler(OfficeRoomNotFoundException.class)
   public ResponseEntity<ErrorDetails> handleOfficeRoomNotFound(OfficeRoomNotFoundException e, WebRequest request) {
 

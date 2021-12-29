@@ -37,7 +37,7 @@ public class OfficeSpaceService {
     if (optionalOfficeSpace.isPresent()) {
       return optionalOfficeSpace.get();
     }
-    throw new EntityNotFoundException("OfficeSpace with id: " + " does not exist!");
+    throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
   }
 
   public String deleteById(int id) {

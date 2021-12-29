@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/officeSpaces")
+@RequestMapping("/api/office-spaces")
 public class OfficeSpaceController {
 
   private OfficeSpaceService officeSpaceService;
@@ -27,6 +27,11 @@ public class OfficeSpaceController {
   public List<OfficeSpace> findAll() {
     List<OfficeSpace> officeSpaces = officeSpaceService.findAll();
     return officeSpaces;
+  }
+
+  @GetMapping("/{id}")
+  public OfficeSpace findOfficeSpaceById(@PathVariable int id) {
+    return officeSpaceService.findOfficeSpaceById(id);
   }
 
   @PostMapping
