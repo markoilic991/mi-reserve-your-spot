@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,6 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@DynamicUpdate
 @Table(name = "officeSpaces")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class OfficeSpace {
@@ -33,7 +35,7 @@ public class OfficeSpace {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @Column(unique = true)
+  @Column(unique = true, updatable = false)
   private String name;
 
   private String description;

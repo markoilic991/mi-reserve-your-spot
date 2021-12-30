@@ -46,8 +46,15 @@ public class OfficeRoomService {
     return "Room deleted!";
   }
 
-  public List<OfficeRoom> findByOfficeSpaceId(int id){
+  public List<OfficeRoom> findByOfficeSpaceId(int id) {
     return officeRoomRepository.findByOfficeSpaceId(id);
   }
 
+  public OfficeRoom updateOfficeRoom(OfficeRoom officeRoom, int id) {
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
+    optionalOfficeRoom.get().setName(officeRoom.getName());
+    optionalOfficeRoom.get().setCode(officeRoom.getCode());
+    return officeRoomRepository.save(optionalOfficeRoom.get());
+
+  }
 }
