@@ -65,8 +65,7 @@ public class OfficeRoomService {
   }
 
   public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {
-    Optional<OfficeSpace> officeSpace = Optional.of(new OfficeSpace());
-    officeSpace = officeSpaceRepository.findById(officeSpaceId);
+    Optional<OfficeSpace> officeSpace = officeSpaceRepository.findById(officeSpaceId);
 
     if (!officeSpace.isPresent()){
       throw new EntityNotFoundException("OfficeSpace with id " + officeSpaceId + " does not exist! OfficeRoom can not be saved!");
