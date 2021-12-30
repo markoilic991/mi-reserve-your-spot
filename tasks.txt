@@ -2,7 +2,7 @@
 + 2. clean officeRoom and officeSpace entities
 + 3. initial load by object saving and remove unnecessary methods and all jsons
 + 4. include hibernate5 module in mapper
-5. rename controllers (localhost:8080//api/office-spaces/)
++ 5. rename controllers (localhost:8080//api/office-spaces/)
 6. check behavior of post update and put update
 ----------------------
 

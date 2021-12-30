@@ -44,4 +44,12 @@ public class OfficeSpaceService {
     officeSpaceRepository.deleteById((int) id);
     return "OfficeSpace deleted!";
   }
+
+  public OfficeSpace updateOfficeSpace(OfficeSpace officeSpace, int id){
+    Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
+    optionalOfficeSpace.get().setName(officeSpace.getName());
+    optionalOfficeSpace.get().setDescription(officeSpace.getDescription());
+    return officeSpaceRepository.save(optionalOfficeSpace.get());
+  }
+
 }
