@@ -35,7 +35,7 @@ public class OfficeSpace {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @Column(unique = true, updatable = false)
+  @Column(unique = true)
   private String name;
 
   private String description;

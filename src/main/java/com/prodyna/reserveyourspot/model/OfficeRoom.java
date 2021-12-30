@@ -32,7 +32,7 @@ public class OfficeRoom {
   private String name;
 
   @NotNull(message = "OfficeRoom name must have a code!")
-  @Column(unique = true, updatable = false)
+  @Column(unique = true)
   private int code;
 
   @ManyToOne
