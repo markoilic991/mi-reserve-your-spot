@@ -71,11 +71,7 @@ public class OfficeRoomService {
       throw new EntityNotFoundException("OfficeSpace with id " + officeSpaceId + " does not exist! OfficeRoom can not be saved!");
     }
 
-    Optional<OfficeRoom> optionalOfficeRoom = Optional.of(new OfficeRoom());
-    optionalOfficeRoom.get().setName(officeRoom.getName());
-    optionalOfficeRoom.get().setCode(officeRoom.getCode());
-    optionalOfficeRoom.get().setOfficeSpace(officeSpace.get());
-
-    return officeRoomRepository.save(optionalOfficeRoom.get());
+    officeRoom.setOfficeSpace(officeSpace.get());
+    return officeRoomRepository.save(officeRoom);
   }
 }

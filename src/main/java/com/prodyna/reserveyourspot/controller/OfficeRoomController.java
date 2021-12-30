@@ -28,21 +28,6 @@ public class OfficeRoomController {
     this.officeRoomService = officeRoomService;
   }
 
-  @PostMapping
-  public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
-    return officeRoomService.save(officeRoom);
-  }
-
-  @PostMapping("/list")
-  public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
-    return officeRoomService.saveAll(rooms);
-  }
-
-  @PostMapping("/office-space/{officeSpaceId}")
-  public OfficeRoom saveOfficeRoom(@PathVariable("officeSpaceId") int officeSpaceId, @RequestBody OfficeRoom officeRoom) {
-    return officeRoomService.saveOfficeRoom(officeSpaceId, officeRoom);
-  }
-
   @GetMapping
   public List<OfficeRoom> findAll() {
     return officeRoomService.findAll();
@@ -56,6 +41,21 @@ public class OfficeRoomController {
   @GetMapping("/office-spaces/{officeSpaceId}")
   public List<OfficeRoom> findByOfficeSpaceId(@PathVariable("officeSpaceId") int id) {
     return officeRoomService.findByOfficeSpaceId(id);
+  }
+
+  @PostMapping
+  public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
+    return officeRoomService.save(officeRoom);
+  }
+
+  @PostMapping("/list")
+  public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
+    return officeRoomService.saveAll(rooms);
+  }
+
+  @PostMapping("/office-spaces/{officeSpaceId}")
+  public OfficeRoom saveOfficeRoom(@PathVariable("officeSpaceId") int officeSpaceId, @RequestBody OfficeRoom officeRoom) {
+    return officeRoomService.saveOfficeRoom(officeSpaceId, officeRoom);
   }
 
   @DeleteMapping("/{id}")
