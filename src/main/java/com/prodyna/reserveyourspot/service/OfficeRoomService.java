@@ -2,7 +2,9 @@ package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
+import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
+import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -15,10 +17,13 @@ import java.util.Optional;
 public class OfficeRoomService {
 
   private OfficeRoomRepository officeRoomRepository;
+  private OfficeSpaceRepository officeSpaceRepository;
 
   @Autowired
-  public OfficeRoomService(OfficeRoomRepository officeRoomRepository) {
+  public OfficeRoomService(OfficeRoomRepository officeRoomRepository,
+                           OfficeSpaceRepository officeSpaceRepository) {
     this.officeRoomRepository = officeRoomRepository;
+    this.officeSpaceRepository = officeSpaceRepository;
   }
 
   public OfficeRoom save(OfficeRoom officeRoom) {
@@ -55,6 +60,17 @@ public class OfficeRoomService {
     optionalOfficeRoom.get().setName(officeRoom.getName());
     optionalOfficeRoom.get().setCode(officeRoom.getCode());
     return officeRoomRepository.save(optionalOfficeRoom.get());
+  }
 
+  public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {
+    Optional<OfficeSpace> officeSpace = Optional.of(new OfficeSpace());
+    officeSpace = officeSpaceRepository.findById(officeSpaceId);
+
+    Optional<OfficeRoom> optionalOfficeRoom = Optional.of(new OfficeRoom());
+    optionalOfficeRoom.get().setName(officeRoom.getName());
+    optionalOfficeRoom.get().setCode(officeRoom.getCode());
+    optionalOfficeRoom.get().setOfficeSpace(officeSpace.get());
+
+    return officeRoomRepository.save(optionalOfficeRoom.get());
   }
 }

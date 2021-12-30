@@ -3,7 +3,8 @@
 + 3. initial load by object saving and remove unnecessary methods and all jsons
 + 4. include hibernate5 module in mapper
 + 5. rename controllers (localhost:8080//api/office-spaces/)
-6. check behavior of post update and put update
++ 6. check behavior of post update and put update
+7. Office Room - check if we can create new officeRoom with reference on officeSpace
 ----------------------
 
 1. officeSpace service save - check how method save works when we need to update existing entity (when providing only id and description, write test)
