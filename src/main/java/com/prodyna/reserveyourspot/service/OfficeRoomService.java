@@ -1,10 +1,12 @@
 package com.prodyna.reserveyourspot.service;
 
+import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -65,6 +67,10 @@ public class OfficeRoomService {
   public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {
     Optional<OfficeSpace> officeSpace = Optional.of(new OfficeSpace());
     officeSpace = officeSpaceRepository.findById(officeSpaceId);
+
+    if (!officeSpace.isPresent()){
+      throw new EntityNotFoundException("OfficeSpace with id " + officeSpaceId + " does not exist! OfficeRoom can not be saved!");
+    }
 
     Optional<OfficeRoom> optionalOfficeRoom = Optional.of(new OfficeRoom());
     optionalOfficeRoom.get().setName(officeRoom.getName());
