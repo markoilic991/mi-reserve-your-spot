@@ -53,7 +53,7 @@ public class OfficeRoomController {
     officeRoomService.deleteById(id);
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/{id}")
   public OfficeRoom update(@RequestBody OfficeRoom officeRoom, @PathVariable int id) {
     return officeRoomService.updateOfficeRoom(officeRoom, id);
   }

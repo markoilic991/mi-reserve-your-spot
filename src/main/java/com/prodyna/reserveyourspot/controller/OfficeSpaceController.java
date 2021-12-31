@@ -47,7 +47,7 @@ public class OfficeSpaceController {
   }
 
   @PostMapping
-  public OfficeSpace saveOfficeSpace(@RequestBody OfficeSpace officeSpace){
+  public OfficeSpace saveOfficeSpace(@RequestBody OfficeSpace officeSpace) {
     return officeSpaceService.saveOfficeSpace(officeSpace);
   }
 
@@ -61,7 +61,7 @@ public class OfficeSpaceController {
     officeSpaceService.deleteById(id);
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/{id}")
   public OfficeSpace update(@RequestBody OfficeSpace officeSpace, @PathVariable int id) {
     return officeSpaceService.updateOfficeSpace(officeSpace, id);
   }

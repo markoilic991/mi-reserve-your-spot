@@ -5,11 +5,13 @@ import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class OfficeSpaceService {
 
   private OfficeSpaceRepository officeSpaceRepository;
@@ -56,9 +58,6 @@ public class OfficeSpaceService {
   }
 
   public OfficeSpace saveOfficeSpace(OfficeSpace officeSpace) {
-    OfficeSpace newOfficeSpace = new OfficeSpace();
-    newOfficeSpace.setName(officeSpace.getName());
-    newOfficeSpace.setDescription(officeSpace.getDescription());
-    return officeSpaceRepository.save(newOfficeSpace);
+    return officeSpaceRepository.save(officeSpace);
   }
 }
