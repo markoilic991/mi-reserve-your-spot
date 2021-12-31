@@ -54,4 +54,11 @@ public class OfficeSpaceService {
     optionalOfficeSpace.get().setDescription(officeSpace.getDescription());
     return officeSpaceRepository.save(optionalOfficeSpace.get());
   }
+
+  public OfficeSpace saveOfficeSpace(OfficeSpace officeSpace) {
+    OfficeSpace newOfficeSpace = new OfficeSpace();
+    newOfficeSpace.setName(officeSpace.getName());
+    newOfficeSpace.setDescription(officeSpace.getDescription());
+    return officeSpaceRepository.save(newOfficeSpace);
+  }
 }
