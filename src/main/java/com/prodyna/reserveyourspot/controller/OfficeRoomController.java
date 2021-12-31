@@ -38,11 +38,6 @@ public class OfficeRoomController {
     return officeRoomService.findById(id);
   }
 
-  @GetMapping("/office-spaces/{officeSpaceId}")
-  public List<OfficeRoom> findByOfficeSpaceId(@PathVariable("officeSpaceId") int id) {
-    return officeRoomService.findByOfficeSpaceId(id);
-  }
-
   @PostMapping
   public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
     return officeRoomService.save(officeRoom);
@@ -51,11 +46,6 @@ public class OfficeRoomController {
   @PostMapping("/list")
   public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
     return officeRoomService.saveAll(rooms);
-  }
-
-  @PostMapping("/office-spaces/{officeSpaceId}")
-  public OfficeRoom saveOfficeRoom(@PathVariable("officeSpaceId") int officeSpaceId, @RequestBody OfficeRoom officeRoom) {
-    return officeRoomService.saveOfficeRoom(officeSpaceId, officeRoom);
   }
 
   @DeleteMapping("/{id}")

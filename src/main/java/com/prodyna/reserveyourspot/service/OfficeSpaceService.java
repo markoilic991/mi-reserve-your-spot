@@ -45,11 +45,13 @@ public class OfficeSpaceService {
     return "OfficeSpace deleted!";
   }
 
-  public OfficeSpace updateOfficeSpace(OfficeSpace officeSpace, int id){
+  public OfficeSpace updateOfficeSpace(OfficeSpace officeSpace, int id) {
     Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
+    if (!optionalOfficeSpace.isPresent()) {
+      throw new EntityNotFoundException("OfficeSpace does not exist in database!");
+    }
     optionalOfficeSpace.get().setName(officeSpace.getName());
     optionalOfficeSpace.get().setDescription(officeSpace.getDescription());
     return officeSpaceRepository.save(optionalOfficeSpace.get());
   }
-
 }
