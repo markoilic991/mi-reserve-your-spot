@@ -83,7 +83,7 @@ public class OfficeRoomControllerTest {
 
     Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomJava);
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/rooms/")
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/office-rooms/")
                     .content(objectMapper.writeValueAsString(officeRoomJava))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
@@ -98,7 +98,7 @@ public class OfficeRoomControllerTest {
 
     Mockito.when(officeRoomService.findById(anyInt())).thenReturn((officeRoomJava));
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/rooms/1"))
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/office-rooms/1"))
             .andDo(print())
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(4))
@@ -111,7 +111,7 @@ public class OfficeRoomControllerTest {
     Mockito.when(officeRoomService.findAll())
             .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomDotNet).collect(Collectors.toList()));
 
-    mockMvc.perform(MockMvcRequestBuilders.get("/rooms/")).andDo(print())
+    mockMvc.perform(MockMvcRequestBuilders.get("/api/office-rooms/")).andDo(print())
             .andExpect(status().isOk());
   }
 
@@ -122,7 +122,7 @@ public class OfficeRoomControllerTest {
 
     String body = objectMapper.writeValueAsString(officeRoomJava);
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/rooms/").contentType("application/json").content(body))
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/office-rooms").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());
 
   }

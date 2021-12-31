@@ -3,6 +3,7 @@ package com.prodyna.reserveyourspot.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
+import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,9 @@ public class OfficeRoomServiceTest {
   @MockBean
   @Autowired
   private OfficeRoomRepository officeRoomRepository;
+
+  @MockBean
+  private OfficeSpaceRepository officeSpaceRepository;
 
   @MockBean
   private OfficeRoom officeRoom;

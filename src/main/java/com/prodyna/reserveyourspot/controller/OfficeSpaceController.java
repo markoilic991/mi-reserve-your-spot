@@ -1,9 +1,10 @@
 package com.prodyna.reserveyourspot.controller;
 
+import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
+import com.prodyna.reserveyourspot.service.OfficeRoomService;
 import com.prodyna.reserveyourspot.service.OfficeSpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.filter.OrderedFormContentFilter;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +21,13 @@ import java.util.List;
 public class OfficeSpaceController {
 
   private OfficeSpaceService officeSpaceService;
+  private OfficeRoomService officeRoomService;
 
   @Autowired
-  public OfficeSpaceController(OfficeSpaceService officeSpaceService) {
+  public OfficeSpaceController(OfficeSpaceService officeSpaceService,
+                               OfficeRoomService officeRoomService) {
     this.officeSpaceService = officeSpaceService;
+    this.officeRoomService = officeRoomService;
   }
 
   @GetMapping
@@ -37,9 +41,19 @@ public class OfficeSpaceController {
     return officeSpaceService.findOfficeSpaceById(id);
   }
 
+  @GetMapping("/{officeSpaceId}/office-rooms")
+  public List<OfficeRoom> findByOfficeSpaceId(@PathVariable("officeSpaceId") int id) {
+    return officeRoomService.findByOfficeSpaceId(id);
+  }
+
   @PostMapping
-  public OfficeSpace save(OfficeSpace officeSpace) {
-    return officeSpaceService.save(officeSpace);
+  public OfficeSpace saveOfficeSpace(@RequestBody OfficeSpace officeSpace) {
+    return officeSpaceService.saveOfficeSpace(officeSpace);
+  }
+
+  @PostMapping("/{officeSpaceId}/office-rooms")
+  public OfficeRoom saveOfficeRoom(@PathVariable("officeSpaceId") int officeSpaceId, @RequestBody OfficeRoom officeRoom) {
+    return officeRoomService.saveOfficeRoom(officeSpaceId, officeRoom);
   }
 
   @DeleteMapping("/{id}")
@@ -47,9 +61,8 @@ public class OfficeSpaceController {
     officeSpaceService.deleteById(id);
   }
 
-  @PutMapping("/update/{id}")
-  public OfficeSpace update(@RequestBody OfficeSpace officeSpace, @PathVariable int id){
+  @PutMapping("/{id}")
+  public OfficeSpace update(@RequestBody OfficeSpace officeSpace, @PathVariable int id) {
     return officeSpaceService.updateOfficeSpace(officeSpace, id);
   }
-
 }

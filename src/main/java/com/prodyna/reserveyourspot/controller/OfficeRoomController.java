@@ -28,16 +28,6 @@ public class OfficeRoomController {
     this.officeRoomService = officeRoomService;
   }
 
-  @PostMapping
-  public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
-    return officeRoomService.save(officeRoom);
-  }
-
-  @PostMapping("/list")
-  public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
-    return officeRoomService.saveAll(rooms);
-  }
-
   @GetMapping
   public List<OfficeRoom> findAll() {
     return officeRoomService.findAll();
@@ -48,9 +38,14 @@ public class OfficeRoomController {
     return officeRoomService.findById(id);
   }
 
-  @GetMapping("/office-space/{officeSpaceId}")
-  public List<OfficeRoom> findByOfficeSpaceId(@PathVariable("officeSpaceId") int id) {
-    return officeRoomService.findByOfficeSpaceId(id);
+  @PostMapping
+  public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
+    return officeRoomService.save(officeRoom);
+  }
+
+  @PostMapping("/list")
+  public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
+    return officeRoomService.saveAll(rooms);
   }
 
   @DeleteMapping("/{id}")
@@ -58,7 +53,7 @@ public class OfficeRoomController {
     officeRoomService.deleteById(id);
   }
 
-  @PutMapping("/update/{id}")
+  @PutMapping("/{id}")
   public OfficeRoom update(@RequestBody OfficeRoom officeRoom, @PathVariable int id) {
     return officeRoomService.updateOfficeRoom(officeRoom, id);
   }
