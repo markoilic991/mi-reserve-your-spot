@@ -51,7 +51,7 @@ public class OfficeSpaceController {
     return officeSpaceService.save(officeSpace);
   }
 
-  @PostMapping("/{officeSpaceId}/office-room")
+  @PostMapping("/{officeSpaceId}/office-rooms")
   public OfficeRoom saveOfficeRoom(@PathVariable("officeSpaceId") int officeSpaceId, @RequestBody OfficeRoom officeRoom) {
     return officeRoomService.saveOfficeRoom(officeSpaceId, officeRoom);
   }
