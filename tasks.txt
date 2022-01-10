@@ -1,29 +1,18 @@
-+ 1. delete everything except officeSpace and officeRoom entity, repo, service, controller, initial load and test
-+ 2. clean officeRoom and officeSpace entities
-+ 3. initial load by object saving and remove unnecessary methods and all jsons
-+ 4. include hibernate5 module in mapper
-+ 5. rename controllers (localhost:8080//api/office-spaces/)
-+ 6. check behavior of post update and put update
-7. Office Room - check if we can create new officeRoom with reference on officeSpace
++ 1. check if dynamic update works fine (officeSpace returns officeRooms)
 ----------------------
 
-1. officeSpace service save - check how method save works when we need to update existing entity (when providing only id and description, write test)
-----------------------
-
-2. OfficeRoom - check if we can create, update or delete officeRoom
-3. refactor controllers path
++ 2. OfficeRoom - check if we can create, update or delete officeRoom
+3. WorkStation - entity, repo, service, controller, initial load and test, officeSpace relationship
 4. WorkStation - check if we can create, update or delete workStation
-7. change orderNo to code and set field to be unique inside officeRoom
-8. change uniqueCode to code and set field to be unique inside WorkStation
-9. make sure that SampleDataService create data only once
-10. update log4j dependency - 2.17.0
+5. change uniqueCode to code and set field to be unique inside WorkStation
+6. update log4j dependency - 2.17.0
 ----------------------
 
 1. create docker image
 2. how to start up a container using docker image
 3. fix README file
 4. push this image to docker hub
-6. remove unnecessary JOIN to fetch parent object from queries
+5. remove unnecessary JOIN to fetch parent object from queries
 ----------------------
 
 1. User reservation view - analysis and preparation
