@@ -63,9 +63,10 @@ public class OfficeRoomService {
     if (!optionalOfficeRoom.isPresent()) {
       throw new EntityNotFoundException("OfficeRoom does not exist in database!");
     }
-    optionalOfficeRoom.get().setName(officeRoom.getName());
-    optionalOfficeRoom.get().setCode(officeRoom.getCode());
-    return officeRoomRepository.save(optionalOfficeRoom.get());
+    OfficeRoom officeRoomUpdated = optionalOfficeRoom.get();
+    officeRoomUpdated.setName(officeRoom.getName());
+    officeRoomUpdated.setCode(officeRoom.getCode());
+    return officeRoomRepository.save(officeRoomUpdated);
   }
 
   public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {

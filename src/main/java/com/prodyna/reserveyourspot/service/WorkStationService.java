@@ -60,9 +60,10 @@ public class WorkStationService {
     if (!optionalWorkStation.isPresent()) {
       throw new EntityNotFoundException("Working Station does not exist in database!");
     }
-    optionalWorkStation.get().setDescription(workStation.getDescription());
-    optionalWorkStation.get().setCode(workStation.getCode());
-    return workStationRepository.save(optionalWorkStation.get());
+    WorkStation workStationUpdated = optionalWorkStation.get();
+    workStationUpdated.setDescription(workStation.getDescription());
+    workStationUpdated.setCode(workStation.getCode());
+    return workStationRepository.save(workStationUpdated);
   }
 
   public WorkStation saveWorkStation(WorkStation workStation, int id) {

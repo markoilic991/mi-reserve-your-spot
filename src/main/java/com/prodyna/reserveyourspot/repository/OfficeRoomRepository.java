@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface OfficeRoomRepository extends JpaRepository<OfficeRoom, Integer> {
-  @Query("select o from OfficeRoom o where o.officeSpace.id= :id")
+  @Query("SELECT o FROM OfficeRoom o WHERE o.officeSpace.id= :id")
   public List<OfficeRoom> findByOfficeSpaceId(@Param("id") int officeSpaceId);
 }

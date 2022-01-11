@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface WorkStationRepository  extends JpaRepository<WorkStation, Integer> {
-  @Query("select w from WorkStation w where w.officeRoom.id = :id")
+  @Query("SELECT w FROM WorkStation w WHERE w.officeRoom.id = :id")
   public List<WorkStation> findByOfficeRoomId(@Param("id") int id);
 }
