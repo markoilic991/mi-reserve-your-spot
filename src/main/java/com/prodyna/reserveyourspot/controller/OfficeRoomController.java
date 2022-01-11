@@ -1,7 +1,9 @@
 package com.prodyna.reserveyourspot.controller;
 
 import com.prodyna.reserveyourspot.model.OfficeRoom;
+import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.service.OfficeRoomService;
+import com.prodyna.reserveyourspot.service.WorkStationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,10 +24,13 @@ import java.util.List;
 public class OfficeRoomController {
 
   private OfficeRoomService officeRoomService;
+  private WorkStationService workStationService;
 
   @Autowired
-  public OfficeRoomController(OfficeRoomService officeRoomService) {
+  public OfficeRoomController(OfficeRoomService officeRoomService,
+                              WorkStationService workStationService) {
     this.officeRoomService = officeRoomService;
+    this.workStationService = workStationService;
   }
 
   @GetMapping
@@ -38,6 +43,11 @@ public class OfficeRoomController {
     return officeRoomService.findById(id);
   }
 
+  @GetMapping("/{officeRoomId}/work-stations")
+  public List<WorkStation> findByOfficeRoomId(@PathVariable("officeRoomId") int id) {
+    return workStationService.findByOfficeRoomId(id);
+  }
+
   @PostMapping
   public OfficeRoom save(@Valid @RequestBody OfficeRoom officeRoom) {
     return officeRoomService.save(officeRoom);
@@ -46,6 +56,11 @@ public class OfficeRoomController {
   @PostMapping("/list")
   public List<OfficeRoom> saveAll(@RequestBody List<OfficeRoom> rooms) {
     return officeRoomService.saveAll(rooms);
+  }
+
+  @PostMapping("/{officeRoomId}/work-stations")
+  public WorkStation saveWorkStation(@PathVariable("officeRoomId") int officeRoomId, @RequestBody WorkStation workStation) {
+    return workStationService.saveWorkStation(workStation, officeRoomId);
   }
 
   @DeleteMapping("/{id}")
