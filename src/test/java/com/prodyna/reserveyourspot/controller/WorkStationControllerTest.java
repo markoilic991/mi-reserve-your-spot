@@ -67,19 +67,15 @@ public class WorkStationControllerTest {
     workStationLinux.setId(2);
     workStationLinux.setCode("PD11145");
     workStationLinux.setDescription("Linux WorkStation");
-
   }
 
   @AfterEach
   public void cleanUp() {
-
     workStationRepository.deleteAll();
-
   }
 
   @Test
   public void should_Add_New_WorkStation() throws Exception {
-
     Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationLinux);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/work-stations")
@@ -88,12 +84,10 @@ public class WorkStationControllerTest {
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
-
   }
 
   @Test
   public void should_Find_WorkStation_By_Id() throws Exception {
-
     Mockito.when(workStationService.findById(anyInt())).thenReturn((workStationWindows));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/api/work-stations/1"))
@@ -101,12 +95,10 @@ public class WorkStationControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("PD00002"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.description").value("Windows WorkStation"))
             .andExpect(status().isOk());
-
   }
 
   @Test
   public void should_Find_All_WorkStations() throws Exception {
-
     Mockito.when(workStationService.findAll())
             .thenReturn((List<WorkStation>) Stream.of(workStationLinux, workStationWindows).collect(Collectors.toList()));
 

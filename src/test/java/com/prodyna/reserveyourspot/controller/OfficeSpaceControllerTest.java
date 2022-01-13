@@ -86,19 +86,15 @@ public class OfficeSpaceControllerTest {
     officeSpaceProdyna.setName("PRODYNA");
     officeSpaceProdyna.setDescription("Business garden");
     officeSpaceProdyna.setRooms(officeRooms);
-
   }
 
   @AfterEach
   public void cleanUp() {
-
     officeSpaceRepository.deleteAll();
-
   }
 
   @Test
   public void should_Add_New_OfficeSpace() throws Exception {
-
     Mockito.when(officeSpaceService.save(any(OfficeSpace.class))).thenReturn(officeSpaceProdyna);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/office-spaces")
@@ -110,7 +106,6 @@ public class OfficeSpaceControllerTest {
 
   @Test
   public void should_Find_OfficeSpace_By_Id() throws Exception {
-
     Mockito.when(officeSpaceService.findOfficeSpaceById(anyInt())).thenReturn((officeSpaceProdyna));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/api/office-spaces/1"))
@@ -122,7 +117,6 @@ public class OfficeSpaceControllerTest {
 
   @Test
   public void should_Find_All_Office_Spaces() throws Exception {
-
     Mockito.when(officeSpaceService.findAll())
             .thenReturn((List<OfficeSpace>) Stream.of(officeSpaceProdyna).collect(Collectors.toList()));
 
