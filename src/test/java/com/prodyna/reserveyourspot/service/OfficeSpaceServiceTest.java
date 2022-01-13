@@ -72,40 +72,31 @@ public class OfficeSpaceServiceTest {
 
   @AfterEach
   public void cleanUp() {
-
     officeSpaceRepository.deleteAll();
-
   }
 
   @Test
   public void should_Find_All_Office_Spaces() {
-
     Mockito.when(officeSpaceRepository.findAll())
             .thenReturn((List<OfficeSpace>) Stream.of(officeSpaceProdyna)
                     .collect(Collectors.toList()));
 
     Assertions.assertEquals(1, officeSpaceService.findAll().size());
-
   }
 
   @Test
   public void should_Find_Office_Space_By_Id() {
-
     Mockito.when(officeSpaceRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(officeSpaceProdyna));
-
     OfficeSpace officeSpace = officeSpaceService.findOfficeSpaceById(1);
 
     Assertions.assertNotNull(officeSpace);
     Assertions.assertEquals("PRODYNA", officeSpace.getName());
-
   }
 
   @Test
   public void should_Delete_Office_Space_By_Id() {
-
     officeSpaceService.deleteById(officeSpaceProdyna.getId());
 
     Mockito.verify(officeSpaceRepository, Mockito.times(1)).deleteById(officeSpaceProdyna.getId());
-
   }
 }

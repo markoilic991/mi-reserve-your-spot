@@ -21,14 +21,6 @@ public class OfficeSpaceService {
     this.officeSpaceRepository = officeSpaceRepository;
   }
 
-  public OfficeSpace save(OfficeSpace officeSpace) {
-    return officeSpaceRepository.save(officeSpace);
-  }
-
-  public List<OfficeSpace> saveAll(List<OfficeSpace> officeSpaces) {
-    return officeSpaceRepository.saveAll(officeSpaces);
-  }
-
   public List<OfficeSpace> findAll() {
     List<OfficeSpace> officeSpaces = officeSpaceRepository.findAll();
     return officeSpaces;
@@ -40,6 +32,14 @@ public class OfficeSpaceService {
       return optionalOfficeSpace.get();
     }
     throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
+  }
+
+  public OfficeSpace save(OfficeSpace officeSpace) {
+    return officeSpaceRepository.save(officeSpace);
+  }
+
+  public List<OfficeSpace> saveAll(List<OfficeSpace> officeSpaces) {
+    return officeSpaceRepository.saveAll(officeSpaces);
   }
 
   public String deleteById(int id) {
@@ -55,9 +55,5 @@ public class OfficeSpaceService {
     optionalOfficeSpace.get().setName(officeSpace.getName());
     optionalOfficeSpace.get().setDescription(officeSpace.getDescription());
     return officeSpaceRepository.save(optionalOfficeSpace.get());
-  }
-
-  public OfficeSpace saveOfficeSpace(OfficeSpace officeSpace) {
-    return officeSpaceRepository.save(officeSpace);
   }
 }

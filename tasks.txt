@@ -1,11 +1,6 @@
-+ 1. check if dynamic update works fine (officeSpace returns officeRooms)
-----------------------
+1. Reservation - entity, repo, service, controller, initial load and test, WorkStation relationship
+2. User - entity, repo, service, controller, initial load and test, Reservation relationship
 
-+ 2. OfficeRoom - check if we can create, update or delete officeRoom
-+ 3. WorkStation - entity, repo, service, controller, initial load and test, officeSpace relationship
-+ 4. WorkStation - check if we can create, update or delete workStation
-+ 5. change uniqueCode to code and set field to be unique inside WorkStation
-+ 6. update log4j dependency - 2.17.1
 ----------------------
 
 1. create docker image

@@ -48,7 +48,7 @@ public class OfficeSpaceController {
 
   @PostMapping
   public OfficeSpace saveOfficeSpace(@RequestBody OfficeSpace officeSpace) {
-    return officeSpaceService.saveOfficeSpace(officeSpace);
+    return officeSpaceService.save(officeSpace);
   }
 
   @PostMapping("/{officeSpaceId}/office-rooms")

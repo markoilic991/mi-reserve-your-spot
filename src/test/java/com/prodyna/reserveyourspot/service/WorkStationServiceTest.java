@@ -58,19 +58,15 @@ public class WorkStationServiceTest {
     workStationLinux.setId(2);
     workStationLinux.setCode("PD11145");
     workStationLinux.setDescription("Linux WorkStation");
-
   }
 
   @AfterEach
   public void cleanUp() {
-
     workStationRepository.deleteAll();
-
   }
 
   @Test
   public void should_Get_All_Stations() {
-
     Mockito.when(workStationRepository.findAll())
             .thenReturn((List<WorkStation>) Stream.of(workStationWindows, workStationLinux)
                     .collect(Collectors.toList()));
@@ -80,22 +76,17 @@ public class WorkStationServiceTest {
 
   @Test
   public void should_Get_Station_By_Id() {
-
     Mockito.when(workStationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(workStationLinux));
-
     WorkStation workStation = workStationService.findById(1);
 
     Assertions.assertNotNull(workStation);
     Assertions.assertEquals("Linux WorkStation", workStationLinux.getDescription());
-
   }
 
   @Test
   public void should_Delete_Station() {
-
     workStationService.deleteById(workStationWindows.getId());
 
     Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStationWindows.getId());
-
   }
 }

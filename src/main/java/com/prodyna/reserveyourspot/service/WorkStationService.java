@@ -26,14 +26,6 @@ public class WorkStationService {
     this.officeRoomRepository = officeRoomRepository;
   }
 
-  public WorkStation save(WorkStation workStation) {
-    return workStationRepository.save(workStation);
-  }
-
-  public List<WorkStation> saveAll(List<WorkStation> stations) {
-    return workStationRepository.saveAll(stations);
-  }
-
   public List<WorkStation> findAll() {
     return workStationRepository.findAll();
   }
@@ -50,6 +42,23 @@ public class WorkStationService {
     return workStationRepository.findByOfficeRoomId(id);
   }
 
+  public WorkStation save(WorkStation workStation) {
+    return workStationRepository.save(workStation);
+  }
+
+  public List<WorkStation> saveAll(List<WorkStation> stations) {
+    return workStationRepository.saveAll(stations);
+  }
+
+  public WorkStation saveWorkStation(WorkStation workStation, int id) {
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
+    if (!optionalOfficeRoom.isPresent()) {
+      throw new EntityNotFoundException("OfficeRoom with id " + id + " does not exist! WorkStation can not be saved!");
+    }
+    workStation.setOfficeRoom(optionalOfficeRoom.get());
+    return workStationRepository.save(workStation);
+  }
+
   public String deleteById(int id) {
     workStationRepository.deleteById(id);
     return "Station deleted!";
@@ -64,14 +73,5 @@ public class WorkStationService {
     workStationUpdated.setDescription(workStation.getDescription());
     workStationUpdated.setCode(workStation.getCode());
     return workStationRepository.save(workStationUpdated);
-  }
-
-  public WorkStation saveWorkStation(WorkStation workStation, int id) {
-    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
-    if (!optionalOfficeRoom.isPresent()) {
-      throw new EntityNotFoundException("OfficeRoom with id " + id + " does not exist! WorkStation can not be saved!");
-    }
-    workStation.setOfficeRoom(optionalOfficeRoom.get());
-    return workStationRepository.save(workStation);
   }
 }

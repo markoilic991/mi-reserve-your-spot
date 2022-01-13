@@ -81,41 +81,31 @@ public class OfficeRoomServiceTest {
 
   @AfterEach
   public void cleanUp() {
-
     officeRoomRepository.deleteAll();
-
   }
 
   @Test
   public void should_Find_All_Rooms() {
-
     Mockito.when(officeRoomRepository.findAll())
             .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomDotNet)
                     .collect(Collectors.toList()));
 
     Assertions.assertEquals(2, officeRoomService.findAll().size());
-
   }
 
   @Test
   public void should_Find_Room_By_Id() {
-
     Mockito.when(officeRoomRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(officeRoomJava));
-
     OfficeRoom officeRoom = officeRoomService.findById(1);
 
     Assertions.assertNotNull(officeRoom);
     Assertions.assertEquals("JAVA", officeRoom.getName());
-
   }
 
   @Test
   public void should_Delete_Room_By_Id() {
-
     officeRoomService.deleteById(officeRoomJava.getId());
 
     Mockito.verify(officeRoomRepository, Mockito.times(1)).deleteById(officeRoomJava.getId());
-
   }
-
 }

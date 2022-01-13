@@ -70,6 +70,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(ReservationAlreadyExistException.class)
+  public ResponseEntity<ErrorDetails> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
+
+    ErrorDetails errorDetails = new ErrorDetails(
+            HttpStatus.BAD_REQUEST,
+            e.getMessage(),
+            ZonedDateTime.now(),
+            request.getDescription(true));
+
+    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+  }
 }
 
 
