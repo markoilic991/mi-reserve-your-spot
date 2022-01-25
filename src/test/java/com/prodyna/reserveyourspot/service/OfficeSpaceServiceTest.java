@@ -15,9 +15,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,7 +46,7 @@ public class OfficeSpaceServiceTest {
   OfficeSpace officeSpaceProdyna;
   OfficeRoom officeRoomJava;
   OfficeRoom officeRoomDotNet;
-  List<OfficeRoom> officeRooms;
+  Set<OfficeRoom> officeRooms;
 
   @BeforeEach
   public void init() {
@@ -59,7 +60,7 @@ public class OfficeSpaceServiceTest {
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
     officeRoomDotNet.setCode(3);
-    officeRooms = new ArrayList<>();
+    officeRooms = new HashSet<>();
     officeRooms.add(officeRoomJava);
     officeRooms.add(officeRoomDotNet);
     officeSpaceProdyna = new OfficeSpace();
@@ -67,7 +68,6 @@ public class OfficeSpaceServiceTest {
     officeSpaceProdyna.setName("PRODYNA");
     officeSpaceProdyna.setDescription("Business garden");
     officeSpaceProdyna.setRooms(officeRooms);
-
   }
 
   @AfterEach

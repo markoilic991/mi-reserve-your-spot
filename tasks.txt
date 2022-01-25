@@ -1,5 +1,5 @@
-1. Reservation - entity, repo, service, controller, initial load and test, WorkStation relationship
-2. User - entity, repo, service, controller, initial load and test, Reservation relationship
++ 1. Reservation - entity, repo, service, controller, initial load and test, WorkStation relationship
++ 2. User - entity, repo, service, controller, initial load and test, Reservation relationship
 
 ----------------------
 

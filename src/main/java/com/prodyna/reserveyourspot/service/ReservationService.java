@@ -3,10 +3,11 @@ package com.prodyna.reserveyourspot.service;
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
 import com.prodyna.reserveyourspot.model.Reservation;
+import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.ReservationRepository;
+import com.prodyna.reserveyourspot.repository.UserRepository;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,19 +18,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @Transactional
 public class ReservationService {
 
   private ReservationRepository reservationRepository;
   private WorkStationRepository workStationRepository;
+  private UserRepository userRepository;
 
   @Autowired
   public ReservationService(ReservationRepository reservationRepository,
-                            WorkStationRepository workStationRepository) {
+                            WorkStationRepository workStationRepository,
+                            UserRepository userRepository) {
     this.reservationRepository = reservationRepository;
     this.workStationRepository = workStationRepository;
+    this.userRepository = userRepository;
   }
 
   public List<Reservation> findAll() {
@@ -42,7 +45,6 @@ public class ReservationService {
       return optionalReservation.get();
     }
     throw new EntityNotFoundException("Reservation with id: " + " does not exist!");
-
   }
 
   public List<Reservation> findAllReservationsByDateRange(LocalDate dateFrom, LocalDate dateTo) {
@@ -57,13 +59,16 @@ public class ReservationService {
     return reservationRepository.save(reservation);
   }
 
-  public Reservation saveReservation(int workStationId, Reservation reservation) {
+  public Reservation saveReservation(int userId, int workStationId, Reservation reservation) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
-    if (!optionalWorkStation.isPresent()) {
-      throw new EntityNotFoundException("WorkStation with id " + workStationId + " does not exist! Reservation can not be saved!");
+    Optional<User> optionalUser = userRepository.findById(userId);
+    if (!optionalWorkStation.isPresent() || !optionalUser.isPresent()) {
+      throw new EntityNotFoundException("User or workStation do not exist in database! Reservation can not be saved!");
     }
     WorkStation workStationToSave = optionalWorkStation.get();
+    User userToSave = optionalUser.get();
     reservation.setWorkStation(workStationToSave);
+    reservation.setUser(userToSave);
     if (checkIfReservationExist(reservation)) {
       throw new ReservationAlreadyExistException("Reservation already exists in database!!!");
     } else {
@@ -71,12 +76,13 @@ public class ReservationService {
     }
   }
 
-  public List<Reservation> saveReservations(int workStationId, LocalDate from, LocalDate to) {
+  public List<Reservation> saveReservations(int userId, int workStationId, LocalDate from, LocalDate to) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
-    if (optionalWorkStation.isPresent()) {
+    Optional<User> optionalUser = userRepository.findById(userId);
+    if (optionalWorkStation.isPresent() && optionalUser.isPresent()) {
 
       List<Reservation> reservations = dateRangeFromTo(from, to).stream()
-              .map(date -> new Reservation(date, optionalWorkStation.get()))
+              .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
               .collect(Collectors.toList());
 
       return reservationRepository.saveAll(reservations);
@@ -89,9 +95,9 @@ public class ReservationService {
     return "Reservations deleted!";
   }
 
-  public void cancelReservation(int workStationId, LocalDate date) {
-    reservationRepository.deleteByDateAndWorkStationId(date, workStationId);
-    log.info("Reservation cancelled!!!");
+  public String cancelReservation(int userId, int workStationId, LocalDate date) {
+    reservationRepository.deleteByDateAndUserIdAndWorkStationId(date, userId, workStationId);
+    return "Reservation cancelled successfully!";
   }
 
   public Reservation updateReservation(Reservation reservation, int id) {
@@ -106,16 +112,19 @@ public class ReservationService {
 
   public boolean checkIfReservationExist(Reservation reservation) {
     LocalDate date = reservation.getDate();
+    int userId = reservation.getUser().getId();
     int workStationId = reservation.getWorkStation().getId();
     boolean reservationExist = true;
 
     Optional<Reservation> newReservation1 = Optional.ofNullable(reservationRepository.findByDateAndWorkStationId(date, workStationId));
+    Optional<Reservation> newReservation2 = Optional.ofNullable(reservationRepository.findByDateAndUserId(date, userId));
 
     if (newReservation1.isPresent()) {
       return reservationExist;
-    } else {
-      return false;
+    } else if (newReservation2.isPresent()) {
+      return reservationExist;
     }
+    return false;
   }
 
   public List<LocalDate> dateRangeFromTo(LocalDate dateFrom, LocalDate dateTo) {

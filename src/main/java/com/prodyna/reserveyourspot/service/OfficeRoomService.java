@@ -9,7 +9,6 @@ import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
@@ -63,7 +62,7 @@ public class OfficeRoomService {
 
   public String deleteById(int id) {
     officeRoomRepository.deleteById(id);
-    return "Room deleted!";
+    return "OfficeRoom deleted successfully!";
   }
 
   public OfficeRoom updateOfficeRoom(OfficeRoom officeRoom, int id) {

@@ -21,8 +21,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,7 +65,9 @@ public class OfficeSpaceControllerTest {
   OfficeSpace officeSpaceProdyna;
   OfficeRoom officeRoomJava;
   OfficeRoom officeRoomDotNet;
-  List<OfficeRoom> officeRooms;
+  Set<OfficeRoom> officeRooms;
+  OfficeSpace officeSpaceQnit;
+  OfficeSpace officeSpaceUpdated;
 
   @BeforeEach
   public void init() {
@@ -78,7 +81,7 @@ public class OfficeSpaceControllerTest {
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
     officeRoomDotNet.setCode(3);
-    officeRooms = new ArrayList<>();
+    officeRooms = new HashSet<>();
     officeRooms.add(officeRoomJava);
     officeRooms.add(officeRoomDotNet);
     officeSpaceProdyna = new OfficeSpace();
@@ -86,6 +89,9 @@ public class OfficeSpaceControllerTest {
     officeSpaceProdyna.setName("PRODYNA");
     officeSpaceProdyna.setDescription("Business garden");
     officeSpaceProdyna.setRooms(officeRooms);
+    officeSpaceQnit = new OfficeSpace();
+    officeSpaceQnit.setName("Qnit");
+    officeSpaceQnit.setDescription("Qnit doo");
   }
 
   @AfterEach
@@ -95,13 +101,13 @@ public class OfficeSpaceControllerTest {
 
   @Test
   public void should_Add_New_OfficeSpace() throws Exception {
-    Mockito.when(officeSpaceService.save(any(OfficeSpace.class))).thenReturn(officeSpaceProdyna);
+    Mockito.when(officeSpaceService.save(any(OfficeSpace.class))).thenReturn(officeSpaceQnit);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/office-spaces")
-                    .content(objectMapper.writeValueAsString(officeSpaceProdyna))
+                    .content(objectMapper.writeValueAsString(officeSpaceQnit))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isCreated());
   }
 
   @Test
@@ -122,5 +128,14 @@ public class OfficeSpaceControllerTest {
 
     mockMvc.perform(MockMvcRequestBuilders.get("/api/office-spaces")).andDo(print())
             .andExpect(status().isOk());
+  }
+
+  @Test
+  public void should_Update_Office_Space() {
+    officeSpaceUpdated = new OfficeSpace();
+    officeSpaceUpdated.setName("Qnit Wien");
+    officeSpaceUpdated.setDescription(officeSpaceProdyna.getDescription());
+
+    Mockito.when(officeSpaceService.findOfficeSpaceById(officeSpaceProdyna.getId())).thenReturn(officeSpaceUpdated);
   }
 }

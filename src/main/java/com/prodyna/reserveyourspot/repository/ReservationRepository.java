@@ -16,11 +16,14 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
   @Query("SELECT r FROM Reservation r WHERE r.workStation.id=:id AND r.date=:date")
   public Reservation findByDateAndWorkStationId(@Param("date") LocalDate date, @Param("id") int workStationId);
 
+  @Query("SELECT r FROM Reservation r WHERE r.user.id=:id AND r.date=:date")
+  public Reservation findByDateAndUserId(@Param("date") LocalDate date, @Param("id") int userId);
+
   @Query("SELECT r FROM Reservation r WHERE r.date BETWEEN :dateFrom AND :dateTo")
   public List<Reservation> findAllReservationByDateRange(@Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
   @Transactional
   @Modifying
-  @Query("DELETE FROM Reservation r WHERE r.date = :date AND r.workStation.id = :workStationId")
-  public void deleteByDateAndWorkStationId(@Param("date") LocalDate date, @Param("workStationId") int workStationId);
+  @Query("DELETE FROM Reservation r WHERE r.date = :date AND r.user.id = :userId AND r.workStation.id = :workStationId")
+  public void deleteByDateAndUserIdAndWorkStationId(@Param("date") LocalDate date, @Param("userId") int userId, @Param("workStationId") int workStationId);
 }

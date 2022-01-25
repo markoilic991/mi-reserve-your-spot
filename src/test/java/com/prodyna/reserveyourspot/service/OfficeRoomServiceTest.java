@@ -16,9 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,7 +51,7 @@ public class OfficeRoomServiceTest {
   OfficeRoom officeRoomDotNet;
   WorkStation workStationOne;
   WorkStation workStationTwo;
-  List<WorkStation> workStations;
+  Set<WorkStation> workStations;
 
   @BeforeEach
   public void init() {
@@ -64,7 +65,7 @@ public class OfficeRoomServiceTest {
     workStationTwo.setId(2);
     workStationTwo.setCode("PD009922");
     workStationTwo.setDescription("Windows Work Station");
-    workStations = new ArrayList<>();
+    workStations = new HashSet<>();
     workStations.add(workStationOne);
     workStations.add(workStationTwo);
     officeRoomJava = new OfficeRoom();
@@ -76,7 +77,6 @@ public class OfficeRoomServiceTest {
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
     officeRoomDotNet.setCode(3);
-
   }
 
   @AfterEach

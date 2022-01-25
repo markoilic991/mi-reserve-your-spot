@@ -3,6 +3,7 @@ package com.prodyna.reserveyourspot.service;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.model.Reservation;
+import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +22,20 @@ public class SampleDataService {
 
   private WorkStationService workStationService;
 
+  private UserService userService;
+
   private ReservationService reservationService;
 
   @Autowired
   public SampleDataService(OfficeRoomService officeRoomService,
                            OfficeSpaceService officeSpaceService,
                            WorkStationService workStationService,
+                           UserService userService,
                            ReservationService reservationService) {
     this.officeRoomService = officeRoomService;
     this.officeSpaceService = officeSpaceService;
     this.workStationService = workStationService;
+    this.userService = userService;
     this.reservationService = reservationService;
   }
 
@@ -70,15 +75,25 @@ public class SampleDataService {
     this.workStationService.save(workStationTwo);
     this.workStationService.save(workStationThree);
     this.workStationService.save(workStationFour);
+    User userMarko = new User();
+    userMarko.setName("Marko Ilic");
+    userMarko.setEmail("marko.ilic@prodyna.com");
+    User userMiroslav = new User();
+    userMiroslav.setName("Miroslav Perovic");
+    userMiroslav.setEmail("miroslav.perovic@prodyna.com");
+    this.userService.save(userMarko);
+    this.userService.save(userMiroslav);
     Reservation reservationOne = new Reservation();
     String dateOne = "2021-12-30";
     LocalDate parseDateOne = LocalDate.parse(dateOne);
     reservationOne.setDate(parseDateOne);
+    reservationOne.setUser(userMarko);
     reservationOne.setWorkStation(workStationThree);
     Reservation reservationTwo = new Reservation();
     String dateTwo = "2022-01-28";
     LocalDate parseDateTwo = LocalDate.parse(dateTwo);
     reservationTwo.setDate(parseDateTwo);
+    reservationTwo.setUser(userMiroslav);
     reservationTwo.setWorkStation(workStationTwo);
     this.reservationService.save(reservationOne);
     this.reservationService.save(reservationTwo);

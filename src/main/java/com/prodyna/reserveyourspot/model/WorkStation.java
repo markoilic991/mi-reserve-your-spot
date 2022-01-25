@@ -21,8 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -52,5 +52,5 @@ public class WorkStation {
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "workStation", orphanRemoval = true, fetch = FetchType.LAZY)
-  private List<Reservation> reservations = new ArrayList<>();
+  private Set<Reservation> reservations = new HashSet<>();
 }

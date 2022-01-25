@@ -42,8 +42,14 @@ public class Reservation {
   @JoinColumn(name = "workStation_id")
   private WorkStation workStation;
 
-  public Reservation(LocalDate date, WorkStation workStation) {
+  @ManyToOne
+  @JsonIgnore
+  @JoinColumn(name = "user_id")
+  private User user;
+
+  public Reservation(LocalDate date, User user, WorkStation workStation) {
     this.date = date;
+    this.user = user;
     this.workStation = workStation;
   }
 }

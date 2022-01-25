@@ -2,9 +2,11 @@ package com.prodyna.reserveyourspot.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prodyna.reserveyourspot.model.Reservation;
+import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.ReservationRepository;
 import com.prodyna.reserveyourspot.service.ReservationService;
+import com.prodyna.reserveyourspot.service.UserService;
 import com.prodyna.reserveyourspot.service.WorkStationService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,14 +53,22 @@ public class ReservationControllerTest {
   private ReservationRepository reservationRepository;
 
   @MockBean
+  @Autowired
   private ReservationService reservationService;
 
   @MockBean
   private WorkStationService workStationService;
 
+  @MockBean
+  private UserService userService;
+
   Reservation reservationOne;
   Reservation reservationTwo;
   WorkStation workStationWindows;
+  Reservation reservationThree;
+  User userMarko;
+  User userStefan;
+  Reservation reservationUpdated;
 
   @BeforeEach
   public void init() {
@@ -68,18 +78,34 @@ public class ReservationControllerTest {
     workStationWindows.setId(1);
     workStationWindows.setCode("PD76332");
     workStationWindows.setDescription("Windows Work Station");
+    userMarko = new User();
+    userMarko.setId(1);
+    userMarko.setName("Marko Ilic");
+    userMarko.setEmail("marko.ilic@prodyna.com");
+    userStefan = new User();
+    userStefan.setId(2);
+    userStefan.setName("Stefan Cvijic");
+    userStefan.setEmail("stefan.cvijic@gmail.com");
     reservationOne = new Reservation();
     reservationOne.setId(1);
     String dateOne = "2021-12-30";
     LocalDate parseDateOne = LocalDate.parse(dateOne);
     reservationOne.setDate(parseDateOne);
+    reservationOne.setUser(userMarko);
     reservationOne.setWorkStation(workStationWindows);
     reservationTwo = new Reservation();
     reservationTwo.setId(2);
     String dateTwo = "2022-01-20";
     LocalDate parseDateTwo = LocalDate.parse(dateTwo);
     reservationTwo.setDate(parseDateTwo);
+    reservationTwo.setUser(userStefan);
     reservationTwo.setWorkStation(workStationWindows);
+    reservationThree = new Reservation();
+    String dateThree = "2022-01-22";
+    LocalDate parseDateThree = LocalDate.parse(dateThree);
+    reservationThree.setDate(parseDateThree);
+    reservationThree.setUser(userStefan);
+    reservationThree.setWorkStation(workStationWindows);
   }
 
   @AfterEach
@@ -106,12 +132,24 @@ public class ReservationControllerTest {
 
   @Test
   public void should_Add_New_Reservation() throws Exception {
-    Mockito.when(reservationService.save(any(Reservation.class))).thenReturn(reservationOne);
+    Mockito.when(reservationService.saveReservation(anyInt(), anyInt(), any(Reservation.class))).thenReturn(reservationThree);
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/reservations/reservation/1")
-                    .content(objectMapper.writeValueAsString(reservationOne))
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/reservations/reservation/2/1")
+                    .content(objectMapper.writeValueAsString(reservationThree))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isCreated());
+  }
+
+  @Test
+  public void should_Update_Reservation() {
+    reservationUpdated = new Reservation();
+    String dateNew = "2022-01-22";
+    LocalDate parseDateNew = LocalDate.parse(dateNew);
+    reservationUpdated.setDate(parseDateNew);
+    reservationUpdated.setWorkStation(reservationOne.getWorkStation());
+    reservationUpdated.setUser(reservationOne.getUser());
+
+    Mockito.when(reservationService.findById(reservationOne.getId())).thenReturn(reservationUpdated);
   }
 }

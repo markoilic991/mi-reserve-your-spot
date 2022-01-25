@@ -54,6 +54,8 @@ public class WorkStationControllerTest {
 
   WorkStation workStationWindows;
   WorkStation workStationLinux;
+  WorkStation workStationMac;
+  WorkStation workStationUpdated;
 
   @BeforeEach
   public void init() {
@@ -67,6 +69,9 @@ public class WorkStationControllerTest {
     workStationLinux.setId(2);
     workStationLinux.setCode("PD11145");
     workStationLinux.setDescription("Linux WorkStation");
+    workStationMac = new WorkStation();
+    workStationMac.setCode("PD00000");
+    workStationMac.setDescription("Mac WorkStation");
   }
 
   @AfterEach
@@ -76,13 +81,13 @@ public class WorkStationControllerTest {
 
   @Test
   public void should_Add_New_WorkStation() throws Exception {
-    Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationLinux);
+    Mockito.when(workStationService.save(any(WorkStation.class))).thenReturn(workStationMac);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/work-stations")
-                    .content(objectMapper.writeValueAsString(workStationLinux))
+                    .content(objectMapper.writeValueAsString(workStationMac))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists());
   }
 
@@ -105,5 +110,14 @@ public class WorkStationControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/api/work-stations"))
             .andDo(print())
             .andExpect(status().isOk());
+  }
+
+  @Test
+  public void should_Update_Work_Station() {
+    workStationUpdated = new WorkStation();
+    workStationUpdated.setDescription("Mac Working Station");
+    workStationUpdated.setCode(workStationLinux.getCode());
+
+    Mockito.when(workStationService.findById(workStationLinux.getId())).thenReturn(workStationUpdated);
   }
 }

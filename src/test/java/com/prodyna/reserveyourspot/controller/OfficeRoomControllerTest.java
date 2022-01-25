@@ -21,8 +21,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,7 +63,9 @@ public class OfficeRoomControllerTest {
   OfficeRoom officeRoomDotNet;
   WorkStation workStationOne;
   WorkStation workStationTwo;
-  List<WorkStation> workStations;
+  Set<WorkStation> workStations;
+  OfficeRoom officeRoomSharePoint;
+  OfficeRoom officeRoomUpdated;
 
   @BeforeEach
   public void init() {
@@ -76,7 +79,7 @@ public class OfficeRoomControllerTest {
     workStationTwo.setId(2);
     workStationTwo.setCode("PD009922");
     workStationTwo.setDescription("Windows Work Station");
-    workStations = new ArrayList<>();
+    workStations = new HashSet<>();
     workStations.add(workStationOne);
     workStations.add(workStationTwo);
     officeRoomJava = new OfficeRoom();
@@ -88,6 +91,9 @@ public class OfficeRoomControllerTest {
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
     officeRoomDotNet.setCode(3);
+    officeRoomSharePoint = new OfficeRoom();
+    officeRoomSharePoint.setName("SharePoint");
+    officeRoomSharePoint.setCode(8);
   }
 
   @AfterEach
@@ -97,16 +103,16 @@ public class OfficeRoomControllerTest {
 
   @Test
   public void should_Add_New_OfficeRoom() throws Exception {
-    Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomJava);
+    Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomSharePoint);
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/office-rooms/")
-                    .content(objectMapper.writeValueAsString(officeRoomJava))
+                    .content(objectMapper.writeValueAsString(officeRoomSharePoint))
                     .contentType(MediaType.APPLICATION_JSON))
             .andDo(print())
-            .andExpect(status().isOk())
+            .andExpect(status().isCreated())
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(4));
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("SharePoint"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(8));
   }
 
   @Test
@@ -136,5 +142,14 @@ public class OfficeRoomControllerTest {
 
     mockMvc.perform(MockMvcRequestBuilders.post("/api/office-rooms").contentType("application/json").content(body))
             .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void should_Update_Office_Room() {
+    officeRoomUpdated = new OfficeRoom();
+    officeRoomUpdated.setName("Java");
+    officeRoomUpdated.setCode(officeRoomDotNet.getCode());
+
+    Mockito.when(officeRoomService.findById(officeRoomDotNet.getId())).thenReturn(officeRoomUpdated);
   }
 }

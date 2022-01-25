@@ -61,7 +61,7 @@ public class WorkStationService {
 
   public String deleteById(int id) {
     workStationRepository.deleteById(id);
-    return "Station deleted!";
+    return "WorkStation deleted successfully!";
   }
 
   public WorkStation updateWorkStation(WorkStation workStation, int id) {
