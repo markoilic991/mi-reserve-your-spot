@@ -46,7 +46,7 @@ public class OfficeSpaceController {
     return officeSpaceService.findOfficeSpaceById(id);
   }
 
-  @GetMapping("/getOfficeView")
+  @GetMapping("/get-office-view")
   public OfficeSpace getOfficeByIdAndReservationDateRange(@RequestParam(value = "officeSpaceId") int id,
                                                           @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                           @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
