@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface WorkStationRepository  extends JpaRepository<WorkStation, Integer> {
+public interface WorkStationRepository extends JpaRepository<WorkStation, Integer> {
   @Query("SELECT w FROM WorkStation w WHERE w.officeRoom.id = :id")
   public List<WorkStation> findByOfficeRoomId(@Param("id") int id);
 }

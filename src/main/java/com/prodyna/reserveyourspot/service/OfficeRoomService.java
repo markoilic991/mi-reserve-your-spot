@@ -9,13 +9,11 @@ import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 @Transactional
 public class OfficeRoomService {
 
@@ -37,6 +35,15 @@ public class OfficeRoomService {
     return officeRoomRepository.saveAll(rooms);
   }
 
+  public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {
+    Optional<OfficeSpace> officeSpace = officeSpaceRepository.findById(officeSpaceId);
+    if (!officeSpace.isPresent()) {
+      throw new EntityNotFoundException("OfficeSpace with id " + officeSpaceId + " does not exist! OfficeRoom can not be saved!");
+    }
+    officeRoom.setOfficeSpace(officeSpace.get());
+    return officeRoomRepository.save(officeRoom);
+  }
+
   public List<OfficeRoom> findAll() {
     return officeRoomRepository.findAll();
   }
@@ -49,13 +56,13 @@ public class OfficeRoomService {
     throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
   }
 
-  public String deleteById(int id) {
-    officeRoomRepository.deleteById(id);
-    return "Room deleted!";
-  }
-
   public List<OfficeRoom> findByOfficeSpaceId(int id) {
     return officeRoomRepository.findByOfficeSpaceId(id);
+  }
+
+  public String deleteById(int id) {
+    officeRoomRepository.deleteById(id);
+    return "OfficeRoom deleted successfully!";
   }
 
   public OfficeRoom updateOfficeRoom(OfficeRoom officeRoom, int id) {
@@ -67,14 +74,5 @@ public class OfficeRoomService {
     officeRoomUpdated.setName(officeRoom.getName());
     officeRoomUpdated.setCode(officeRoom.getCode());
     return officeRoomRepository.save(officeRoomUpdated);
-  }
-
-  public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {
-    Optional<OfficeSpace> officeSpace = officeSpaceRepository.findById(officeSpaceId);
-    if (!officeSpace.isPresent()) {
-      throw new EntityNotFoundException("OfficeSpace with id " + officeSpaceId + " does not exist! OfficeRoom can not be saved!");
-    }
-    officeRoom.setOfficeSpace(officeSpace.get());
-    return officeRoomRepository.save(officeRoom);
   }
 }

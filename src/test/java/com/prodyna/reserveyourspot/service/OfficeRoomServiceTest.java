@@ -16,9 +16,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,7 +51,7 @@ public class OfficeRoomServiceTest {
   OfficeRoom officeRoomDotNet;
   WorkStation workStationOne;
   WorkStation workStationTwo;
-  List<WorkStation> workStations;
+  Set<WorkStation> workStations;
 
   @BeforeEach
   public void init() {
@@ -64,7 +65,7 @@ public class OfficeRoomServiceTest {
     workStationTwo.setId(2);
     workStationTwo.setCode("PD009922");
     workStationTwo.setDescription("Windows Work Station");
-    workStations = new ArrayList<>();
+    workStations = new HashSet<>();
     workStations.add(workStationOne);
     workStations.add(workStationTwo);
     officeRoomJava = new OfficeRoom();
@@ -76,46 +77,35 @@ public class OfficeRoomServiceTest {
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
     officeRoomDotNet.setCode(3);
-
   }
 
   @AfterEach
   public void cleanUp() {
-
     officeRoomRepository.deleteAll();
-
   }
 
   @Test
   public void should_Find_All_Rooms() {
-
     Mockito.when(officeRoomRepository.findAll())
             .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomDotNet)
                     .collect(Collectors.toList()));
 
     Assertions.assertEquals(2, officeRoomService.findAll().size());
-
   }
 
   @Test
   public void should_Find_Room_By_Id() {
-
     Mockito.when(officeRoomRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(officeRoomJava));
-
     OfficeRoom officeRoom = officeRoomService.findById(1);
 
     Assertions.assertNotNull(officeRoom);
     Assertions.assertEquals("JAVA", officeRoom.getName());
-
   }
 
   @Test
   public void should_Delete_Room_By_Id() {
-
     officeRoomService.deleteById(officeRoomJava.getId());
 
     Mockito.verify(officeRoomRepository, Mockito.times(1)).deleteById(officeRoomJava.getId());
-
   }
-
 }

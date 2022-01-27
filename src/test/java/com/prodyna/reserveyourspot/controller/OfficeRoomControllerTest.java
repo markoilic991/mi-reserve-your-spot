@@ -21,8 +21,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -62,7 +63,8 @@ public class OfficeRoomControllerTest {
   OfficeRoom officeRoomDotNet;
   WorkStation workStationOne;
   WorkStation workStationTwo;
-  List<WorkStation> workStations;
+  Set<WorkStation> workStations;
+  OfficeRoom officeRoomUpdated;
 
   @BeforeEach
   public void init() {
@@ -76,7 +78,7 @@ public class OfficeRoomControllerTest {
     workStationTwo.setId(2);
     workStationTwo.setCode("PD009922");
     workStationTwo.setDescription("Windows Work Station");
-    workStations = new ArrayList<>();
+    workStations = new HashSet<>();
     workStations.add(workStationOne);
     workStations.add(workStationTwo);
     officeRoomJava = new OfficeRoom();
@@ -88,34 +90,15 @@ public class OfficeRoomControllerTest {
     officeRoomDotNet.setId(2);
     officeRoomDotNet.setName(".NET");
     officeRoomDotNet.setCode(3);
-
   }
 
   @AfterEach
   public void cleanUp() {
-
     officeRoomRepository.deleteAll();
-
-  }
-
-  @Test
-  public void should_Add_New_OfficeRoom() throws Exception {
-
-    Mockito.when(officeRoomService.save(any(OfficeRoom.class))).thenReturn(officeRoomJava);
-
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/office-rooms/")
-                    .content(objectMapper.writeValueAsString(officeRoomJava))
-                    .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
-            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("JAVA"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(4));
   }
 
   @Test
   public void should_Find_OfficeRoom_By_Id() throws Exception {
-
     Mockito.when(officeRoomService.findById(anyInt())).thenReturn((officeRoomJava));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/api/office-rooms/1"))
@@ -126,25 +109,17 @@ public class OfficeRoomControllerTest {
   }
 
   @Test
-  public void should_Find_All_Rooms() throws Exception {
+  public void should_Update_Office_Room() {
+    officeRoomUpdated = new OfficeRoom();
+    officeRoomUpdated.setName("Java");
+    officeRoomUpdated.setCode(officeRoomDotNet.getCode());
 
-    Mockito.when(officeRoomService.findAll())
-            .thenReturn((List<OfficeRoom>) Stream.of(officeRoomJava, officeRoomDotNet).collect(Collectors.toList()));
-
-    mockMvc.perform(MockMvcRequestBuilders.get("/api/office-rooms/")).andDo(print())
-            .andExpect(status().isOk());
+    Mockito.when(officeRoomService.findById(officeRoomDotNet.getId())).thenReturn(officeRoomUpdated);
   }
 
   @Test
-  public void when_Room_Is_Invalid_Then_Return_Exception400() throws Exception {
-
-    officeRoomJava.setName(null);
-
-    String body = objectMapper.writeValueAsString(officeRoomJava);
-
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/office-rooms").contentType("application/json").content(body))
-            .andExpect(status().isBadRequest());
-
+  public void should_Delete_Office_Room() throws Exception {
+    Mockito.when(officeRoomService.deleteById(officeRoomDotNet.getId())).thenReturn("Success");
+    mockMvc.perform(MockMvcRequestBuilders.delete("/api/office-rooms/2")).andExpect(status().isNoContent());
   }
-
 }

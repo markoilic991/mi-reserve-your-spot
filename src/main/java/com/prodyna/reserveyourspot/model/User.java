@@ -1,6 +1,5 @@
 package com.prodyna.reserveyourspot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,10 +15,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,28 +27,24 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @DynamicUpdate
-@Table(name = "officeRooms")
+@Table(name = "users")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class OfficeRoom {
+public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotNull(message = "OfficeRoom name must have a value!")
+  @NotNull
   private String name;
 
-  @NotNull(message = "OfficeRoom name must have a code!")
+  @NotNull
+  @Email
   @Column(unique = true)
-  private int code;
-
-  @ManyToOne
-  @JsonIgnore
-  @JoinColumn(name = "officeSpace_Id")
-  private OfficeSpace officeSpace;
+  private String email;
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "officeRoom", orphanRemoval = true, fetch = FetchType.LAZY)
-  private Set<WorkStation> workStations = new HashSet<>();
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+  private Set<Reservation> reservations = new HashSet<>();
 }

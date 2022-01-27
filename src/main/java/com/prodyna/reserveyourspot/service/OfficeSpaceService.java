@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +20,6 @@ public class OfficeSpaceService {
   @Autowired
   public OfficeSpaceService(OfficeSpaceRepository officeSpaceRepository) {
     this.officeSpaceRepository = officeSpaceRepository;
-  }
-
-  public OfficeSpace save(OfficeSpace officeSpace) {
-    return officeSpaceRepository.save(officeSpace);
-  }
-
-  public List<OfficeSpace> saveAll(List<OfficeSpace> officeSpaces) {
-    return officeSpaceRepository.saveAll(officeSpaces);
   }
 
   public List<OfficeSpace> findAll() {
@@ -42,6 +35,22 @@ public class OfficeSpaceService {
     throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
   }
 
+  public OfficeSpace getOfficeByIdAndReservationDateRange(int id, LocalDate dateFrom, LocalDate dateTo) {
+    Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
+    if (optionalOfficeSpace.isPresent()) {
+      return officeSpaceRepository.getOfficeByIdAndReservationDateRange(id, dateFrom, dateTo);
+    }
+    throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
+  }
+
+  public OfficeSpace save(OfficeSpace officeSpace) {
+    return officeSpaceRepository.save(officeSpace);
+  }
+
+  public List<OfficeSpace> saveAll(List<OfficeSpace> officeSpaces) {
+    return officeSpaceRepository.saveAll(officeSpaces);
+  }
+
   public String deleteById(int id) {
     officeSpaceRepository.deleteById((int) id);
     return "OfficeSpace deleted!";
@@ -55,9 +64,5 @@ public class OfficeSpaceService {
     optionalOfficeSpace.get().setName(officeSpace.getName());
     optionalOfficeSpace.get().setDescription(officeSpace.getDescription());
     return officeSpaceRepository.save(optionalOfficeSpace.get());
-  }
-
-  public OfficeSpace saveOfficeSpace(OfficeSpace officeSpace) {
-    return officeSpaceRepository.save(officeSpace);
   }
 }
