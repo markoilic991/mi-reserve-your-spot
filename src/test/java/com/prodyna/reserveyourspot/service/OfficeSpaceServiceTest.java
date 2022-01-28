@@ -95,8 +95,9 @@ public class OfficeSpaceServiceTest {
 
   @Test
   public void should_Delete_Office_Space_By_Id() {
+    Mockito.when(officeSpaceRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(officeSpaceProdyna));
+    OfficeSpace officeSpace = officeSpaceService.findOfficeSpaceById(1);
     officeSpaceService.deleteById(officeSpaceProdyna.getId());
-
     Mockito.verify(officeSpaceRepository, Mockito.times(1)).deleteById(officeSpaceProdyna.getId());
   }
 }

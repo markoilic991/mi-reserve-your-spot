@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -128,17 +126,6 @@ public class ReservationControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/api/reservations/1"))
             .andDo(print())
             .andExpect(status().isOk());
-  }
-
-  @Test
-  public void should_Add_New_Reservation() throws Exception {
-    Mockito.when(reservationService.saveReservation(anyInt(), anyInt(), any(Reservation.class))).thenReturn(reservationThree);
-
-    mockMvc.perform(MockMvcRequestBuilders.post("/api/reservations/reservation/2/1")
-                    .content(objectMapper.writeValueAsString(reservationThree))
-                    .contentType(MediaType.APPLICATION_JSON))
-            .andDo(print())
-            .andExpect(status().isCreated());
   }
 
   @Test

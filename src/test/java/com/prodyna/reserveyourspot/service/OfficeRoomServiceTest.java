@@ -104,8 +104,9 @@ public class OfficeRoomServiceTest {
 
   @Test
   public void should_Delete_Room_By_Id() {
+    Mockito.when(officeRoomRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(officeRoomJava));
+    OfficeRoom officeRoom = officeRoomService.findById(1);
     officeRoomService.deleteById(officeRoomJava.getId());
-
     Mockito.verify(officeRoomRepository, Mockito.times(1)).deleteById(officeRoomJava.getId());
   }
 }

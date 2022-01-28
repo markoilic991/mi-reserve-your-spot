@@ -12,4 +12,7 @@ import java.util.List;
 public interface OfficeRoomRepository extends JpaRepository<OfficeRoom, Integer> {
   @Query("SELECT o FROM OfficeRoom o WHERE o.officeSpace.id= :id")
   public List<OfficeRoom> findByOfficeSpaceId(@Param("id") int officeSpaceId);
+
+  @Query("SELECT o FROM OfficeRoom o WHERE o.code = :code")
+  public OfficeRoom findOfficeRoomByCode(@Param("code") int code);
 }

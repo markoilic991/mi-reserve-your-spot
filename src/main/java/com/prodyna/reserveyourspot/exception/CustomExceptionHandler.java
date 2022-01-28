@@ -38,7 +38,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<String> handleContraintViolationException(ConstraintViolationException e) {
 
     return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
-
   }
 
   @Override
@@ -55,7 +54,6 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     body.put("errors", errors);
 
     return new ResponseEntity<>(body, headers, status);
-
   }
 
   @ExceptionHandler(EntityNotFoundException.class)
@@ -72,6 +70,18 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
   @ExceptionHandler(ReservationAlreadyExistException.class)
   public ResponseEntity<ErrorDetails> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
+
+    ErrorDetails errorDetails = new ErrorDetails(
+            HttpStatus.BAD_REQUEST,
+            e.getMessage(),
+            ZonedDateTime.now(),
+            request.getDescription(true));
+
+    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(UniqueValueException.class)
+  public ResponseEntity<ErrorDetails> EntityNotFoundExceptionHandler(UniqueValueException e, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,

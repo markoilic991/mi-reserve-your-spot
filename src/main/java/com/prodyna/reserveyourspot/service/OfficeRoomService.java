@@ -2,6 +2,7 @@ package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
+import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
@@ -39,6 +40,8 @@ public class OfficeRoomService {
     Optional<OfficeSpace> officeSpace = officeSpaceRepository.findById(officeSpaceId);
     if (!officeSpace.isPresent()) {
       throw new EntityNotFoundException("OfficeSpace with id " + officeSpaceId + " does not exist! OfficeRoom can not be saved!");
+    } else if (checkIfOfficeRoomExist(officeRoom)) {
+      throw new UniqueValueException("OfficeRoom has unique code! Try another one!");
     }
     officeRoom.setOfficeSpace(officeSpace.get());
     return officeRoomRepository.save(officeRoom);
@@ -61,6 +64,10 @@ public class OfficeRoomService {
   }
 
   public String deleteById(int id) {
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
+    if (!optionalOfficeRoom.isPresent()) {
+      throw new EntityNotFoundException("OfficeRoom with id " + id + "does not exist in database!");
+    }
     officeRoomRepository.deleteById(id);
     return "OfficeRoom deleted successfully!";
   }
@@ -68,11 +75,22 @@ public class OfficeRoomService {
   public OfficeRoom updateOfficeRoom(OfficeRoom officeRoom, int id) {
     Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
     if (!optionalOfficeRoom.isPresent()) {
-      throw new EntityNotFoundException("OfficeRoom does not exist in database!");
+      throw new EntityNotFoundException("OfficeRoom with id " + id + "does not exist in database!");
     }
     OfficeRoom officeRoomUpdated = optionalOfficeRoom.get();
     officeRoomUpdated.setName(officeRoom.getName());
     officeRoomUpdated.setCode(officeRoom.getCode());
     return officeRoomRepository.save(officeRoomUpdated);
+  }
+
+  public boolean checkIfOfficeRoomExist(OfficeRoom officeRoom) {
+    int code = officeRoom.getCode();
+    boolean officeRoomExist = true;
+    Optional<OfficeRoom> optionalOfficeRoom = Optional.ofNullable(officeRoomRepository.findOfficeRoomByCode(code));
+
+    if (optionalOfficeRoom.isPresent()) {
+      return officeRoomExist;
+    }
+    return false;
   }
 }
