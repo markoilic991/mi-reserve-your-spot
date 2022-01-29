@@ -63,6 +63,10 @@ public class WorkStationService {
   }
 
   public String deleteById(int id) {
+    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
+    if (!optionalWorkStation.isPresent()){
+      throw new EntityNotFoundException("WorkStation with id " + id + " does not exist in database!");
+    }
     workStationRepository.deleteById(id);
     return "WorkStation deleted successfully!";
   }

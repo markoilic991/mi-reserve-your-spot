@@ -1,6 +1,7 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
+import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class UserService {
   }
 
   public User save(User user) {
+    if (checkIfUserExist(user)) {
+      throw new UniqueValueException("User has unique email! Try another one!");
+    }
     return userRepository.save(user);
   }
 
@@ -42,6 +46,10 @@ public class UserService {
   }
 
   public String deleteById(int id) {
+    Optional<User> optionalUser = userRepository.findById(id);
+    if (!optionalUser.isPresent()) {
+      throw new EntityNotFoundException("User with id " + id + " does not exist in database!");
+    }
     userRepository.deleteById(id);
     return "User deleted successfully!";
   }
@@ -55,5 +63,16 @@ public class UserService {
     userUpdated.setName(user.getName());
     userUpdated.setEmail(user.getEmail());
     return userRepository.save(userUpdated);
+  }
+
+  public boolean checkIfUserExist(User user) {
+    String email = user.getEmail();
+    boolean userExist = true;
+    Optional<User> optionalUser = Optional.ofNullable(userRepository.findUserByEmail(email));
+
+    if (optionalUser.isPresent()) {
+      return userExist;
+    }
+    return false;
   }
 }

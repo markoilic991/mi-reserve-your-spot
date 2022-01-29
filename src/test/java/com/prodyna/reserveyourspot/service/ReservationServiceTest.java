@@ -114,6 +114,7 @@ public class ReservationServiceTest {
 
   @Test
   public void should_Delete_Reservation() {
+    Mockito.when(reservationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(reservationOne));
     reservationService.deleteById(reservationOne.getId());
     Mockito.verify(reservationRepository, Mockito.times(1)).deleteById(reservationOne.getId());
   }

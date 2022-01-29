@@ -75,7 +75,7 @@ public class WorkStationServiceTest {
   }
 
   @Test
-  public void should_Get_Station_By_Id() {
+  public void should_Get_Work_Station_By_Id() {
     Mockito.when(workStationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(workStationLinux));
     WorkStation workStation = workStationService.findById(1);
 
@@ -84,9 +84,9 @@ public class WorkStationServiceTest {
   }
 
   @Test
-  public void should_Delete_Station() {
+  public void should_Delete_Work_Station() {
+    Mockito.when(workStationRepository.findById((int) anyInt())).thenReturn(Optional.ofNullable(workStationWindows));
     workStationService.deleteById(workStationWindows.getId());
-
     Mockito.verify(workStationRepository, Mockito.times(1)).deleteById(workStationWindows.getId());
   }
 }

@@ -66,7 +66,7 @@ public class OfficeRoomService {
   public String deleteById(int id) {
     Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
     if (!optionalOfficeRoom.isPresent()) {
-      throw new EntityNotFoundException("OfficeRoom with id " + id + "does not exist in database!");
+      throw new EntityNotFoundException("OfficeRoom with id " + id + " does not exist in database!");
     }
     officeRoomRepository.deleteById(id);
     return "OfficeRoom deleted successfully!";
