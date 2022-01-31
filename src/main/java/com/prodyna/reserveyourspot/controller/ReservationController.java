@@ -46,18 +46,6 @@ public class ReservationController {
     return reservationService.findById(id);
   }
 
-  @GetMapping("/dateAndWorkStation")
-  public Reservation findByDateAndWorkStationId(@RequestParam(value = "date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                                @RequestParam(value = "workStationId") int workStationId) {
-    return reservationService.findByDateAndWorkStationId(date, workStationId);
-  }
-
-  @PostMapping("/reservation/{userId}/{workStationId}")
-  @ResponseStatus(HttpStatus.CREATED)
-  public Reservation saveReservation(@PathVariable("userId") int userId, @PathVariable("workStationId") int workStationId, @RequestBody Reservation reservation) {
-    return reservationService.saveReservation(userId, workStationId, reservation);
-  }
-
   @PostMapping("/save")
   @ResponseStatus(HttpStatus.CREATED)
   public List<Reservation> saveReservations(@RequestParam(value = "userId") int userId,

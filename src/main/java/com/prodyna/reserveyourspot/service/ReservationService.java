@@ -79,23 +79,35 @@ public class ReservationService {
   public List<Reservation> saveReservations(int userId, int workStationId, LocalDate from, LocalDate to) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
     Optional<User> optionalUser = userRepository.findById(userId);
-    if (optionalWorkStation.isPresent() && optionalUser.isPresent()) {
 
+    if (optionalWorkStation.isPresent() && optionalUser.isPresent()) {
       List<Reservation> reservations = dateRangeFromTo(from, to).stream()
               .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
               .collect(Collectors.toList());
 
+      if (checkIfReservationsExist(from, to)) {
+        throw new ReservationAlreadyExistException("Reservations by this date range already exist in database. Choose another data range!");
+      }
       return reservationRepository.saveAll(reservations);
     }
     throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
   }
 
   public String deleteById(int id) {
-    reservationRepository.deleteById((int) id);
+    Optional<Reservation> optionalReservation = reservationRepository.findById(id);
+    if (!optionalReservation.isPresent()) {
+      throw new EntityNotFoundException("Reservation with id " + id + " does not exist in database!");
+    }
+    reservationRepository.deleteById(id);
     return "Reservations deleted!";
   }
 
   public String cancelReservation(int userId, int workStationId, LocalDate date) {
+    Optional<Reservation> optionalReservation =
+            Optional.ofNullable(reservationRepository.findByDateAndUserIdAndWorkStationId(date, userId, workStationId));
+    if (!optionalReservation.isPresent()) {
+      throw new EntityNotFoundException("Reservation has been already cancelled!");
+    }
     reservationRepository.deleteByDateAndUserIdAndWorkStationId(date, userId, workStationId);
     return "Reservation cancelled successfully!";
   }
@@ -114,15 +126,29 @@ public class ReservationService {
     LocalDate date = reservation.getDate();
     int userId = reservation.getUser().getId();
     int workStationId = reservation.getWorkStation().getId();
-    boolean reservationExist = true;
+    boolean reservationExist = false;
 
     Optional<Reservation> newReservation1 = Optional.ofNullable(reservationRepository.findByDateAndWorkStationId(date, workStationId));
     Optional<Reservation> newReservation2 = Optional.ofNullable(reservationRepository.findByDateAndUserId(date, userId));
 
     if (newReservation1.isPresent()) {
-      return reservationExist;
+      reservationExist = true;
     } else if (newReservation2.isPresent()) {
-      return reservationExist;
+      reservationExist = true;
+    }
+    return reservationExist;
+  }
+
+  public boolean checkIfReservationsExist(LocalDate dateFrom, LocalDate dateTo) {
+    List<Reservation> reservationList = reservationRepository.findAllReservationByDateRange(dateFrom, dateTo);
+    Reservation reservation = null;
+    boolean reservationsExist = true;
+
+    for (int i = 0; i < reservationList.size(); i++) {
+      reservation = reservationList.get(i);
+      if (reservation == reservationList.get(i)) {
+        return reservationsExist;
+      }
     }
     return false;
   }

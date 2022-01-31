@@ -1,6 +1,7 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
+import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class OfficeSpaceService {
   }
 
   public OfficeSpace save(OfficeSpace officeSpace) {
+    if (checkIfOfficeSpaceExist(officeSpace)) {
+      throw new UniqueValueException("OfficeSpace has unique name! Try another one!");
+    }
     return officeSpaceRepository.save(officeSpace);
   }
 
@@ -52,6 +56,10 @@ public class OfficeSpaceService {
   }
 
   public String deleteById(int id) {
+    Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
+    if (!optionalOfficeSpace.isPresent()) {
+      throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist in database!");
+    }
     officeSpaceRepository.deleteById((int) id);
     return "OfficeSpace deleted!";
   }
@@ -64,5 +72,16 @@ public class OfficeSpaceService {
     optionalOfficeSpace.get().setName(officeSpace.getName());
     optionalOfficeSpace.get().setDescription(officeSpace.getDescription());
     return officeSpaceRepository.save(optionalOfficeSpace.get());
+  }
+
+  public boolean checkIfOfficeSpaceExist(OfficeSpace officeSpace) {
+    String name = officeSpace.getName();
+    boolean officeSpaceExist = false;
+    Optional<OfficeSpace> optionalOfficeSpace = Optional.ofNullable(officeSpaceRepository.getOfficeSpaceByName(name));
+
+    if (optionalOfficeSpace.isPresent()) {
+      officeSpaceExist = true;
+    }
+    return officeSpaceExist;
   }
 }

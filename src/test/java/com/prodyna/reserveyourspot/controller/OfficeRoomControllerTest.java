@@ -15,19 +15,14 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -119,6 +114,7 @@ public class OfficeRoomControllerTest {
 
   @Test
   public void should_Delete_Office_Room() throws Exception {
+    Mockito.when(officeRoomService.findById(anyInt())).thenReturn((officeRoomDotNet));
     Mockito.when(officeRoomService.deleteById(officeRoomDotNet.getId())).thenReturn("Success");
     mockMvc.perform(MockMvcRequestBuilders.delete("/api/office-rooms/2")).andExpect(status().isNoContent());
   }

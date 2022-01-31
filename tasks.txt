@@ -1,14 +1,20 @@
-+ 1. Reservation - entity, repo, service, controller, initial load and test, WorkStation relationship
-+ 2. User - entity, repo, service, controller, initial load and test, Reservation relationship
-
+1. fix ExceptionHandler
 ----------------------
 
 1. create docker image
 2. how to start up a container using docker image
 3. fix README file
 4. push this image to docker hub
-5. remove unnecessary JOIN to fetch parent object from queries
+5. test pulling the image from docker hub and starting it
 ----------------------
 
-1. User reservation view - analysis and preparation
+1. Research how to modify put rest API (OfficeSpace) - Swagger
+Example:
+{
+  "name": "string",
+  "description": "string"
+}
+2. create UML diagram - object and db
+3. User reservation view - analysis and preparation
+4. try to implement @Transient annotations when we are fetching entire OfficeView instead of returning list of reservations, we should return hasReservations boolean flag;
 

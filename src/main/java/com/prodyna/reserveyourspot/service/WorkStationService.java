@@ -1,6 +1,7 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
+import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
@@ -54,12 +55,18 @@ public class WorkStationService {
     Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
     if (!optionalOfficeRoom.isPresent()) {
       throw new EntityNotFoundException("OfficeRoom with id " + id + " does not exist! WorkStation can not be saved!");
+    } else if (checkIfWorkStationExist(workStation)) {
+      throw new UniqueValueException("WorkStation has unique code! Try another one!");
     }
     workStation.setOfficeRoom(optionalOfficeRoom.get());
     return workStationRepository.save(workStation);
   }
 
   public String deleteById(int id) {
+    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
+    if (!optionalWorkStation.isPresent()) {
+      throw new EntityNotFoundException("WorkStation with id " + id + " does not exist in database!");
+    }
     workStationRepository.deleteById(id);
     return "WorkStation deleted successfully!";
   }
@@ -73,5 +80,16 @@ public class WorkStationService {
     workStationUpdated.setDescription(workStation.getDescription());
     workStationUpdated.setCode(workStation.getCode());
     return workStationRepository.save(workStationUpdated);
+  }
+
+  public boolean checkIfWorkStationExist(WorkStation workStation) {
+    String code = workStation.getCode();
+    boolean officeRoomExist = false;
+    Optional<WorkStation> optionalWorkStation = Optional.ofNullable(workStationRepository.findWorkStationByCode(code));
+
+    if (optionalWorkStation.isPresent()) {
+      officeRoomExist = true;
+    }
+    return officeRoomExist;
   }
 }

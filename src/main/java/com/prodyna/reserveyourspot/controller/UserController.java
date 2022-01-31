@@ -43,12 +43,6 @@ public class UserController {
     return userService.save(user);
   }
 
-  @PostMapping("/list")
-  @ResponseStatus(HttpStatus.CREATED)
-  public List<User> saveAll(@RequestBody List<User> users) {
-    return userService.saveAll(users);
-  }
-
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public String deleteById(@PathVariable int id) {
