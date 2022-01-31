@@ -76,12 +76,12 @@ public class OfficeSpaceService {
 
   public boolean checkIfOfficeSpaceExist(OfficeSpace officeSpace) {
     String name = officeSpace.getName();
-    boolean officeSpaceExist = true;
+    boolean officeSpaceExist = false;
     Optional<OfficeSpace> optionalOfficeSpace = Optional.ofNullable(officeSpaceRepository.getOfficeSpaceByName(name));
 
     if (optionalOfficeSpace.isPresent()) {
-      return officeSpaceExist;
+      officeSpaceExist = true;
     }
-    return false;
+    return officeSpaceExist;
   }
 }

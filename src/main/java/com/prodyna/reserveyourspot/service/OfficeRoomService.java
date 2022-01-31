@@ -85,12 +85,12 @@ public class OfficeRoomService {
 
   public boolean checkIfOfficeRoomExist(OfficeRoom officeRoom) {
     int code = officeRoom.getCode();
-    boolean officeRoomExist = true;
+    boolean officeRoomExist = false;
     Optional<OfficeRoom> optionalOfficeRoom = Optional.ofNullable(officeRoomRepository.findOfficeRoomByCode(code));
 
     if (optionalOfficeRoom.isPresent()) {
-      return officeRoomExist;
+      officeRoomExist = true;
     }
-    return false;
+    return officeRoomExist;
   }
 }

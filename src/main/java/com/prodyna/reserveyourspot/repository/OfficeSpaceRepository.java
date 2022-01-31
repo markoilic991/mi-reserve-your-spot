@@ -16,6 +16,6 @@ public interface OfficeSpaceRepository extends JpaRepository<OfficeSpace, Intege
   /*@EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "graph.officeSpaceOfficeRoomWorkStationsReserve")*/
   public OfficeSpace getOfficeByIdAndReservationDateRange(@Param("id") int id, @Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
-  @Query("SELECT os FROM OfficeSpace os WHERE os.name=:name")
+  @Query("SELECT os FROM OfficeSpace os WHERE os.name= :name")
   public OfficeSpace getOfficeSpaceByName(@Param("name") String name);
 }

@@ -64,7 +64,7 @@ public class WorkStationService {
 
   public String deleteById(int id) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
-    if (!optionalWorkStation.isPresent()){
+    if (!optionalWorkStation.isPresent()) {
       throw new EntityNotFoundException("WorkStation with id " + id + " does not exist in database!");
     }
     workStationRepository.deleteById(id);
@@ -84,12 +84,12 @@ public class WorkStationService {
 
   public boolean checkIfWorkStationExist(WorkStation workStation) {
     String code = workStation.getCode();
-    boolean officeRoomExist = true;
+    boolean officeRoomExist = false;
     Optional<WorkStation> optionalWorkStation = Optional.ofNullable(workStationRepository.findWorkStationByCode(code));
 
     if (optionalWorkStation.isPresent()) {
-      return officeRoomExist;
+      officeRoomExist = true;
     }
-    return false;
+    return officeRoomExist;
   }
 }

@@ -67,12 +67,12 @@ public class UserService {
 
   public boolean checkIfUserExist(User user) {
     String email = user.getEmail();
-    boolean userExist = true;
+    boolean userExist = false;
     Optional<User> optionalUser = Optional.ofNullable(userRepository.findUserByEmail(email));
 
     if (optionalUser.isPresent()) {
-      return userExist;
+      userExist = true;
     }
-    return false;
+    return userExist;
   }
 }
