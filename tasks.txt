@@ -1,8 +1,8 @@
-1. fix ExceptionHandler
++ 1. fix ExceptionHandler
 ----------------------
 
-1. create docker image
-2. how to start up a container using docker image
++ 1. create docker image
++ 2. how to start up a container using docker image
 3. fix README file
 4. push this image to docker hub
 5. test pulling the image from docker hub and starting it
