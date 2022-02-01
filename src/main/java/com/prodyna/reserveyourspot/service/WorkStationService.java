@@ -1,6 +1,7 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
+import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
 import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.WorkStation;
@@ -40,6 +41,10 @@ public class WorkStationService {
   }
 
   public List<WorkStation> findByOfficeRoomId(int id) {
+    Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
+    if (!optionalOfficeRoom.isPresent()) {
+      throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
+    }
     return workStationRepository.findByOfficeRoomId(id);
   }
 

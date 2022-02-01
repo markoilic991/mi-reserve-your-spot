@@ -60,6 +60,10 @@ public class OfficeRoomService {
   }
 
   public List<OfficeRoom> findByOfficeSpaceId(int id) {
+    Optional<OfficeSpace> officeSpace = officeSpaceRepository.findById(id);
+    if (!officeSpace.isPresent()) {
+      throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
+    }
     return officeRoomRepository.findByOfficeSpaceId(id);
   }
 
