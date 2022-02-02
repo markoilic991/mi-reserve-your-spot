@@ -8,8 +8,8 @@ plugins {
 
 mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
-group = 'com.pluralsight'
-version = '0.0.1-SNAPSHOT'
+group = 'com.prodyna'
+version = '0.0.2-SNAPSHOT'
 
 repositories {
     mavenCentral()

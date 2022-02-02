@@ -1,4 +1,5 @@
 FROM openjdk:11
-ADD build/libs/reserve-your-spot-0.0.1-SNAPSHOT.jar dockerimage.jar
+ADD build/libs/reserve-your-spot-0.0.2-SNAPSHOT.jar app.jar
+COPY . .
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "dockerimage.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

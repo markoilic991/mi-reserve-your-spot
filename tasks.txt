@@ -1,11 +1,11 @@
-+ 1. fix ExceptionHandler
-----------------------
-
 + 1. create docker image
-+ 2. how to start up a container using docker image
-3. fix README file
-4. push this image to docker hub
++ 2. push this image to docker hub
++ 3. how to start up a container using docker image
+4. introduce use of spring profiles -> application properties for local and dev
 5. test pulling the image from docker hub and starting it
+6. take a look into COMMENTs, there are some *IMPORTANT things that needs to be changed
+7. fix README file
+8. changelog
 ----------------------
 
 1. Research how to modify put rest API (OfficeSpace) - Swagger
@@ -18,3 +18,4 @@ Example:
 3. User reservation view - analysis and preparation
 4. try to implement @Transient annotations when we are fetching entire OfficeView instead of returning list of reservations, we should return hasReservations boolean flag;
 
+---------------------------------
