@@ -9,11 +9,20 @@ plugins {
 mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
 group = 'com.prodyna'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.8'
 
 repositories {
     mavenCentral()
 }
+
+docker {
+    name "marko991/${project.name}:${project.version}"
+    dockerfile file('Dockerfile')
+    copySpec.from(jar).rename(".*","app.jar")
+    buildArgs(['JAR_FILE': "app.jar"])
+    tag 'DockerHub', "marko991/reserve-your-spot_app:${project.version}"
+}
+docker.dependsOn build
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -33,6 +42,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'junit:junit:4.13.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.0'
+
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.1'
