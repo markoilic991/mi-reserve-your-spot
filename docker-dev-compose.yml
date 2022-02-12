@@ -14,6 +14,7 @@ services:
       - "8080:8080"
     restart: unless-stopped
     environment:
+      SPRING_PROFILES_ACTIVE: dev
       SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/prodyna?autoReconnect=true&useSSL=false
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "4567"
