@@ -1,8 +1,8 @@
 + 1. create docker image
 + 2. push this image to docker hub
 + 3. how to start up a container using docker image
-4. introduce use of spring profiles -> application properties for local and dev
-5. test pulling the image from docker hub and starting it
++ 4. introduce use of spring profiles -> application properties for local and dev
++ 5. test pulling the image from docker hub and starting it
 6. take a look into COMMENTs, there are some *IMPORTANT things that needs to be changed
 7. fix README file
 8. changelog
