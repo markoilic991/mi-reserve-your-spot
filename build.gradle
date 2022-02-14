@@ -6,12 +6,10 @@ plugins {
     id "com.palantir.docker" version "0.32.0"
 }
 
-application {
-    mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
-}
+mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
 group = 'com.prodyna'
-version = '0.0.14-SNAPSHOT'
+version = '0.0.20-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -35,7 +33,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'junit:junit:4.13.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.13.0'
-    implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.6.1'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.1'
