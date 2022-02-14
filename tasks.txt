@@ -8,7 +8,7 @@
 8. change name in docker gradle task - without _app
 9. update initial load to check if entities exist in db before saving
 10. take a look into COMMENTs, there are some *IMPORTANT things that needs to be changed
-11. fix README file
+11. fix README file and export Postman collection
 12. changelog
 ----------------------
 
