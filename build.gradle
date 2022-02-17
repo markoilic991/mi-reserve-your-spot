@@ -3,13 +3,13 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'application'
-    id 'com.palantir.docker' version '0.22.1'
+    id "com.palantir.docker" version "0.32.0"
 }
 
 mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
-group = 'com.pluralsight'
-version = '0.0.1-SNAPSHOT'
+group = 'com.prodyna'
+version = '0.0.22-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -51,6 +51,29 @@ dependencies {
     runtimeOnly 'mysql:mysql-connector-java'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
+}
+
+bootJar {
+    archiveName 'app.jar'
+}
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    manifest {
+        attributes(
+                'Main-Class': 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+docker {
+    dependsOn bootJar
+    name "reserve-your-spot"
+    files bootJar.archivePath
+    tag 'DockerHub', "marko991/reserve-your-spot:${project.version}"
 }
 
 test {

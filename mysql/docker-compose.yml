@@ -1,0 +1,11 @@
+version: "3"
+services:
+  database:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_DATABASE: prodyna
+      MYSQL_PASSWORD: 4567
+      MYSQL_ROOT_PASSWORD: 4567
+    ports:
+      - "3307:3306"
+
