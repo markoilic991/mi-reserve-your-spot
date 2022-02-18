@@ -4,7 +4,7 @@
 + 4. introduce use of spring profiles -> application properties for local and dev
 + 5. test pulling the image from docker hub and starting it
 + 6. build docker image locally and by gradle task (BUILD ARGS)
-7. build and push docker image with two tags - gradle task
++ 7. build and push docker image with two tags - gradle task
 + 8. change name in docker gradle task - without _app
 9. update initial load to check if entities exist in db before saving
 10. take a look into COMMENTs, there are some *IMPORTANT things that needs to be changed
