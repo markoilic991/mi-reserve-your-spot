@@ -9,7 +9,7 @@ plugins {
 mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
 group = 'com.prodyna'
-version = '0.0.22-SNAPSHOT'
+version = '0.0.23-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -73,6 +73,7 @@ docker {
     dependsOn bootJar
     name "reserve-your-spot"
     files bootJar.archivePath
+    buildArgs(['JAR_FILE': "app.jar"])
     tag 'DockerHub', "marko991/reserve-your-spot:${project.version}"
 }
 
