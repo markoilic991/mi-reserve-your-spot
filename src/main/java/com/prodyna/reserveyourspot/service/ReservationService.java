@@ -124,16 +124,12 @@ public class ReservationService {
 
   public boolean checkIfReservationExist(Reservation reservation) {
     LocalDate date = reservation.getDate();
-    int userId = reservation.getUser().getId();
     int workStationId = reservation.getWorkStation().getId();
     boolean reservationExist = false;
 
-    Optional<Reservation> newReservation1 = Optional.ofNullable(reservationRepository.findByDateAndWorkStationId(date, workStationId));
-    Optional<Reservation> newReservation2 = Optional.ofNullable(reservationRepository.findByDateAndUserId(date, userId));
+    Optional<Reservation> newReservation = Optional.ofNullable(reservationRepository.findByDateAndWorkStationId(date, workStationId));
 
-    if (newReservation1.isPresent()) {
-      reservationExist = true;
-    } else if (newReservation2.isPresent()) {
+    if (newReservation.isPresent()) {
       reservationExist = true;
     }
     return reservationExist;
