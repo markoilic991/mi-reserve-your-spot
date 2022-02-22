@@ -20,7 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,10 +37,10 @@ public class OfficeRoom {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotNull(message = "OfficeRoom name must have a value!")
+  @NotBlank(message = "OfficeRoom name must have a value!")
   private String name;
 
-  @NotNull(message = "OfficeRoom name must have a code!")
+  @NotBlank(message = "OfficeRoom code must have a value!")
   @Column(unique = true)
   private int code;
 

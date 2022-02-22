@@ -13,9 +13,7 @@ import java.time.LocalDate;
 public interface OfficeSpaceRepository extends JpaRepository<OfficeSpace, Integer> {
   @Query("SELECT DISTINCT os FROM OfficeSpace os LEFT JOIN os.rooms r LEFT JOIN r.workStations ws LEFT JOIN ws.reservations rs ON rs.date BETWEEN :dateFrom AND :dateTo WHERE os.id=:id")
   @EntityGraph(value = "graph.officeSpace.OfficeRoom.WorkStations.Reservations")
-  /*@EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "graph.officeSpaceOfficeRoomWorkStationsReserve")*/
-  public OfficeSpace getOfficeByIdAndReservationDateRange(@Param("id") int id, @Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
+  public OfficeSpace getOfficeSpaceByIdAndReservationDateRange(@Param("id") int id, @Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
-  @Query("SELECT os FROM OfficeSpace os WHERE os.name= :name")
-  public OfficeSpace getOfficeSpaceByName(@Param("name") String name);
+  public OfficeSpace findByName(String name);
 }

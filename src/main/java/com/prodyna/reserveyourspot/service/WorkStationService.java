@@ -1,7 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
-import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
 import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.WorkStation;
@@ -43,17 +42,13 @@ public class WorkStationService {
   public List<WorkStation> findByOfficeRoomId(int id) {
     Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
     if (!optionalOfficeRoom.isPresent()) {
-      throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
+      throw new EntityNotFoundException("OfficeRoom with id: " + id + " does not exist!");
     }
     return workStationRepository.findByOfficeRoomId(id);
   }
 
   public WorkStation save(WorkStation workStation) {
     return workStationRepository.save(workStation);
-  }
-
-  public List<WorkStation> saveAll(List<WorkStation> stations) {
-    return workStationRepository.saveAll(stations);
   }
 
   public WorkStation saveWorkStation(WorkStation workStation, int id) {
@@ -79,7 +74,7 @@ public class WorkStationService {
   public WorkStation updateWorkStation(WorkStation workStation, int id) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
     if (!optionalWorkStation.isPresent()) {
-      throw new EntityNotFoundException("Working Station does not exist in database!");
+      throw new EntityNotFoundException("WorkStation with id " + id + " does not exist in database!");
     }
     WorkStation workStationUpdated = optionalWorkStation.get();
     workStationUpdated.setDescription(workStation.getDescription());
@@ -90,7 +85,7 @@ public class WorkStationService {
   public boolean checkIfWorkStationExist(WorkStation workStation) {
     String code = workStation.getCode();
     boolean officeRoomExist = false;
-    Optional<WorkStation> optionalWorkStation = Optional.ofNullable(workStationRepository.findWorkStationByCode(code));
+    Optional<WorkStation> optionalWorkStation = Optional.ofNullable(workStationRepository.findByCode(code));
 
     if (optionalWorkStation.isPresent()) {
       officeRoomExist = true;

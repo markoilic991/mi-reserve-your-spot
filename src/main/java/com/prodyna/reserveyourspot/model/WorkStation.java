@@ -20,7 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,11 +37,11 @@ public class WorkStation {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotNull(message = "Every workStation must have it's unique code!")
+  @NotBlank(message = "Every work station must have it's unique code!")
   @Column(unique = true)
   private String code;
 
-  @NotNull
+  @NotBlank
   private String description;
 
   @ManyToOne

@@ -46,11 +46,11 @@ public class OfficeSpaceController {
     return officeSpaceService.findOfficeSpaceById(id);
   }
 
-  @GetMapping("/get-office-view")
+  @GetMapping("/office-view")
   public OfficeSpace getOfficeByIdAndReservationDateRange(@RequestParam(value = "officeSpaceId") int id,
                                                           @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                           @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
-    return officeSpaceService.getOfficeByIdAndReservationDateRange(id, dateFrom, dateTo);
+    return officeSpaceService.getOfficeSpaceByIdAndReservationDateRange(id, dateFrom, dateTo);
   }
 
   @GetMapping("/{officeSpaceId}/office-rooms")

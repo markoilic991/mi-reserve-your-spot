@@ -36,23 +36,19 @@ public class OfficeSpaceService {
     throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
   }
 
-  public OfficeSpace getOfficeByIdAndReservationDateRange(int id, LocalDate dateFrom, LocalDate dateTo) {
+  public OfficeSpace getOfficeSpaceByIdAndReservationDateRange(int id, LocalDate dateFrom, LocalDate dateTo) {
     Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
     if (optionalOfficeSpace.isPresent()) {
-      return officeSpaceRepository.getOfficeByIdAndReservationDateRange(id, dateFrom, dateTo);
+      return officeSpaceRepository.getOfficeSpaceByIdAndReservationDateRange(id, dateFrom, dateTo);
     }
     throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist!");
   }
 
   public OfficeSpace save(OfficeSpace officeSpace) {
     if (checkIfOfficeSpaceExist(officeSpace)) {
-      throw new UniqueValueException("OfficeSpace has unique name! Try another one!");
+      throw new UniqueValueException("Office space with name xyz already exist, try another one...");
     }
     return officeSpaceRepository.save(officeSpace);
-  }
-
-  public List<OfficeSpace> saveAll(List<OfficeSpace> officeSpaces) {
-    return officeSpaceRepository.saveAll(officeSpaces);
   }
 
   public String deleteById(int id) {
@@ -77,7 +73,7 @@ public class OfficeSpaceService {
   public boolean checkIfOfficeSpaceExist(OfficeSpace officeSpace) {
     String name = officeSpace.getName();
     boolean officeSpaceExist = false;
-    Optional<OfficeSpace> optionalOfficeSpace = Optional.ofNullable(officeSpaceRepository.getOfficeSpaceByName(name));
+    Optional<OfficeSpace> optionalOfficeSpace = Optional.ofNullable(officeSpaceRepository.findByName(name));
 
     if (optionalOfficeSpace.isPresent()) {
       officeSpaceExist = true;

@@ -133,9 +133,9 @@ public class SampleDataService {
     String dateOne = "2021-12-30";
     LocalDate parseDateOne = LocalDate.parse(dateOne);
     reservationOne.setDate(parseDateOne);
-    User userOne = userRepository.findUserByEmail("marko.ilic@prodyna.com");
+    User userOne = userRepository.findByEmail("marko.ilic@prodyna.com");
     reservationOne.setUser(userOne);
-    WorkStation workStationWindows = workStationRepository.findWorkStationByCode("PD110011");
+    WorkStation workStationWindows = workStationRepository.findByCode("PD110011");
     reservationOne.setWorkStation(workStationWindows);
 
     if (!reservationService.checkIfReservationExist(reservationOne)) {
@@ -146,9 +146,9 @@ public class SampleDataService {
     String dateTwo = "2022-01-28";
     LocalDate parseDateTwo = LocalDate.parse(dateTwo);
     reservationTwo.setDate(parseDateTwo);
-    User userTwo = userRepository.findUserByEmail("miroslav.perovic@prodyna.com");
+    User userTwo = userRepository.findByEmail("miroslav.perovic@prodyna.com");
     reservationTwo.setUser(userTwo);
-    WorkStation workStationLinux = workStationRepository.findWorkStationByCode("PD440044");
+    WorkStation workStationLinux = workStationRepository.findByCode("PD440044");
     reservationTwo.setWorkStation(workStationLinux);
 
     if (!reservationService.checkIfReservationExist(reservationTwo)) {
