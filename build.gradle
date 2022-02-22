@@ -9,7 +9,7 @@ plugins {
 mainClassName = 'com.prodyna.reserveyourspot.ReserveYourSpotApplication'
 
 group = 'com.prodyna'
-version = '0.0.27-SNAPSHOT'
+version = '0.0.28-SNAPSHOT'
 
 repositories {
     mavenCentral()
