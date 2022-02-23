@@ -28,10 +28,6 @@ public class SampleDataService {
 
   private ReservationService reservationService;
 
-  private UserRepository userRepository;
-
-  private WorkStationRepository workStationRepository;
-
   @Autowired
   public SampleDataService(OfficeRoomService officeRoomService,
                            OfficeSpaceService officeSpaceService,
@@ -45,8 +41,6 @@ public class SampleDataService {
     this.workStationService = workStationService;
     this.userService = userService;
     this.reservationService = reservationService;
-    this.userRepository = userRepository;
-    this.workStationRepository = workStationRepository;
   }
 
   @PostConstruct
@@ -133,9 +127,9 @@ public class SampleDataService {
     String dateOne = "2021-12-30";
     LocalDate parseDateOne = LocalDate.parse(dateOne);
     reservationOne.setDate(parseDateOne);
-    User userOne = userRepository.findByEmail("marko.ilic@prodyna.com");
+    User userOne = userService.findByEmail("marko.ilic@prodyna.com");
     reservationOne.setUser(userOne);
-    WorkStation workStationWindows = workStationRepository.findByCode("PD110011");
+    WorkStation workStationWindows = workStationService.findByCode("PD110011");
     reservationOne.setWorkStation(workStationWindows);
 
     if (!reservationService.checkIfReservationExist(reservationOne)) {
@@ -146,9 +140,9 @@ public class SampleDataService {
     String dateTwo = "2022-01-28";
     LocalDate parseDateTwo = LocalDate.parse(dateTwo);
     reservationTwo.setDate(parseDateTwo);
-    User userTwo = userRepository.findByEmail("miroslav.perovic@prodyna.com");
+    User userTwo = userService.findByEmail("miroslav.perovic@prodyna.com");
     reservationTwo.setUser(userTwo);
-    WorkStation workStationLinux = workStationRepository.findByCode("PD440044");
+    WorkStation workStationLinux = workStationService.findByCode("PD440044");
     reservationTwo.setWorkStation(workStationLinux);
 
     if (!reservationService.checkIfReservationExist(reservationTwo)) {

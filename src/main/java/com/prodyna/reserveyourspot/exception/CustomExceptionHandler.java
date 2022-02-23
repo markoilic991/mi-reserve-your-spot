@@ -12,6 +12,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
@@ -30,6 +34,14 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
   @Override
   protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+    Map<String, Object> body = new HashMap<>();
+    List<String> errors = exception.getBindingResult()
+            .getFieldErrors()
+            .stream()
+            .map(fieldError -> fieldError.getDefaultMessage())
+            .collect(Collectors.toList());
+    body.put("errors", errors);
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,

@@ -36,7 +36,15 @@ public class WorkStationService {
     if (optionalWorkStation.isPresent()) {
       return optionalWorkStation.get();
     }
-    throw new EntityNotFoundException("WorkStation with id: " + id + " does not exist!");
+    throw new EntityNotFoundException("WorkStation with id " + id + " does not exist!");
+  }
+
+  public WorkStation findByCode(String code){
+    Optional<WorkStation> optionalWorkStation = Optional.ofNullable(workStationRepository.findByCode(code));
+    if (optionalWorkStation.isPresent()){
+      return optionalWorkStation.get();
+    }
+    throw new EntityNotFoundException("WorkStation with code " + code + " does not exist!");
   }
 
   public List<WorkStation> findByOfficeRoomId(int id) {

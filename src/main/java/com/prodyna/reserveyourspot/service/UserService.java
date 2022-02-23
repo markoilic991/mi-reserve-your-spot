@@ -34,6 +34,14 @@ public class UserService {
     throw new EntityNotFoundException("User with id " + id + " does not exist!");
   }
 
+  public User findByEmail(String email){
+    Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
+    if (optionalUser.isPresent()){
+      return optionalUser.get();
+    }
+    throw new EntityNotFoundException("User with email " + email + " does not exist!");
+  }
+
   public User save(User user) {
     if (checkIfUserExist(user)) {
       throw new UniqueValueException("User has unique email! Try another one!");
