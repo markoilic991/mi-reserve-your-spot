@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class OfficeSpaceController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public OfficeSpace saveOfficeSpace(@RequestBody OfficeSpace officeSpace) {
+  public OfficeSpace saveOfficeSpace(@Valid @RequestBody OfficeSpace officeSpace) {
     return officeSpaceService.save(officeSpace);
   }
 
