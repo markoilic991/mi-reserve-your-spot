@@ -84,12 +84,12 @@ public class WorkStationService {
 
   public boolean checkIfWorkStationExist(WorkStation workStation) {
     String code = workStation.getCode();
-    boolean officeRoomExist = false;
+    boolean workStationExist = false;
     Optional<WorkStation> optionalWorkStation = Optional.ofNullable(workStationRepository.findByCode(code));
 
     if (optionalWorkStation.isPresent()) {
-      officeRoomExist = true;
+      workStationExist = true;
     }
-    return officeRoomExist;
+    return workStationExist;
   }
 }
