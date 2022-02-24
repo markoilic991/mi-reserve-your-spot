@@ -22,12 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -109,14 +105,6 @@ public class ReservationControllerTest {
   @AfterEach
   public void cleanUp() {
     reservationRepository.deleteAll();
-  }
-
-  @Test
-  public void should_Find_All_Reservations() throws Exception {
-    Mockito.when(reservationService.findAll())
-            .thenReturn((List<Reservation>) Stream.of(reservationOne, reservationTwo).collect(Collectors.toList()));
-
-    mockMvc.perform(get("/api/reservations")).andDo(print()).andExpect(status().isOk());
   }
 
   @Test

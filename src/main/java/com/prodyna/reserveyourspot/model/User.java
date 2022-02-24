@@ -18,7 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,10 +35,10 @@ public class User {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotNull
+  @NotBlank
   private String name;
 
-  @NotNull
+  @NotBlank
   @Email
   @Column(unique = true)
   private String email;

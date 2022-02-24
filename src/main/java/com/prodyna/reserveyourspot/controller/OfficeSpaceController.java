@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -46,11 +47,11 @@ public class OfficeSpaceController {
     return officeSpaceService.findOfficeSpaceById(id);
   }
 
-  @GetMapping("/get-office-view")
+  @GetMapping("/office-view")
   public OfficeSpace getOfficeByIdAndReservationDateRange(@RequestParam(value = "officeSpaceId") int id,
                                                           @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
                                                           @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
-    return officeSpaceService.getOfficeByIdAndReservationDateRange(id, dateFrom, dateTo);
+    return officeSpaceService.getOfficeSpaceByIdAndReservationDateRange(id, dateFrom, dateTo);
   }
 
   @GetMapping("/{officeSpaceId}/office-rooms")
@@ -60,7 +61,7 @@ public class OfficeSpaceController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public OfficeSpace saveOfficeSpace(@RequestBody OfficeSpace officeSpace) {
+  public OfficeSpace saveOfficeSpace(@Valid @RequestBody OfficeSpace officeSpace) {
     return officeSpaceService.save(officeSpace);
   }
 

@@ -1,7 +1,6 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
-import com.prodyna.reserveyourspot.exception.OfficeRoomNotFoundException;
 import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
@@ -32,10 +31,6 @@ public class OfficeRoomService {
     return officeRoomRepository.save(officeRoom);
   }
 
-  public List<OfficeRoom> saveAll(List<OfficeRoom> rooms) {
-    return officeRoomRepository.saveAll(rooms);
-  }
-
   public OfficeRoom saveOfficeRoom(int officeSpaceId, OfficeRoom officeRoom) {
     Optional<OfficeSpace> officeSpace = officeSpaceRepository.findById(officeSpaceId);
     if (!officeSpace.isPresent()) {
@@ -56,7 +51,7 @@ public class OfficeRoomService {
     if (optionalOfficeRoom.isPresent()) {
       return optionalOfficeRoom.get();
     }
-    throw new OfficeRoomNotFoundException("OfficeRoom with id: " + id + " does not exist!");
+    throw new EntityNotFoundException("OfficeRoom with id " + id + " does not exist!");
   }
 
   public List<OfficeRoom> findByOfficeSpaceId(int id) {
@@ -90,7 +85,7 @@ public class OfficeRoomService {
   public boolean checkIfOfficeRoomExist(OfficeRoom officeRoom) {
     int code = officeRoom.getCode();
     boolean officeRoomExist = false;
-    Optional<OfficeRoom> optionalOfficeRoom = Optional.ofNullable(officeRoomRepository.findOfficeRoomByCode(code));
+    Optional<OfficeRoom> optionalOfficeRoom = Optional.ofNullable(officeRoomRepository.findByCode(code));
 
     if (optionalOfficeRoom.isPresent()) {
       officeRoomExist = true;

@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
@@ -21,71 +20,52 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(OfficeRoomNotFoundException.class)
-  public ResponseEntity<ErrorDetails> handleOfficeRoomNotFound(OfficeRoomNotFoundException e, WebRequest request) {
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<ErrorDetails> handleConstraintViolationException(ConstraintViolationException exception, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.NOT_FOUND,
-            e.getMessage(),
+            HttpStatus.BAD_REQUEST,
+            exception.getMessage(),
             ZonedDateTime.now(),
-            request.getDescription(true)
-    );
-    return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
-  }
+            request.getDescription(true));
 
-  @ExceptionHandler(ConstraintViolationException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ResponseEntity<String> handleContraintViolationException(ConstraintViolationException e) {
-
-    return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
   @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-    Map<String, Object> body = new HashMap<>();
+    final String errors = exception.getBindingResult().getFieldErrors().stream()
+            .map(error -> String.join(" : ", error.getField(), error.getDefaultMessage()))
+            .collect(Collectors.joining("; "));
 
-    List<String> errors = ex.getBindingResult()
-            .getFieldErrors()
-            .stream()
-            .map(x -> x.getDefaultMessage())
-            .collect(Collectors.toList());
+    ErrorDetails errorDetails = new ErrorDetails(
+            HttpStatus.BAD_REQUEST,
+            errors,
+            ZonedDateTime.now(),
+            request.getDescription(true));
 
-    body.put("errors", errors);
-
-    return new ResponseEntity<>(body, headers, status);
+    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(EntityNotFoundException.class)
-  public ResponseEntity<ErrorDetails> EntityNotFoundExceptionHandler(EntityNotFoundException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> EntityNotFoundExceptionHandler(EntityNotFoundException exception, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
+            HttpStatus.NOT_FOUND,
+            exception.getMessage(),
             ZonedDateTime.now(),
             request.getDescription(true));
 
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
-  }
-
-  @ExceptionHandler(ReservationAlreadyExistException.class)
-  public ResponseEntity<ErrorDetails> reservationExistExceptionHandler(ReservationAlreadyExistException e, ServletWebRequest request) {
-
-    ErrorDetails errorDetails = new ErrorDetails(
-            HttpStatus.BAD_REQUEST,
-            e.getMessage(),
-            ZonedDateTime.now(),
-            request.getDescription(true));
-
-    return new ResponseEntity(errorDetails, HttpStatus.BAD_REQUEST);
+    return new ResponseEntity(errorDetails, HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(UniqueValueException.class)
-  public ResponseEntity<ErrorDetails> EntityNotFoundExceptionHandler(UniqueValueException e, ServletWebRequest request) {
+  public ResponseEntity<ErrorDetails> UniqueValueExceptionHandler(UniqueValueException exception, ServletWebRequest request) {
 
     ErrorDetails errorDetails = new ErrorDetails(
             HttpStatus.BAD_REQUEST,
-            e.getMessage(),
+            exception.getMessage(),
             ZonedDateTime.now(),
             request.getDescription(true));
 

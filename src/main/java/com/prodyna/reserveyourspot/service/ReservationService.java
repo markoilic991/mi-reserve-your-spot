@@ -1,7 +1,7 @@
 package com.prodyna.reserveyourspot.service;
 
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
-import com.prodyna.reserveyourspot.exception.ReservationAlreadyExistException;
+import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.Reservation;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.model.WorkStation;
@@ -47,47 +47,22 @@ public class ReservationService {
     throw new EntityNotFoundException("Reservation with id: " + " does not exist!");
   }
 
-  public List<Reservation> findAllReservationsByDateRange(LocalDate dateFrom, LocalDate dateTo) {
-    return reservationRepository.findAllReservationByDateRange(dateFrom, dateTo);
-  }
-
-  public Reservation findByDateAndWorkStationId(LocalDate date, int workStationId) {
-    return reservationRepository.findByDateAndWorkStationId(date, workStationId);
-  }
-
   public Reservation save(Reservation reservation) {
     return reservationRepository.save(reservation);
-  }
-
-  public Reservation saveReservation(int userId, int workStationId, Reservation reservation) {
-    Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
-    Optional<User> optionalUser = userRepository.findById(userId);
-    if (!optionalWorkStation.isPresent() || !optionalUser.isPresent()) {
-      throw new EntityNotFoundException("User or workStation do not exist in database! Reservation can not be saved!");
-    }
-    WorkStation workStationToSave = optionalWorkStation.get();
-    User userToSave = optionalUser.get();
-    reservation.setWorkStation(workStationToSave);
-    reservation.setUser(userToSave);
-    if (checkIfReservationExist(reservation)) {
-      throw new ReservationAlreadyExistException("Reservation already exists in database!!!");
-    } else {
-      return reservationRepository.save(reservation);
-    }
   }
 
   public List<Reservation> saveReservations(int userId, int workStationId, LocalDate from, LocalDate to) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(workStationId);
     Optional<User> optionalUser = userRepository.findById(userId);
 
+    if (checkIfReservationsExistInDateRange(workStationId, from, to)) {
+      throw new UniqueValueException("Reservations by this date range already exist in database. Choose another data range!");
+    }
+
     if (optionalWorkStation.isPresent() && optionalUser.isPresent()) {
       List<Reservation> reservations = dateRangeFromTo(from, to).stream()
               .map(date -> new Reservation(date, optionalUser.get(), optionalWorkStation.get()))
               .collect(Collectors.toList());
-
-      if (checkIfReservationsExist(from, to)) {
-        throw new ReservationAlreadyExistException("Reservations by this date range already exist in database. Choose another data range!");
-      }
       return reservationRepository.saveAll(reservations);
     }
     throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
@@ -112,16 +87,7 @@ public class ReservationService {
     return "Reservation cancelled successfully!";
   }
 
-  public Reservation updateReservation(Reservation reservation, int id) {
-    Optional<Reservation> optionalReservation = reservationRepository.findById(id);
-    if (!optionalReservation.isPresent()) {
-      throw new EntityNotFoundException("Reservation does not exist in database!");
-    }
-    Reservation reservationUpdated = optionalReservation.get();
-    reservationUpdated.setDate(reservation.getDate());
-    return reservationRepository.save(reservationUpdated);
-  }
-
+  //this method is used in SampleDataService class
   public boolean checkIfReservationExist(Reservation reservation) {
     LocalDate date = reservation.getDate();
     int workStationId = reservation.getWorkStation().getId();
@@ -135,18 +101,14 @@ public class ReservationService {
     return reservationExist;
   }
 
-  public boolean checkIfReservationsExist(LocalDate dateFrom, LocalDate dateTo) {
-    List<Reservation> reservationList = reservationRepository.findAllReservationByDateRange(dateFrom, dateTo);
-    Reservation reservation = null;
-    boolean reservationsExist = true;
+  public boolean checkIfReservationsExistInDateRange(int workStationId, LocalDate dateFrom, LocalDate dateTo) {
+    List<Reservation> reservationList = reservationRepository.findReservationsByWorkStationIdAndDateRange(workStationId, dateFrom, dateTo);
+    boolean reservationsExist = false;
 
-    for (int i = 0; i < reservationList.size(); i++) {
-      reservation = reservationList.get(i);
-      if (reservation == reservationList.get(i)) {
-        return reservationsExist;
-      }
+    if (!reservationList.isEmpty()) {
+      reservationsExist = true;
     }
-    return false;
+    return reservationsExist;
   }
 
   public List<LocalDate> dateRangeFromTo(LocalDate dateFrom, LocalDate dateTo) {

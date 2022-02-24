@@ -31,7 +31,15 @@ public class UserService {
     if (optionalUser.isPresent()) {
       return optionalUser.get();
     }
-    throw new EntityNotFoundException("User with id: " + id + " does not exist!");
+    throw new EntityNotFoundException("User with id " + id + " does not exist!");
+  }
+
+  public User findByEmail(String email){
+    Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
+    if (optionalUser.isPresent()){
+      return optionalUser.get();
+    }
+    throw new EntityNotFoundException("User with email " + email + " does not exist!");
   }
 
   public User save(User user) {
@@ -39,10 +47,6 @@ public class UserService {
       throw new UniqueValueException("User has unique email! Try another one!");
     }
     return userRepository.save(user);
-  }
-
-  public List<User> saveAll(List<User> users) {
-    return userRepository.saveAll(users);
   }
 
   public String deleteById(int id) {
@@ -57,7 +61,7 @@ public class UserService {
   public User updateUser(User user, int id) {
     Optional<User> optionalUser = userRepository.findById(id);
     if (!optionalUser.isPresent()) {
-      throw new EntityNotFoundException("User does not exist in database!");
+      throw new EntityNotFoundException("User with id " + id + " does not exist in database!");
     }
     User userUpdated = optionalUser.get();
     userUpdated.setName(user.getName());
@@ -68,7 +72,7 @@ public class UserService {
   public boolean checkIfUserExist(User user) {
     String email = user.getEmail();
     boolean userExist = false;
-    Optional<User> optionalUser = Optional.ofNullable(userRepository.findUserByEmail(email));
+    Optional<User> optionalUser = Optional.ofNullable(userRepository.findByEmail(email));
 
     if (optionalUser.isPresent()) {
       userExist = true;

@@ -20,7 +20,7 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,11 +45,11 @@ public class OfficeSpace {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private int id;
 
-  @NotNull(message = "OfficeSpace name must have a value!")
+  @NotBlank(message = "OfficeSpace name must have a value!")
   @Column(unique = true)
   private String name;
 
-  @NotNull
+  @NotBlank
   private String description;
 
   @ToString.Exclude

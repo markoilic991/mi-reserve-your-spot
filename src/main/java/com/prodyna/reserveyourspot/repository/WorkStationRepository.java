@@ -13,6 +13,5 @@ public interface WorkStationRepository extends JpaRepository<WorkStation, Intege
   @Query("SELECT w FROM WorkStation w WHERE w.officeRoom.id = :id")
   public List<WorkStation> findByOfficeRoomId(@Param("id") int id);
 
-  @Query("SELECT w FROM WorkStation w WHERE w.code = :code")
-  public WorkStation findWorkStationByCode(@Param("code") String code);
+  public WorkStation findByCode(String code);
 }

@@ -118,12 +118,4 @@ public class ReservationServiceTest {
     reservationService.deleteById(reservationOne.getId());
     Mockito.verify(reservationRepository, Mockito.times(1)).deleteById(reservationOne.getId());
   }
-
-  @Test
-  public void should_Find_Reservation_By_Date_And_Work_Station_Id() {
-    reservationService.findByDateAndWorkStationId(reservationOne.getDate(), reservationOne.getWorkStation().getId());
-
-    Mockito.verify(reservationRepository, Mockito.times(1))
-            .findByDateAndWorkStationId(reservationOne.getDate(), reservationOne.getWorkStation().getId());
-  }
 }
