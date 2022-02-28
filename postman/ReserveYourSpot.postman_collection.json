@@ -1,0 +1,539 @@
+{
+	"info": {
+		"_postman_id": "c1d5ac1c-c7e4-463c-b3f7-2510b7b74e29",
+		"name": "ReserveYourSpot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "saveRooms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n        \"name\": \"C#\",\r\n        \"code\": 77\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/office-spaces/20/office-rooms",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces",
+						"20",
+						"office-rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveOfficeSpace",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"name\": \"Qnit Wien\",\r\n        \"description\": \"Qnit Belgrade\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/office-spaces",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveWorkStations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"code\": \"PD7777\",\r\n        \"description\": \"Linux Working Station\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/office-rooms/13/work-stations",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-rooms",
+						"13",
+						"work-stations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"name\": \"Igor Mirkovic\",\r\n        \"email\": \"igor.mirkovic@prodyna.com\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "saveReservationsByDateRange",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/reservations/save?userId=8&workStationId=5&dateFrom=2024-08-26&dateTo=2024-08-30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reservations",
+						"save"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "8"
+						},
+						{
+							"key": "workStationId",
+							"value": "5"
+						},
+						{
+							"key": "dateFrom",
+							"value": "2024-08-26"
+						},
+						{
+							"key": "dateTo",
+							"value": "2024-08-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllOfficeSpaces",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"name\": \"QNIT DOO\",\r\n        \"description\": \"QNIT quality assurance - IT\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/office-spaces",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getRoomsByOfficeSpaceId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/office-spaces/8/office-rooms",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces",
+						"8",
+						"office-rooms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStationsByOfficeRoomId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/office-rooms/15/work-stations",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-rooms",
+						"15",
+						"work-stations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsersById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/users/8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOfficeView",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/office-spaces/office-view?officeSpaceId=1&dateFrom=2024-07-30&dateTo=2024-07-30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces",
+						"office-view"
+					],
+					"query": [
+						{
+							"key": "officeSpaceId",
+							"value": "1"
+						},
+						{
+							"key": "dateFrom",
+							"value": "2024-07-30"
+						},
+						{
+							"key": "dateTo",
+							"value": "2024-07-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOfficeSpace",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/office-spaces/77",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces",
+						"77"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteOfficeRoom",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/office-rooms/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-rooms",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteWorkStations",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/work-stations/7",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"work-stations",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancelReservation",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/reservations/cancel?userId=17&workStationId=15&date=2024-07-30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reservations",
+						"cancel"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "17"
+						},
+						{
+							"key": "workStationId",
+							"value": "15"
+						},
+						{
+							"key": "date",
+							"value": "2024-07-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/users/9",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateOfficeRoom",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"name\": \"JavaScript\",\r\n        \"code\": 34\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/office-rooms/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-rooms",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateOfficeSpace",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \r\n        \"name\": \"QNIT - Belgrade\",\r\n        \"description\": \"Qnit \"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/office-spaces/12",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"office-spaces",
+						"12"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateWorkStation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"code\": \"PD00034\",\r\n        \"description\": \"Working Station\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/work-stations/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"work-stations",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Milos Radin\",\r\n    \"email\": \"ana.mitkovic@prodyna.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/users/12",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"users",
+						"12"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
