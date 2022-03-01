@@ -13,169 +13,216 @@ This project should ensure that employees in a company can successfully reserve 
 
 * https://secure.prodyna.de/confluence/display/PS/Spring+boot+microservice+task
 ## Technology Stack
-##### This project was built using InteliiJ IDEA and uses the following technologies:
+##### This project was built using IntelliJ IDEA and uses the following technologies:
 * Java 11
-* Spring Framework/Spring Boot
+* Spring Framework/Spring Boot version 2.5.6
 * REST CRUD operations
-* Swagger UI with REST
+* Swagger UI with REST version 3.0.0
 * Spring DATA MySQL
 * Test coverage
 * Rest error handlers
-* Locally installed mySql (setup of it: database name: prodyna, username: root, password: 1234)
+* Locally installed mySql 8.0 (setup: database name: prodyna, username: root, password: 4567)
+* Docker & docker-compose
+* Postman
+
+##  Setup
+
+1. Install MySQL Workbench 8.0 and create new connection (database=prodyna, username=root, password=4567)
+2. Install DockerDesktop
+3. Create profile on DockerHub
+4. Install Postman for testing REST API
+5. Run next Docker command on your local machine from the correct location where docker-compose.yml file is:
+  ```http
+ Docker-compose up
+```
+6. Wait the application to start
+7. Run Postman and import collection of REST API 
+8. Test the API below using Postman or Swagger UI
+9. Link to open Swagger UI- http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
 
 ## API Reference
+### Administration scenario
 
-### Users
-#### Get all users
+### OfficeSpace
+
+#### Find all office-spaces
 
 ```http
-  GET /users/
+  GET /api/office-spaces
 ```
 
-#### Get user
+#### Find office-space
 
 ```http
-  GET /users/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of user to fetch |
-
-#### Add user
-
-```http
-  POST/users/
-```
-
-#### Delete user
-
-```http
-  DELETE /users/${id}
+  GET /api/office-spaces/${id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of user to delete |
+| `id`      | `int` | **Required**: Id of office-space to find |
 
-#### Update user
-
-```http
-  PUT /users/update
-```
-
-### OfficeRooms
-#### Get all rooms
+#### Find office-rooms by office-space id
 
 ```http
-  GET /rooms/
-```
-
-
-#### Get OfficeRoom
-
-```http
-  GET /rooms/${id}
+  GET /api/office-spaces/{officeSpaceId}/office-rooms
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of room to fetch |
+| `id`      | `int` | **Required**: Id of office-space to find office-rooms|
 
-#### Add rooms
+#### Save office-space
 
 ```http
-  POST /rooms/
+  POST /api/office-spaces
 ```
-
-#### Delete OfficeRoom
-
-```http
-  DELETE /rooms/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of room to delete |
-
-#### Update OfficeRoom
+#### Delete office-space
 
 ```http
-  PUT /rooms/update
-```
-### WorkStations
-#### Get all stations
-
-```http
-  GET /workStations/
-```
-
-
-#### Get WorkStation
-
-```http
-  GET /workStations/${id}
+  DELETE /api/office-spaces/{id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of station to fetch |
+| `id`      | `int` | **Required**: Id of office-space to delete |
 
-#### Add WorkStation
-
-```http
-  POST /workStations/
-```
-#### Delete WorkStation
+#### Update office-space
 
 ```http
-  DELETE /workStations/${id}
+  PUT /api/office-spaces/{id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of station to delete |
+| `id`      | `int` | **Required**: Id of office-space to update |
 
-#### Update WorkStation
+### OfficeRoom
 
-```http
-  PUT /workStations/update
-```
-### Reservations
-#### Get all reservations
+#### Find all office-rooms
 
 ```http
-  GET /reservations/
+  GET /api/office-rooms
 ```
 
-
-#### Get Reservation
+#### Find office-room
 
 ```http
-  GET /reservations/${id}
+  GET /api/office-rooms/${id}
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of reservation to fetch |
+| `id`      | `int` | **Required**: Id of office-room to find |
 
-
-#### Delete Reservation
+#### Find work-stations by office-room id
 
 ```http
-  DELETE /reservations/${id}
+  GET /api/office-rooms/{officeRoomId}/work-stations
 ```
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of reservation to delete |
+| `id`      | `int` | **Required**: Id of office-room to find work-stations|
 
-#### Add Reservation
+#### Save office-room
 
 ```http
-  POST /reservations/
+  POST /api/office-rooms
 ```
 
+#### Delete office-room
+
+```http
+  DELETE /api/office-rooms/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**: Id of office-room to delete |
+
+#### Update office-room
+
+```http
+  PUT /api/office-rooms/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**: Id of office-room to update |
+
+### WorkStation
+
+#### Save work-stations
+
+```http
+  POST /api/work-stations
+```
+#### Delete work-stations
+
+```http
+  DELETE /api/work-stations/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**: Id of work-station to delete |
+
+#### Update work-stations
+
+```http
+  PUT /api/work-stations/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**: Id of work-station to update |
+
+### Reservation scenario
+
+### OfficeSpace
+
+#### Find all office-spaces
+
+```http
+  GET /api/office-spaces
+```
+
+#### Find office-space by id and date range
+
+```http
+  GET /api/office-spaces/office-view?officeSpaceID=''&dateFrom=''&dateTo=''
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**: Id of office-space to find |
+| `dateFrom`      | `LocalDate` | **Required**: date from needed |
+| `dateTo`      | `LocalDate` | **Required**: date to needed |
+
+### Reservation
+
+#### Save reservations by date range
+
+```http
+  POST /api/reservations/save?userId=''&workStationId=''&dateFrom=''&dateTo=''
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `userId`      | `int` | **Required**: Id of user to save |
+| `workStationId`      | `int` | **Required**: Id of work-station to save |
+| `dateFrom`      | `LocalDate` | **Required**: date from needed |
+| `dateTo`      | `LocalDate` | **Required**: date to needed |
+
+#### Delete/Cancel reservation
+
+```http
+  DELETE /api/reservations/cancel?userId=''&workStationId=''&date=''
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `userId`      | `int` | **Required**: Id of user to cancel reservation for |
+| `workStationId`      | `int` | **Required**: Id of work-station to cancel reservation for|
+| `date`      | `LocalDate` | **Required**: date to cancel reservation |
 ## Authors
 
 - [@markoilic](https://bitbucket.prodyna.com/profile)
