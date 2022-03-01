@@ -17,7 +17,7 @@ This project should ensure that employees in a company can successfully reserve 
 * Java 11
 * Spring Framework/Spring Boot version 2.5.6
 * REST CRUD operations
-* Swagger UI with REST 
+* Swagger UI with REST version 3.0.0
 * Spring DATA MySQL
 * Test coverage
 * Rest error handlers
