@@ -19,6 +19,6 @@ All notable changes to this project will be documented in this file.
 
 ### *Updated*
 
-- Refactor README.md file
-- Refactor code and tests 
+- README.md file
+- tests 
 
