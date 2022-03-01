@@ -17,7 +17,7 @@ All notable changes to this project will be documented in this file.
 - Docker task inside build.gradle
 - Methods in reservation repository
 
-### *Fixed*
+### *Updated*
 
 - Refactor README.md file
 - Refactor code and tests 
