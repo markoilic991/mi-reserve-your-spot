@@ -82,9 +82,9 @@ class Reservation {
     + setUser(n : User) : void
 }
 
-OfficeRoom "many" <--* "1" OfficeSpace
-WorkStation "many" <--* "1" OfficeRoom
-WorkStation "1" *-- "many" Reservation
-User "1" *-- "many" Reservation
+OfficeRoom "*" <--* "1" OfficeSpace
+WorkStation "*" <--* "1" OfficeRoom
+User "0..*" - "0..*" WorkStation
+(User, WorkStation) .. Reservation
 
 @enduml
