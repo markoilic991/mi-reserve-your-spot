@@ -1,0 +1,90 @@
+@startuml
+
+class OfficeSpace {
+    - id : int
+    - name: String
+    - description: String
+    - rooms: Set<OfficeRoom>
+
+    + getId() : int
+    + setId(n : int) : void
+    + getName() : String
+    + setName(n : String) : void
+    + getDescription() : String
+    + setDescription(n : String) : void
+    + getRooms() : OfficeRoom
+    + setRooms(n : Set<OfficeRoom>) : void
+}
+class OfficeRoom {
+    - id: int
+    - name: String
+    - code: int
+    - officeSpace: OfficeSpace
+    - workStations: Set<WorkStation>
+
+    + getId() : int
+    + setId(n : int) : void
+    + getName() : String
+    + setName(n : String) : void
+    + getCode() : int
+    + setCode(n : int) : void
+    + getOfficeSpace() : OfficeSpace
+    + setOfficeSpace(n : OfficeSpace) : void
+    + getWorkStations() : Set<WorkStation>
+    + setWorkStations(n : Set<WorkStation>) : void
+}
+class WorkStation {
+    - id: int
+    - code: String
+    - description: String
+    - officeRoom: OfficeRoom
+    - reservations: Set<Reservation>
+
+    + getId() : int
+    + setId(n : int) : void
+    + getCode() : String
+    + setCode(n : String) : void
+    + getDescription() : String
+    + setDescription(n : String) : void
+    + getOfficeRoom() : OfficeRoom
+    + setOfficeRoom(n : OfficeRoom) : void
+    + getReservations() : Set<Reservation>
+    + setReservations(n : Set<Reservation>) : void
+}
+class User {
+    - id: int
+    - name: String
+    - email: String
+    - reservations: Set<Reservation>
+
+    + getId() : int
+    + setId(n : int) : void
+    + getName() : String
+    + setName(n : String) : void
+    + getEmail() : String
+    + setEmail(n : String) : void
+    + getReservations() : Set<Reservation>
+    + setReservations(n : Set<Reservation>) : void
+}
+class Reservation {
+    - id: int
+    - date: LocalDate
+    - workStation: WorkStation
+    - user: User
+
+    + getId() : int
+    + setId(n : int) : void
+    + getDate() : LocalDate
+    + setDate(n : LocalDate) : void
+    + getWorkStation() : WorkStation
+    + setWorkStation(n : WorkStation) : void
+    + getUser() : User
+    + setUser(n : User) : void
+}
+
+OfficeRoom "*" --* "1" OfficeSpace
+WorkStation "*" --* "1" OfficeRoom
+User "0..*" - "0..*" WorkStation
+(User, WorkStation) .. Reservation
+
+@enduml

@@ -18,8 +18,9 @@ Example:
   "name": "string",
   "description": "string"
 }
-2. create UML diagram - object and db
-3. User reservation view - analysis and preparation
-4. try to implement @Transient annotations when we are fetching entire OfficeView instead of returning list of reservations, we should return hasReservations boolean flag;
++ 2. create UML diagram - object
+3. create diagram - database
+4. User reservation view - analysis and preparation
+5. try to implement @Transient annotations when we are fetching entire OfficeView instead of returning list of reservations, we should return hasReservations boolean flag;
 
 ---------------------------------
