@@ -1,6 +1,7 @@
 package com.prodyna.reserveyourspot.repository;
 
 import com.prodyna.reserveyourspot.model.Reservation;
+import io.swagger.models.auth.In;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,9 +18,19 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
   @Query("SELECT r FROM Reservation r WHERE r.workStation.id = :workStationId AND r.date BETWEEN :dateFrom AND :dateTo")
   public List<Reservation> findReservationsByWorkStationIdAndDateRange(@Param("workStationId") int workStationId, @Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
 
+  @Query("SELECT r FROM Reservation r WHERE r.user.id = :userId AND r.date BETWEEN :dateFrom AND :dateTo")
+  public List<Reservation> findReservationsByUserIdAndDateRange(@Param("userId") int userId, @Param("dateFrom") LocalDate dateFrom, @Param("dateTo") LocalDate dateTo);
+
   @Modifying
   @Query("DELETE FROM Reservation r WHERE r.date = :date AND r.user.id = :userId AND r.workStation.id = :workStationId")
   public void deleteByDateAndUserIdAndWorkStationId(@Param("date") LocalDate date, @Param("userId") int userId, @Param("workStationId") int workStationId);
+
+  @Modifying
+  @Query("DELETE FROM Reservation r WHERE r.id IN (:reservationIDs)")
+  public void deleteAllReservations(@Param("reservationIDs") List<Integer> reservationsIDs);
+
+  @Query("SELECT r FROM Reservation r WHERE r.id IN (:reservationIDs)")
+  public List<Reservation> findReservations(@Param("reservationIDs") List<Integer> reservationsIDs);
 
   public Reservation findByDateAndUserIdAndWorkStationId(LocalDate date, int userId, int workStationId);
 }

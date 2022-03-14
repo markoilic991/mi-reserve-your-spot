@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,6 +34,13 @@ public class ReservationController {
     return reservationService.findById(id);
   }
 
+  @GetMapping
+  public List<Reservation> findAllReservationsByUserIdAndDateRange(@RequestParam(value = "userId") int userId,
+                                                                   @RequestParam(value = "dateFrom") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+                                                                   @RequestParam(value = "dateTo") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo) {
+    return reservationService.findAllReservationsByUserIdAndDateRange(userId, dateFrom, dateTo);
+  }
+
   @PostMapping("/save")
   @ResponseStatus(HttpStatus.CREATED)
   public List<Reservation> saveReservations(@RequestParam(value = "userId") int userId,
@@ -47,6 +55,12 @@ public class ReservationController {
   public String deleteById(@PathVariable int id) {
     reservationService.deleteById(id);
     return "Reservation deleted successfully!";
+  }
+
+  @DeleteMapping("/deleteAll")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteAllReservations(@RequestParam(value = "listIDs") List<Integer> reservationsIDs){
+      reservationService.deleteAll(reservationsIDs);
   }
 
   @DeleteMapping("/cancel")
