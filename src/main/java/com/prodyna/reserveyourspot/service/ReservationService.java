@@ -49,9 +49,9 @@ public class ReservationService {
 
   public List<Reservation> findAllReservationsByUserIdAndDateRange(int userId, LocalDate dateFrom, LocalDate dateTo) {
     Optional<User> optionalUser = userRepository.findById(userId);
-    List<Reservation> reservations = reservationRepository.findReservationsByUserIdAndDateRange(userId, dateFrom, dateTo);
 
     if (optionalUser.isPresent()) {
+      List<Reservation> reservations = reservationRepository.findReservationsByUserIdAndDateRange(userId, dateFrom, dateTo);
       return reservations;
     }
     throw new UniqueValueException("User with id " + userId + " does not exist in database!");
@@ -87,12 +87,12 @@ public class ReservationService {
     return "Reservation deleted!";
   }
 
-  public String deleteAll(List<Integer> reservationsIDs) {
-    List<Reservation> reservationsList = reservationRepository.findReservations(reservationsIDs);
-    if (reservationsList.isEmpty()){
+  public String deleteAll(List<Integer> reservationsIds) {
+    List<Reservation> reservationsList = reservationRepository.findReservations(reservationsIds);
+    if (reservationsList.isEmpty()) {
       throw new EntityNotFoundException("Reservations do not exist in database!");
     }
-    reservationRepository.deleteAllReservations(reservationsIDs);
+    reservationRepository.deleteAllReservations(reservationsIds);
     return "Reservations deleted!";
   }
 

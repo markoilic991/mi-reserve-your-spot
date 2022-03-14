@@ -1,7 +1,6 @@
 package com.prodyna.reserveyourspot.repository;
 
 import com.prodyna.reserveyourspot.model.Reservation;
-import io.swagger.models.auth.In;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,11 +25,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
   public void deleteByDateAndUserIdAndWorkStationId(@Param("date") LocalDate date, @Param("userId") int userId, @Param("workStationId") int workStationId);
 
   @Modifying
-  @Query("DELETE FROM Reservation r WHERE r.id IN (:reservationIDs)")
-  public void deleteAllReservations(@Param("reservationIDs") List<Integer> reservationsIDs);
+  @Query("DELETE FROM Reservation r WHERE r.id IN (:reservationsIds)")
+  public void deleteAllReservations(@Param("reservationsIds") List<Integer> reservationsIds);
 
-  @Query("SELECT r FROM Reservation r WHERE r.id IN (:reservationIDs)")
-  public List<Reservation> findReservations(@Param("reservationIDs") List<Integer> reservationsIDs);
+  @Query("SELECT r FROM Reservation r WHERE r.id IN (:reservationsIds)")
+  public List<Reservation> findReservations(@Param("reservationsIds") List<Integer> reservationsIds);
 
   public Reservation findByDateAndUserIdAndWorkStationId(LocalDate date, int userId, int workStationId);
 }
