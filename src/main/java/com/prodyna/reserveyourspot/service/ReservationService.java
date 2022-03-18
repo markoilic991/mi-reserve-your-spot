@@ -29,7 +29,7 @@ public class ReservationService {
   private UserRepository userRepository;
   private long numberBeforeDelete = 0;
   private long numberAfterDelete = 0;
-  private long result= 0;
+  private long result = 0;
 
   @Autowired
   public ReservationService(ReservationRepository reservationRepository,
