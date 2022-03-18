@@ -4,6 +4,7 @@ import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @Transactional
 public class OfficeSpaceService {
 
@@ -51,13 +53,13 @@ public class OfficeSpaceService {
     return officeSpaceRepository.save(officeSpace);
   }
 
-  public String deleteById(int id) {
+  public void deleteById(int id) {
     Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
     if (!optionalOfficeSpace.isPresent()) {
       throw new EntityNotFoundException("OfficeSpace with id " + id + " does not exist in database!");
     }
     officeSpaceRepository.deleteById((int) id);
-    return "OfficeSpace deleted!";
+    log.info("OfficeSpace deleted!");
   }
 
   public OfficeSpace updateOfficeSpace(OfficeSpace officeSpace, int id) {

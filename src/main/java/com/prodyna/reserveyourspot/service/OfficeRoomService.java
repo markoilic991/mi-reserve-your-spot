@@ -6,6 +6,7 @@ import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @Transactional
 public class OfficeRoomService {
 
@@ -62,13 +64,13 @@ public class OfficeRoomService {
     return officeRoomRepository.findByOfficeSpaceId(id);
   }
 
-  public String deleteById(int id) {
+  public void deleteById(int id) {
     Optional<OfficeRoom> optionalOfficeRoom = officeRoomRepository.findById(id);
     if (!optionalOfficeRoom.isPresent()) {
       throw new EntityNotFoundException("OfficeRoom with id " + id + " does not exist in database!");
     }
     officeRoomRepository.deleteById(id);
-    return "OfficeRoom deleted successfully!";
+    log.info("OfficeRoom deleted successfully!");
   }
 
   public OfficeRoom updateOfficeRoom(OfficeRoom officeRoom, int id) {

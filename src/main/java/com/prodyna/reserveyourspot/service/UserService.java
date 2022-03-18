@@ -4,6 +4,7 @@ import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.User;
 import com.prodyna.reserveyourspot.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @Transactional
 public class UserService {
 
@@ -49,13 +51,13 @@ public class UserService {
     return userRepository.save(user);
   }
 
-  public String deleteById(int id) {
+  public void deleteById(int id) {
     Optional<User> optionalUser = userRepository.findById(id);
     if (!optionalUser.isPresent()) {
       throw new EntityNotFoundException("User with id " + id + " does not exist in database!");
     }
     userRepository.deleteById(id);
-    return "User deleted successfully!";
+    log.info("User deleted successfully!");
   }
 
   public User updateUser(User user, int id) {

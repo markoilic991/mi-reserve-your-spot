@@ -24,8 +24,16 @@ This project should ensure that employees in a company can successfully reserve 
 * Locally installed mySql 8.0 (setup: database name: prodyna, username: root, password: 4567)
 * Docker & docker-compose
 * Postman
+* Installed IntelliJ IDEA plugin Diagrams.net Integration
 
 ##  Setup
+###Setup for local development
+
+1. Run MySQL docker container on docker desktop
+2. Run application in IntelliJ IDEA
+3. Test the API below using Postman or Swagger UI
+4. Link to open Swagger UI- http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+###Setup for running application on other device
 
 1. Install MySQL Workbench 8.0 and create new connection (database=prodyna, username=root, password=4567)
 2. Install DockerDesktop
@@ -36,9 +44,10 @@ This project should ensure that employees in a company can successfully reserve 
  Docker-compose up
 ```
 6. Wait the application to start
-7. Run Postman and import collection of REST API 
+7. Run Postman and import collection of REST API
 8. Test the API below using Postman or Swagger UI
 9. Link to open Swagger UI- http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+10. Install plugin Diagrams.net Integration on IntelliJ IDEA (link for help: https://www.jetbrains.com/help/idea/managing-plugins.html)
 
 ## API Reference
 ### Administration scenario
@@ -200,6 +209,17 @@ This project should ensure that employees in a company can successfully reserve 
 
 ### Reservation
 
+#### Find reservations by user id and date range
+
+```http
+  GET /api/reservations?userId=''&dateFrom=''&dateTo=''
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `userId`      | `int` | **Required**: Id of user to find reservations for|
+| `dateFrom`      | `LocalDate` | **Required**: date from needed |
+| `dateTo`      | `LocalDate` | **Required**: date to needed |
+
 #### Save reservations by date range
 
 ```http
@@ -223,6 +243,24 @@ This project should ensure that employees in a company can successfully reserve 
 | `userId`      | `int` | **Required**: Id of user to cancel reservation for |
 | `workStationId`      | `int` | **Required**: Id of work-station to cancel reservation for|
 | `date`      | `LocalDate` | **Required**: date to cancel reservation |
+
+#### Delete all reservations
+
+```http
+DELETE /api/reservations/deleteAll?reservationsIds=''
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `reservationsIds`      | `List<Integer>` | **Required**: Ids of reservations to delete |
+
+#### Delete reservation
+
+```http
+  DELETE /api/reservations/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `int` | **Required**: Id of reservation to delete |
 ## Authors
 
 - [@markoilic](https://bitbucket.prodyna.com/profile)

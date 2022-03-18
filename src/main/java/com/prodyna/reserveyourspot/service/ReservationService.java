@@ -8,6 +8,7 @@ import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.ReservationRepository;
 import com.prodyna.reserveyourspot.repository.UserRepository;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,12 +20,16 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @Transactional
 public class ReservationService {
 
   private ReservationRepository reservationRepository;
   private WorkStationRepository workStationRepository;
   private UserRepository userRepository;
+  private long numberBeforeDelete = 0;
+  private long numberAfterDelete = 0;
+  private long result= 0;
 
   @Autowired
   public ReservationService(ReservationRepository reservationRepository,
@@ -78,32 +83,31 @@ public class ReservationService {
     throw new EntityNotFoundException("Some of input data do not exist in database, check again!");
   }
 
-  public String deleteById(int id) {
+  public void deleteById(int id) {
     Optional<Reservation> optionalReservation = reservationRepository.findById(id);
     if (!optionalReservation.isPresent()) {
       throw new EntityNotFoundException("Reservation with id " + id + " does not exist in database!");
     }
     reservationRepository.deleteById(id);
-    return "Reservation deleted!";
+    log.info("Reservation deleted!");
   }
 
-  public String deleteAll(List<Integer> reservationsIds) {
-    List<Reservation> reservationsList = reservationRepository.findReservations(reservationsIds);
-    if (reservationsList.isEmpty()) {
-      throw new EntityNotFoundException("Reservations do not exist in database!");
-    }
+  public void deleteAll(List<Integer> reservationsIds) {
+    numberBeforeDelete = reservationRepository.count();
     reservationRepository.deleteAllReservations(reservationsIds);
-    return "Reservations deleted!";
+    numberAfterDelete = reservationRepository.count();
+    result = numberBeforeDelete - numberAfterDelete;
+    log.info("Reservations deleted! Number of deleted reservations: " + result);
   }
 
-  public String cancelReservation(int userId, int workStationId, LocalDate date) {
+  public void cancelReservation(int userId, int workStationId, LocalDate date) {
     Optional<Reservation> optionalReservation =
             Optional.ofNullable(reservationRepository.findByDateAndUserIdAndWorkStationId(date, userId, workStationId));
     if (!optionalReservation.isPresent()) {
       throw new EntityNotFoundException("Reservation has been already cancelled!");
     }
     reservationRepository.deleteByDateAndUserIdAndWorkStationId(date, userId, workStationId);
-    return "Reservation cancelled successfully!";
+    log.info("Reservation cancelled successfully!");
   }
 
   //this method is used in SampleDataService class
@@ -140,4 +144,5 @@ public class ReservationService {
     }
     return listDate;
   }
+
 }
