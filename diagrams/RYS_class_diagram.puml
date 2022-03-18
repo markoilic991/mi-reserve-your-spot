@@ -82,8 +82,8 @@ class Reservation {
     + setUser(n : User) : void
 }
 
-OfficeRoom "*" --* "1" OfficeSpace
-WorkStation "*" --* "1" OfficeRoom
+OfficeRoom "0..*" --* "1" OfficeSpace
+WorkStation "0..*" --* "1" OfficeRoom
 User "0..*" - "0..*" WorkStation
 (User, WorkStation) .. Reservation
 

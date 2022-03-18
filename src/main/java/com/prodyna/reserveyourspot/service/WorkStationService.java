@@ -6,6 +6,7 @@ import com.prodyna.reserveyourspot.model.OfficeRoom;
 import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.OfficeRoomRepository;
 import com.prodyna.reserveyourspot.repository.WorkStationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @Transactional
 public class WorkStationService {
 
@@ -70,13 +72,13 @@ public class WorkStationService {
     return workStationRepository.save(workStation);
   }
 
-  public String deleteById(int id) {
+  public void deleteById(int id) {
     Optional<WorkStation> optionalWorkStation = workStationRepository.findById(id);
     if (!optionalWorkStation.isPresent()) {
       throw new EntityNotFoundException("WorkStation with id " + id + " does not exist in database!");
     }
     workStationRepository.deleteById(id);
-    return "WorkStation deleted successfully!";
+    log.info("WorkStation deleted successfully!");
   }
 
   public WorkStation updateWorkStation(WorkStation workStation, int id) {

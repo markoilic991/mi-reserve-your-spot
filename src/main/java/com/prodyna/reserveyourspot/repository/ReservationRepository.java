@@ -28,8 +28,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
   @Query("DELETE FROM Reservation r WHERE r.id IN (:reservationsIds)")
   public void deleteAllReservations(@Param("reservationsIds") List<Integer> reservationsIds);
 
-  @Query("SELECT r FROM Reservation r WHERE r.id IN (:reservationsIds)")
-  public List<Reservation> findReservations(@Param("reservationsIds") List<Integer> reservationsIds);
-
   public Reservation findByDateAndUserIdAndWorkStationId(LocalDate date, int userId, int workStationId);
 }

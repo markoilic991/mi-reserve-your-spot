@@ -58,7 +58,7 @@ public class ReservationController {
 
   @DeleteMapping("/deleteAll")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteAllReservations(@RequestParam(value = "listIDs") List<Integer> reservationsIds) {
+  public void deleteAllReservations(@RequestParam(value = "reservationsIds") List<Integer> reservationsIds) {
     reservationService.deleteAll(reservationsIds);
   }
 

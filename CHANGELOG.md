@@ -22,3 +22,22 @@ All notable changes to this project will be documented in this file.
 - README.md file
 - tests 
 
+
+##  <span style="color: #1589F0">[ 0.0.29-SNAPSHOT ]</span> - 18.03.2022.
+
+### *Added*
+
+- Diagrams directory with class and database diagrams
+- User reservation view methods
+- Annotation Type Slf4j in all services
+
+### *Changed*
+
+- Methods in reservation repository
+- Methods for delete in all services
+- Custom exceptions 
+
+### *Updated*
+
+- README.md file
+- CHANGELOG.md file
