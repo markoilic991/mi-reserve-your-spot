@@ -33,9 +33,9 @@ import java.util.Set;
         attributeNodes = @NamedAttributeNode(value = "rooms", subgraph = "subgraph.OfficeRoom"),
         subgraphs = {
                 @NamedSubgraph(name = "subgraph.OfficeRoom",
-                        attributeNodes = @NamedAttributeNode(value = "workStations", subgraph = "subgraph.WorkStation")),
-                @NamedSubgraph(name = "subgraph.WorkStation",
-                        attributeNodes = @NamedAttributeNode(value = "reservations"))})
+                        attributeNodes = @NamedAttributeNode(value = "workStations", subgraph = "subgraph.WorkStation"))
+                /*@NamedSubgraph(name = "subgraph.WorkStation",
+                        attributeNodes = @NamedAttributeNode(value = "reservations"))*/})
 @DynamicUpdate
 @Table(name = "officeSpaces")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

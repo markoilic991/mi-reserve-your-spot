@@ -3,13 +3,18 @@ package com.prodyna.reserveyourspot.service;
 import com.prodyna.reserveyourspot.exception.EntityNotFoundException;
 import com.prodyna.reserveyourspot.exception.UniqueValueException;
 import com.prodyna.reserveyourspot.model.OfficeSpace;
+import com.prodyna.reserveyourspot.model.Reservation;
+import com.prodyna.reserveyourspot.model.WorkStation;
 import com.prodyna.reserveyourspot.repository.OfficeSpaceRepository;
+import com.prodyna.reserveyourspot.repository.ReservationRepository;
+import com.prodyna.reserveyourspot.repository.WorkStationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,10 +24,14 @@ import java.util.Optional;
 public class OfficeSpaceService {
 
   private OfficeSpaceRepository officeSpaceRepository;
+  private WorkStationRepository workStationRepository;
+  private ReservationRepository reservationRepository;
 
   @Autowired
-  public OfficeSpaceService(OfficeSpaceRepository officeSpaceRepository) {
+  public OfficeSpaceService(OfficeSpaceRepository officeSpaceRepository, WorkStationRepository workStationRepository, ReservationRepository reservationRepository) {
     this.officeSpaceRepository = officeSpaceRepository;
+    this.workStationRepository = workStationRepository;
+    this.reservationRepository = reservationRepository;
   }
 
   public List<OfficeSpace> findAll() {
@@ -39,6 +48,21 @@ public class OfficeSpaceService {
   }
 
   public OfficeSpace getOfficeSpaceByIdAndReservationDateRange(int id, LocalDate dateFrom, LocalDate dateTo) {
+    List<WorkStation> workStationList = workStationRepository.findAll();
+    List<Reservation> reservationList = reservationRepository.findAllReservationByDateRange(dateFrom, dateTo);
+    List<LocalDate> dateList = dateRangeFromTo(dateFrom, dateTo);
+
+    for (Reservation reservation : reservationList) {
+      for (WorkStation workStation : workStationList) {
+        for (LocalDate date : dateList) {
+          if ((reservation.getWorkStation().getId() == workStation.getId()) && (date.isEqual(reservation.getDate()))) {
+            workStation.setHasReservation(true);
+          } else {
+            workStation.isHasReservation();
+          }
+        }
+      }
+    }
     Optional<OfficeSpace> optionalOfficeSpace = officeSpaceRepository.findById(id);
     if (optionalOfficeSpace.isPresent()) {
       return officeSpaceRepository.getOfficeSpaceByIdAndReservationDateRange(id, dateFrom, dateTo);
@@ -81,5 +105,16 @@ public class OfficeSpaceService {
       officeSpaceExist = true;
     }
     return officeSpaceExist;
+  }
+
+  public List<LocalDate> dateRangeFromTo(LocalDate dateFrom, LocalDate dateTo) {
+    List<LocalDate> listDate = new ArrayList<LocalDate>();
+    LocalDate tmp = dateFrom;
+
+    while (tmp.isBefore(dateTo) || tmp.equals(dateTo)) {
+      listDate.add(tmp);
+      tmp = tmp.plusDays(1);
+    }
+    return listDate;
   }
 }
