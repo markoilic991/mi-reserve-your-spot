@@ -115,7 +115,6 @@ public class OfficeRoomControllerTest {
   @Test
   public void should_Delete_Office_Room() throws Exception {
     Mockito.when(officeRoomService.findById(anyInt())).thenReturn((officeRoomDotNet));
-    Mockito.when(officeRoomService.deleteById(officeRoomDotNet.getId())).thenReturn("Success");
     mockMvc.perform(MockMvcRequestBuilders.delete("/api/office-rooms/2")).andExpect(status().isNoContent());
   }
 }

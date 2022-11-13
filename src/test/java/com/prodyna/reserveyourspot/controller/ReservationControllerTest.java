@@ -130,7 +130,6 @@ public class ReservationControllerTest {
 
   @Test
   public void should_Delete_Reservation() throws Exception {
-    Mockito.when(reservationService.deleteById(reservationOne.getId())).thenReturn("Success");
     mockMvc.perform(MockMvcRequestBuilders.delete("/api/reservations/1")).andExpect(status().isNoContent());
   }
 }

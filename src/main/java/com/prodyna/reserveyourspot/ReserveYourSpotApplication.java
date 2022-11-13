@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ReserveYourSpotApplication {
 
   public static void main(String[] args) {
+
     SpringApplication.run(ReserveYourSpotApplication.class, args);
   }
 }

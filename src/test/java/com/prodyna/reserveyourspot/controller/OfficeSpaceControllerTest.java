@@ -142,7 +142,6 @@ public class OfficeSpaceControllerTest {
   @Test
   public void should_Delete_Office_Space() throws Exception {
     Mockito.when(officeSpaceService.findOfficeSpaceById(anyInt())).thenReturn(officeSpaceProdyna);
-    Mockito.when(officeSpaceService.deleteById(officeSpaceProdyna.getId())).thenReturn("Success");
     mockMvc.perform(MockMvcRequestBuilders.delete("/api/office-spaces/1")).andExpect(status().isNoContent());
   }
 }

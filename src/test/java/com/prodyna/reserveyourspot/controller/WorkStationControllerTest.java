@@ -81,7 +81,6 @@ public class WorkStationControllerTest {
 
   @Test
   public void should_Delete_WorkStation() throws Exception {
-    Mockito.when(workStationService.deleteById(workStationLinux.getId())).thenReturn("Success");
     mockMvc.perform(MockMvcRequestBuilders.delete("/api/work-stations/2")).andExpect(status().isNoContent());
   }
 }
