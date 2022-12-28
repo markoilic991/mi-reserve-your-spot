@@ -25,3 +25,12 @@ jobs:
           distribution: 'adopt'
       - name: Build with Gradle
         run: gradle build -x test
+      - name: Docker login
+        env:
+          DOCKER_USERNAME: marko991
+          DOCKER_PASSWORD: B1389!piki22#09
+        run : docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" docker.io
+      - name: Build Docker image with latest tag
+        run: docker build . --file Dockerfile --tag marko991/reserve-your-spot:latest
+      - name: Publish dockerimage to docker hub
+        run: docker push marko991/reserve-your-spot:latest
