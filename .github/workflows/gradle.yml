@@ -25,12 +25,3 @@ jobs:
           distribution: 'adopt'
       - name: Build with Gradle
         run: gradle build -x test
-        
-  build_docker:
-    name: Build Docker Image
-    runs-on: windows-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image and Push to DockerHub
-      run: gradle dockerTagsPush
